@@ -1,0 +1,1 @@
+export {Barbero, Manicurista, Mecanico, Servicio} from './simulaciones/usuarios'

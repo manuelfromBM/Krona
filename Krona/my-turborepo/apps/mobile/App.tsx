@@ -6,22 +6,26 @@ import ProfileScreen from './src/screens/profile/Profile'
 import React from 'react';
 import TabNavigator from './src/navigation/tabNavigation/TavNavigator';
 import Publicaciones from 'src/components/Feed/Publicacion';
+import ScreenAgenda from 'src/screens/agenda/Agenda';
 
 const Stack = createStackNavigator();
 
 const App: React.FC = () => {
   return (
-    <NavigationContainer>
-      <TabNavigator /> 
-    </NavigationContainer>
+    <>
+      <ScreenAgenda></ScreenAgenda>
+    </>
   );
 }
 export default App;
 
 
-      // <Stack.Navigator>
-      //   {/* <Stack.Screen name="Feed" component={FeedScreen} /> */}
-      //   <Stack.Screen name="Profile" component={ProfileScreen} />
-      //   {/*Componente de login san_martin*/}
-      //   <Stack.Screen name="Feed" component={Publicaciones} />
-      // </Stack.Navigator>
+// <Stack.Navigator>
+//   {/* <Stack.Screen name="Feed" component={FeedScreen} /> */}
+//   <Stack.Screen name="Profile" component={ProfileScreen} />
+//   {/*Componente de login san_martin*/}
+//   <Stack.Screen name="Feed" component={Publicaciones} />
+// </Stack.Navigator>
+// <NavigationContainer>
+//   <TabNavigator />
+// </NavigationContainer>
