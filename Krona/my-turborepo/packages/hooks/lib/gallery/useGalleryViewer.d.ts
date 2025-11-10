@@ -1,6 +1,6 @@
 export default function useGalleryViewer(images: string[], preload?: boolean): {
     visible: boolean;
-    activateIndex: number;
+    activeIndex: number;
     open: (index: number) => void;
     close: () => void;
     next: () => void;
