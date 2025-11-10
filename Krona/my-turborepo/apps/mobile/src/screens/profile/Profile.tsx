@@ -3,8 +3,16 @@ import { styles } from './Profile.styles';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Gallerry from './gallery/Gallery';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export default function ProfileScreen() {
+type ProfileStackParamList = {
+Profile: { userId?: string } | undefined;
+EditarPerfil: { userId?: string } | undefined;
+};
+
+type Props = NativeStackScreenProps<ProfileStackParamList, 'Profile'>;
+
+export default function ProfileScreen({navigation} : Props) {
     const images = [
         'https://media.revistagq.com/photos/5d93360c2c50100008b21511/master/w_1600%2Cc_limit/peaky%2520blinders.jpg',
         'https://www.nintenderos.com/wp-content/uploads/2025/04/Metroid-Prime-4-Beyond.jpg',
@@ -37,7 +45,7 @@ export default function ProfileScreen() {
                 </View>
             </View>
             <View style={{ marginTop: 16 }}>
-                <Button title='Editar perfil' onPress={() => {/**/}}></Button>
+                <Button title='Editar perfil' onPress={() => navigation.navigate('EditarPerfil', { userId: '123' })}></Button>
             </View>
             <View>
                 <Text >Posts</Text>
