@@ -2,35 +2,18 @@ import { View, Text, Image, ScrollView, Animated, TouchableOpacity, Alert, Modal
 import { FontAwesome } from '@expo/vector-icons';
 import styles from "./publicaciones.styles";
 import React from "react";
-import { useRef } from "react";
-import { useState } from "react";
+import { useFeedAnimations } from "@packages/hooks";
 
 export default function FeedPrincipal() {
-
-    const botonComentario = useRef(new Animated.Value(1)).current;
-    const botonCompartir = useRef(new Animated.Value(1)).current;
-
-    const animacionIcono = (scaleValue: Animated.Value) => {
-        Animated.sequence([
-            Animated.timing(scaleValue, {
-                toValue: 1.2,
-                duration: 100,
-                useNativeDriver: true,
-            }),
-            Animated.timing(scaleValue, {
-                toValue: 1,
-                duration: 100,
-                useNativeDriver: true,
-            }),
-        ]).start();
-    }
-
-    const [visible, setVisible] = useState(false);
-    const [selectedPost, setSelectedPost] = useState<number | null>(null);
-
-    // const toqueComentario = () => {
-    //     Alert.alert("Funciona!", "El componente está visible y responde");
-    // }
+    const {
+        botonComentario,
+        botonCompartir,
+        visible,
+        setVisible,
+        selectedPost,
+        setSelectedPost,
+        animacionIcono,
+    } = useFeedAnimations();
 
     const PublicacionItem = ({ index }: { index?: number }) => (
         <View style={styles.contenedor_hijo}>

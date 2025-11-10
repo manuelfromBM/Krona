@@ -69,23 +69,23 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     overlay: {
-    flex: 1,
-    justifyContent: "flex-end",
-    backgroundColor: "rgba(0,0,0,0.5)",
+        flex: 1,
+        justifyContent: "flex-end",
+        backgroundColor: "rgba(0,0,0,0.5)",
     },
     modalContent: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    minHeight: "30%",
+        backgroundColor: "#fff",
+        padding: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        minHeight: "30%",
     },
     closeBtn: {
-    marginTop: 20,
-    backgroundColor: "black",
-    padding: 10,
-    borderRadius: 10,
-    alignSelf: "flex-end",
+        marginTop: 20,
+        backgroundColor: "black",
+        padding: 10,
+        borderRadius: 10,
+        alignSelf: "flex-end",
     },
 });
 

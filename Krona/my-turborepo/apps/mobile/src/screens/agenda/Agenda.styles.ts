@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
     },
     ViewImagen: {
         width: 400,
-        height: 140, // Reducir altura para dar más espacio a la info
-        marginTop: -15, // Overlap sutil con el header
+        height: 140,
+        marginTop: -15, 
     },
     ViewDetalles: {
         position: 'absolute',
-        top: 200, // Ajustar posición
+        top: 200,
         left: 15,
         right: 15,
     },
