@@ -1,11 +1,12 @@
 import React from "react"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ProfileScreen from "../../screens/profile/Profile";
+//import ProfileScreen from "../../screens/profile/Profile";
 import FeedStackNavigator from "../stackNavigation/FeedStackNavigator";
+import ProfileStackNavigator from "../stackNavigation/ProfileStackNavigator";
 
 export type TabParamList = {
-    FeedTab: undefined;
-    Profile: undefined;
+    FeedStack: undefined;
+    ProfileStack: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -17,8 +18,8 @@ const TabNavigator: React.FC = () => {
                 headerShown: false, // el header lo maneja cada stack si amerita compipi
             }}
         >
-            <Tab.Screen name="FeedTab" component={FeedStackNavigator} options={{ title: "Feed" }}/>
-            <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: "Perfil" }}/>
+            <Tab.Screen name="FeedStack" component={FeedStackNavigator} options={{ title: "Feed" }}/>
+            <Tab.Screen name="ProfileStack" component={ProfileStackNavigator} options={{ title: "Perfil" }}/>
         </Tab.Navigator>
     );
 };
