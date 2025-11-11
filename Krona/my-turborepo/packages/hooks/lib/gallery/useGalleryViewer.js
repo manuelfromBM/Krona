@@ -1,7 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
+import { Image } from 'react-native';
+//___________________________________________________________________________________________________
+//Este hook no tiene compatibilidad con web, por lo tanto en el futuro se debe incorporar para su uso
+//___________________________________________________________________________________________________
 export default function useGalleryViewer(images, preload = false) {
     const [visible, setVisible] = useState(false);
-    const [activateIndex, setActiveIndex] = useState(0);
+    const [activeIndex, setActiveIndex] = useState(0);
     const open = useCallback((index) => {
         setActiveIndex(index);
         setVisible(true);
@@ -18,14 +22,13 @@ export default function useGalleryViewer(images, preload = false) {
     useEffect(() => {
         if (preload) {
             images.forEach((src) => {
-                const img = new Image();
-                img.src = src;
+                Image.prefetch(src);
             });
         }
     }, [images, preload]);
     return {
         visible,
-        activateIndex,
+        activeIndex,
         open,
         close,
         next,
