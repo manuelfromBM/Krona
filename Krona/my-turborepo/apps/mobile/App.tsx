@@ -7,9 +7,9 @@ const Stack = createStackNavigator();
 
 const App: React.FC = () => {
   return (
-    <>
-    </>
-
+    <NavigationContainer>
+      <TabNavigator /> 
+    </NavigationContainer>
   );
 }
 export default App;

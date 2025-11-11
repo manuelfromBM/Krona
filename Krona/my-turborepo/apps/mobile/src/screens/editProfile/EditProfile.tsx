@@ -61,7 +61,7 @@ const EditProfileScreen: React.FC = () => {
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : undefined}>
             <ScrollView contentContainerStyle={styles.container}>
-                <LinearGradient 
+                {/* <LinearGradient 
                     colors={["#f58529","#dd2a7b","#8134af"]}
                     start={[0, 0]}
                     end={[1, 1]}
@@ -92,10 +92,10 @@ const EditProfileScreen: React.FC = () => {
                         <Text></Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Text></Text>
+                        <Text></Text>*
                     </TouchableOpacity>
                 </View>
-                <View/>
+                <View/> */}
             </ScrollView>
         </KeyboardAvoidingView>
     )
