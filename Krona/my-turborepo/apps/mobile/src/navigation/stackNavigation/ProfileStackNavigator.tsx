@@ -18,6 +18,7 @@ export default function ProfileStackNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: "Perfil" }} />
       <Stack.Screen name="EditarPerfil" component={EditProfileScreen} options={{ title: "EditarPerfil" }} />
+
     </Stack.Navigator>
   );
 }

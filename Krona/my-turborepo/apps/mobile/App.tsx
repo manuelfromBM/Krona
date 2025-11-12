@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 const App: React.FC = () => {
   return (
     <NavigationContainer>
-      <TabNavigator /> 
+      <TabNavigator />
     </NavigationContainer>
   );
 }

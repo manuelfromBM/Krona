@@ -1,0 +1,81 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f6f6f6",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+   backButton: {
+    position: "absolute",
+    top: 50,
+    left: 20,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  backText: {
+    color: "#007AFF",
+    fontSize: 16,
+    marginLeft: 5,
+    fontWeight: "500",
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "700",
+    color: "#333",
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#555",
+    textAlign: "center",
+    marginBottom: 30,
+  },
+  input: {
+    width: "100%",
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 15,
+    fontSize: 16,
+    color: "#333",
+    marginBottom: 20,
+    elevation: 2,
+  },
+  pickerButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#0077b6",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    marginVertical: 6,
+    width: "100%",
+  },
+  pickerText: {
+    color: "#fff",
+    fontSize: 16,
+    marginLeft: 8,
+  },
+  selectedText: {
+    marginTop: 15,
+    fontSize: 15,
+    color: "#444",
+    fontWeight: "500",
+  },
+  confirmButton: {
+    backgroundColor: "#023e8a",
+    paddingVertical: 14,
+    borderRadius: 12,
+    width: "100%",
+    alignItems: "center",
+    marginTop: 25,
+  },
+  confirmText: {
+    color: "#fff",
+    fontSize: 17,
+    fontWeight: "600",
+  },
+});
