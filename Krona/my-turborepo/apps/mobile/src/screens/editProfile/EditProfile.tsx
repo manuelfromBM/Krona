@@ -74,11 +74,14 @@ const EditProfileScreen: React.FC = () => {
                 </LinearGradient>
                 <View style={styles.avatarWrap}>
                     <TouchableOpacity onPress={pickImage} activeOpacity={0.8}>
-                        <Image source={{ uri: photo }}/>
-                        <View>
-                            <Feather/>
-                            <Text></Text>
+                        { photo ? (
+                        <Image source={{ uri: photo }} style={styles.avatar}/>
+                        ) : (
+                        <View style={styles.avatarPlaceholder}>
+                            <Feather name="camera" size={28} color="#666"/>
+                            <Text style={styles.avatarText}>Cambiar</Text>
                         </View>
+                        )}
                     </TouchableOpacity>
                 </View>
                 <View>
