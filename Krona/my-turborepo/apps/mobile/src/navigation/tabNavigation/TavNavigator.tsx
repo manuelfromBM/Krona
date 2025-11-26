@@ -3,12 +3,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //import ProfileScreen from "../../screens/profile/Profile";
 import FeedStackNavigator from "../stackNavigation/FeedStackNavigator";
 import ProfileStackNavigator from "../stackNavigation/ProfileStackNavigator";
-import ScreenNotificacinoes from "src/screens/notificaciones/notificaciones";
+import ScreenBusqueda from "src/screens/busqueda/busqueda";
 
 export type TabParamList = {
     FeedStack: undefined;
     ProfileStack: undefined;
     Notificaciones: undefined;
+    Busqueda: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -21,6 +22,7 @@ const TabNavigator: React.FC = () => {
             }}
         >
             <Tab.Screen name="FeedStack" component={FeedStackNavigator} options={{ title: "Feed" }} />
+            <Tab.Screen name="Busqueda" component={ScreenBusqueda} options={{ title: "Busqueda" }}></Tab.Screen>
             <Tab.Screen name="ProfileStack" component={ProfileStackNavigator} options={{ title: "Perfil" }} />
         </Tab.Navigator>
     );

@@ -5,6 +5,7 @@ export { default as useRegister } from "./Register/UseRegister";
 export { default as useMetodoPago } from "./metodoPago/UseMetodoPago";
 export { default as useLogin } from "./login/UseLogin";
 export { default as useAcordionBtn} from './notificaciones/useNotificaciones'
+export {default as useBusqudaModal} from './busqueda/useBusqueda'
 export * from "./forgotPassword/UseForgotPassword";
  export * from "./agregarTarjeta/UseAgregarTarjeta";
  export * from "./agendar/UseAgendar";
