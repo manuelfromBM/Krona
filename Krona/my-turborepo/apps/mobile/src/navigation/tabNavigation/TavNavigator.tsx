@@ -7,6 +7,7 @@ import ProfileStackNavigator from "../stackNavigation/ProfileStackNavigator";
 export type TabParamList = {
     FeedStack: undefined;
     ProfileStack: undefined;
+    AgendaStack: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -20,6 +21,7 @@ const TabNavigator: React.FC = () => {
         >
             <Tab.Screen name="FeedStack" component={FeedStackNavigator} options={{ title: "Feed" }}/>
             <Tab.Screen name="ProfileStack" component={ProfileStackNavigator} options={{ title: "Perfil" }}/>
+            <Tab.Screen name="AgendaStack" component={} options={{ title: "Agenda" }}/>
         </Tab.Navigator>
     );
 };
