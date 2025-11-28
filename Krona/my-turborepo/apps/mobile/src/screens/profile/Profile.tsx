@@ -4,10 +4,12 @@ import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Gallerry from './gallery/Gallery';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 type ProfileStackParamList = {
-Profile: { userId?: string } | undefined;
-EditarPerfil: { userId?: string } | undefined;
+    Profile: { userId?: string } | undefined;
+    EditarPerfil: { userId?: string } | undefined;
 };
 
 type Props = NativeStackScreenProps<ProfileStackParamList, 'Profile'>;

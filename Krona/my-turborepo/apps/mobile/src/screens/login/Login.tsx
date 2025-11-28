@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, Pressable, Keyboard } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, Pressable, Keyboard, ActivityIndicator } from "react-native";
 import { styles } from "./Login.styles";
 import { useLogin } from "@packages/hooks";
+import { AuthContext } from "@packages/hooks";
 
 export const Login: React.FC = () => {
   const {
@@ -9,8 +10,9 @@ export const Login: React.FC = () => {
     setEmail,
     password,
     setPassword,
+    loading,
+    error,
     handleLogin,
-    navigation,
   } = useLogin();
 
   return (
@@ -40,16 +42,19 @@ export const Login: React.FC = () => {
         value={password}
         onChangeText={setPassword}
       />
-
+      { error ? <Text> { error } </Text> : null }
       {/* BOTÓN LOGIN */}
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Iniciar sesión</Text>
+      <TouchableOpacity 
+      disabled={loading} 
+      style={[styles.button, loading && styles.buttonDisabled]} 
+      onPress={() => { handleLogin()}}>
+        { loading ? <ActivityIndicator/> : <Text style={styles.buttonText}>Iniciar sesión</Text>}
       </TouchableOpacity>
 
-      {/* OLVIDASTE CONTRASEÑA */}
+      {/* OLVIDASTE CONTRASEÑA
       <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
         <Text style={styles.forgotText}>¿Olvidaste tu contraseña?</Text>
-      </Pressable>
+      </Pressable> */}
 
       {/* SEPARADOR */}
       <View style={styles.separatorContainer}>
@@ -59,11 +64,11 @@ export const Login: React.FC = () => {
       </View>
 
       {/* BOTÓN REGISTRO */}
-      <Pressable style={styles.registerButton} onPress={() => navigation.navigate("Register")}>
+      {/* <Pressable style={styles.registerButton} onPress={() => navigation.navigate("Register")}>
         <Text style={styles.registerText}>
           ¿No tienes cuenta? <Text style={styles.registerHighlight}>Regístrate</Text>
         </Text>
-      </Pressable>
+      </Pressable> */}
 
       {/* POLÍTICAS */}
       <Text style={styles.policyText}>

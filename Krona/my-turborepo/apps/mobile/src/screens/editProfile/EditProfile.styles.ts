@@ -74,5 +74,29 @@ export const styles = StyleSheet.create({
         minHeight: 78,
         textAlignVertical: "top",
     },
-    
+    saveBtn: {
+        marginTop: 18,
+        backgroundColor: '#3897f0',
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.12,
+        shadowRadius: 6,
+        elevation: 2,
+    },
+    saveText: {
+        color: '#fff',
+        fontWeight: '700',
+        fontSize: 15,
+    },
+    unlinkBtn: {
+        marginTop: 12,
+        alignItems: 'center',
+    },
+    unlinkText: {
+        color: '#666',
+        fontSize: 13,
+    },  
 });
