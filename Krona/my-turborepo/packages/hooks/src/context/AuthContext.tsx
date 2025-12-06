@@ -38,8 +38,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         userToken, 
         isLoading,
         signIn: async ({ email, password }: { email: string; password:string}) => {
-
-
             const fakeToken = "fake-token-123";
             await AsyncStorage.setItem("userToken", fakeToken);
             setUserToken(fakeToken);
