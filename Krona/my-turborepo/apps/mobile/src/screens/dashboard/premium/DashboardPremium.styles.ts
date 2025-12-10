@@ -14,7 +14,57 @@ export const styles = StyleSheet.create({
     marginVertical: 15,
   },
 
-  /* ===================== TARJETAS DE MÉTRICAS ===================== */
+  // Tabs DIA/SEMANA/MES 
+   tabsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 20,
+    backgroundColor: "#eee",
+    padding: 6,
+    borderRadius: 12,
+  },
+
+  tab: {
+    flex: 1,
+    marginHorizontal: 4,
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: "#ddd",
+  },
+
+  tabActive: {
+    backgroundColor: "#4A90E2",
+  },
+
+  tabText: {
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+  },
+
+  tabTextActive: {
+    color: "#fff",
+  },
+
+  contentBox: {
+    marginTop: 10,
+    backgroundColor: "#fafafa",
+    padding: 20,
+    borderRadius: 12,
+    elevation: 2,
+  },
+
+  value: {
+    fontSize: 22,
+    fontWeight: "700",
+    marginBottom: 10,
+    color: "#000",
+  },
+
+  // Secciones dinámicas
+
+
   metricsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -40,7 +90,6 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  /* ===================== TÍTULOS DE SECCIÓN ===================== */
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
@@ -48,13 +97,11 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  /* ===================== GRÁFICO ===================== */
   chart: {
     borderRadius: 12,
     marginBottom: 20,
   },
 
-  /* ===================== SERVICIOS POPULARES ===================== */
   serviceCard: {
     backgroundColor: "#F8F8F8",
     padding: 12,
@@ -62,7 +109,6 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  /* ===================== SERVICIOS MENOS PEDIDOS ===================== */
   serviceCardDanger: {
     backgroundColor: "#FFE5E5",
     borderWidth: 1,
@@ -79,13 +125,5 @@ export const styles = StyleSheet.create({
 
   serviceCount: {
     color: "#666",
-  },
-
-  /* ===================== BLOQUES GRANDES ===================== */
-  sectionBlock: {
-    backgroundColor: "#FAFAFA",
-    padding: 12,
-    borderRadius: 12,
-    marginBottom: 20,
   },
 });
