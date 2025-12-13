@@ -10,6 +10,7 @@ type ProfileStackParamList = {
     EditarPerfil: { userId?: string } | undefined;
     AdministradorScreen: undefined;
     ServiciosCrud: undefined;
+    Agenda: undefined;
 };
 
 type Props = NativeStackScreenProps<ProfileStackParamList, 'Profile'>;
@@ -51,6 +52,9 @@ export default function ProfileScreen({ navigation }: Props) {
             </View>
             <View style={{ marginTop: 8 }}>
                 <Button title='Panel Admin' onPress={() => navigation.navigate('AdministradorScreen')}></Button>
+            </View>
+            <View style={{ marginTop: 8 }}>
+                <Button title='Agendar' onPress={() => navigation.navigate('Agenda')}></Button>
             </View>
             <View>
                 <Text >Posts</Text>

@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { styles } from "./Administrador.styles";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+// import { AdminStackParamList } from '@packages/types'
 
 type AdminStackParamList = {
     AdministradorScreen: undefined;

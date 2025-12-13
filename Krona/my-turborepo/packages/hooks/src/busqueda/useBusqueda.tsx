@@ -1,32 +1,13 @@
-import { useState, useCallback, useEffect } from 'react';
-import { Image } from 'react-native';
+import { useState, useEffect } from "react";
 
-export default function useBusqudaMo(images: string[], preload: boolean = false, initialIndex: number = 0) {
-    const [activeIndex, setActiveIndex] = useState<number>(initialIndex);
-
-    useEffect(() => {
-        setActiveIndex(initialIndex);
-    }, [initialIndex]);
-
-    const next = useCallback(() => {
-        setActiveIndex((i: number) => (i + 1) % images.length)
-    }, [images.length]);
-
-    const prev = useCallback(() => {
-        setActiveIndex((i: number) => (i - 1 + images.length) % images.length);
-    }, [images.length]);
+export default function useSearchDebounce(delay = 500) {
+    const [query, setQuery] = useState("");
+    const [debounced, setDebounced] = useState("");
 
     useEffect(() => {
-        if (preload) {
-            images.forEach((src) => {
-                Image.prefetch(src);
-            });
-        }
-    }, [images, preload]);
+        const id = setTimeout(() => setDebounced(query), delay);
+        return () => clearTimeout(id);
+    }, [query, delay]);
 
-    return {
-        activeIndex,
-        next,
-        prev,
-    };
+    return { query, setQuery, debounced };
 }

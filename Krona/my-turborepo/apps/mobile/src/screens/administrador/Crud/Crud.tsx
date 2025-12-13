@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     View,
     Text,
@@ -13,13 +13,7 @@ import {
 import { styles } from "./Crud.styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
-type Servicios = {
-    id: string;
-    name: string;
-    price: number;
-    image: string;
-};
+import { useServiciosCrud } from "@packages/hooks";
 
 type ServiciosStackParamList = {
     ServiciosCrud: undefined;
@@ -28,76 +22,37 @@ type ServiciosStackParamList = {
 type Props = NativeStackScreenProps<ServiciosStackParamList, "ServiciosCrud">;
 
 export default function ServiciosScreenCrud({ navigation }: Props) {
-    const [servicios, setServicios] = useState<Servicios[]>([
+    const initialServicios = [
         {
             id: "1",
             name: "Degradados",
-            price: 10.000,
-            image:
-                "https://cdn2.hubspot.net/hubfs/2356021/spiky%201.jpg",
+            price: 10000,
+            image: "https://cdn2.hubspot.net/hubfs/2356021/spiky%201.jpg",
         },
         {
             id: "p2",
             name: "Corte de barba",
-            price: 15.000,
+            price: 15000,
             image:
                 "https://www.shutterstock.com/image-photo/beard-styling-cut-close-cropped-600nw-675613801.jpg",
         },
-    ]);
+    ];
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const [editing, setEditing] = useState<Servicios | null>(null);
-    const [form, setForm] = useState({ name: "", price: "", image: "" });
+    const {
+        servicios,
+        modalVisible,
+        editing,
+        form,
+        openCreate,
+        openEdit,
+        saveServicio,
+        confirmDelete,
+        setForm,
+    } = useServiciosCrud(initialServicios);
 
-    function openCreate() {
-        setEditing(null);
-        setForm({ name: "", price: "", image: "" });
-        setModalVisible(true);
-    }
+    type Servicio = typeof servicios[number];
 
-    function openEdit(p: Servicios) {
-        setEditing(p);
-        setForm({ name: p.name, price: String(p.price), image: p.image });
-        setModalVisible(true);
-    }
-
-    function saveServicio() {
-        if (!form.name.trim() || !form.price) {
-            Alert.alert("Validación", "Nombre y precio son obligatorios.");
-            return;
-        }
-        if (editing) {
-            setServicios((prev) =>
-                prev.map((p) =>
-                    p.id === editing.id
-                        ? { ...p, name: form.name.trim(), price: parseFloat(form.price), image: form.image || p.image }
-                        : p
-                )
-            );
-        } else {
-            const newServicio: Servicios = {
-                id: "p" + Date.now(),
-                name: form.name.trim(),
-                price: parseFloat(form.price),
-                image: form.image || "https://via.placeholder.com/300x200.png?text=Producto",
-            };
-            setServicios((prev) => [newServicio, ...prev]);
-        }
-        setModalVisible(false);
-    }
-
-    function confirmDelete(id: string) {
-        Alert.alert("Eliminar Servicio", "¿Seguro que deseas eliminar este Servicio?", [
-            { text: "Cancelar", style: "cancel" },
-            {
-                text: "Eliminar",
-                style: "destructive",
-                onPress: () => setServicios((prev) => prev.filter((p) => p.id !== id)),
-            },
-        ]);
-    }
-
-    function renderItem({ item }: { item: Servicios }) {
+    function renderItem({ item }: { item: Servicio }) {
         return (
             <View style={styles.card}>
                 <Image source={{ uri: item.image }} style={styles.servicioImage} />
@@ -121,7 +76,10 @@ export default function ServiciosScreenCrud({ navigation }: Props) {
                     <TouchableOpacity
                         style={styles.smallBtn}
                         onPress={() =>
-                            Alert.alert("Multimedia", "Aquí podrías abrir un modal para gestionar varias imágenes.")
+                            Alert.alert(
+                                "Multimedia",
+                                "Aquí podrías abrir un modal para gestionar varias imágenes."
+                            )
                         }
                     >
                         <Text style={styles.smallBtnText}>Multimedia</Text>
@@ -129,23 +87,7 @@ export default function ServiciosScreenCrud({ navigation }: Props) {
 
                     <TouchableOpacity
                         style={styles.smallBtn}
-                        onPress={() =>
-                            Alert.prompt &&
-                            Alert.prompt("Editar precio", "Ingrese nuevo precio", [
-                                {
-                                    text: "Cancelar",
-                                    style: "cancel",
-                                },
-                                {
-                                    text: "Guardar",
-                                    onPress: (text?: string) => {
-                                        const value = parseFloat(text || "");
-                                        if (isNaN(value)) return Alert.alert("Error", "Precio inválido");
-                                        setServicios((prev) => prev.map((p) => (p.id === item.id ? { ...p, price: value } : p)));
-                                    },
-                                },
-                            ])
-                        }
+                        onPress={() => openEdit(item)}
                     >
                         <Text style={styles.smallBtnText}>Precio</Text>
                     </TouchableOpacity>
@@ -155,7 +97,7 @@ export default function ServiciosScreenCrud({ navigation }: Props) {
     }
 
     return (
-        <SafeAreaView style={styles.container} edges={['bottom']}>
+        <SafeAreaView style={styles.container} edges={["bottom"]}>
             <View style={styles.headerRow}>
                 <Text style={styles.title}>Servicios</Text>
                 <TouchableOpacity style={styles.addBtn} onPress={openCreate}>
@@ -173,7 +115,9 @@ export default function ServiciosScreenCrud({ navigation }: Props) {
             <Modal visible={modalVisible} animationType="slide" transparent>
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>{editing ? "Editar Servicio" : "Crear servicio"}</Text>
+                        <Text style={styles.modalTitle}>
+                            {editing ? "Editar Servicio" : "Crear servicio"}
+                        </Text>
 
                         <TextInput
                             placeholder="Nombre"
@@ -196,7 +140,7 @@ export default function ServiciosScreenCrud({ navigation }: Props) {
                         />
 
                         <View style={styles.modalActions}>
-                            <Button title="Cancelar" onPress={() => setModalVisible(false)} />
+                            <Button title="Cancelar" onPress={() => Alert.alert("Cerrar", "Cierra el modal desde el hook")} />
                             <Button title="Guardar" onPress={saveServicio} />
                         </View>
                     </View>

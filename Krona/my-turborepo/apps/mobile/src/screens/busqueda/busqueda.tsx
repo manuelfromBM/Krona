@@ -1,8 +1,8 @@
 import styles from './busqueda.styles'
-import { View, TextInput, FlatList, Text, Pressable, Image } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
-import React, { useRef, useState, useEffect } from 'react'
+import { View, TextInput, FlatList, Image } from 'react-native'
+import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSearchDebounce } from '@packages/hooks'
 
 const imagenesBuscar = [
     { id: '1', src: { uri: ('https://servitechapp.com/wp-content/uploads/2023/03/MECANICOS-TALLER.jpg') } },
@@ -26,17 +26,7 @@ const imagenesBuscar = [
 ]
 
 export default function ScreenBusqueda() {
-    const [query, setQuery] = useState("");
-    const [debounced, setDebounced] = useState("");
-
-    useEffect(() => {
-        const id = setTimeout(() => setDebounced(query), 500);
-        return () => clearTimeout(id);
-    }, [query]);
-
-    useEffect(() => {
-        console.log("Buscar en API:", debounced);
-    }, [debounced]);
+    const { query, setQuery, debounced } = useSearchDebounce(500);
 
     return (
         <SafeAreaView style={styles.Principal} edges={['top']}>

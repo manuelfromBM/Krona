@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Alert } from "react-native";
+// import {Servicios} from '@packages/types'
 
 export type Servicios = {
     id: string;
@@ -20,7 +21,7 @@ export type ServiciosCrudHook = {
     setForm: React.Dispatch<React.SetStateAction<{ name: string; price: string; image: string }>>;
 };
 
-export function useServiciosCrud(initial: Servicios[] = []): ServiciosCrudHook {
+export default function useServiciosCrud(initial: Servicios[] = []): ServiciosCrudHook {
     const [servicios, setServicios] = useState<Servicios[]>(
         initial.length
             ? initial
