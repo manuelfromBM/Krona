@@ -8,7 +8,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 type ProfileStackParamList = {
 Profile: { userId?: string } | undefined;
 EditarPerfil: { userId?: string } | undefined;
-Dashboard: { useId?: string} | undefined;
+DashboardSelector: { userId?: string } | undefined;
 };
 
 type Props = NativeStackScreenProps<ProfileStackParamList, 'Profile'>;
@@ -49,7 +49,7 @@ export default function ProfileScreen({navigation} : Props) {
                 <Button title='Editar perfil' onPress={() => navigation.navigate('EditarPerfil', { userId: '123' })}></Button>
             </View >
             <View style={{marginTop: 16 }}>
-                <Button title='Ir al Dashboard' onPress={() => navigation.navigate('Dashboard')}></Button>
+                <Button title='Ir al Dashboard' onPress={() => navigation.navigate('DashboardSelector')}></Button>
             </View>
             <View>
                 <Text >Posts</Text>

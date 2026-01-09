@@ -5,4 +5,5 @@ export { default as useLogin } from "./login/UseLogin";
 export * from "./forgotPassword/UseForgotPassword";
 export * from "./agregarTarjeta/UseAgregarTarjeta";
 export * from "./agendar/UseAgendar";
-export * from "./dashboard/useDashboardPremiumData";
+export { useDashboardPremiumData } from "./dashboard/useDashboardPremiumData";
+export { useDashboardPremiumCalendarioData } from "./dashboard/useDashboardPremiumCalendarioData";

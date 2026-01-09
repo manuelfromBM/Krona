@@ -1,120 +1,264 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
-type DayData = {
-  fecha: string; // YYYY-MM-DD
-  totalGanado: number;
-  totalCitas: number;
-  citas: {
-    hora: string;
-    cliente: string;
-    servicio: string;
-    precio: number;
-  }[];
+export type EstadoEvento =
+  | "agendado" 
+  | "confirmado"
+  | "reagendado"
+  | "cancelado";
+
+  type CargaDia = "libre" | "medio" | "lleno";
+
+export interface CalendarioEvento {
+  id: string;
+
+  fecha: Date; // YYYY-MM-DD
+  horaInicio: string;
+  duracion: number;
+
+  cliente: string;
+  telefono?: string;
+
+  servicio: string;
+  tipoServicio?: string;
+
+  estado: EstadoEvento;
+
+  precio: number;
+  abono: number;
+  metodoPago?: "efectivo" | "tarjeta" | "transferencia" | "credito";
+  pagado: boolean;
+
+  calificacion?: number; // la calificacion es de 1 al 5 
+  observaciones?: string; // notas del cliente o servicio
+}
+
+export const useDashboardPremiumCalendarioData = () => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  /* ---------------- EVENTOS MOCK ---------------- */
+  const [eventos, setEventos ]= useState<CalendarioEvento[] >([
+    // SE CAMBIA ESTE CODIGO: const eventos: CalendarioEvento[] = [
+     {
+      id: "1",
+      fecha: new Date(2025, 11, 17),
+      horaInicio: "10:00",
+      cliente: "Juan Pérez",
+      servicio: "Corte de cabello",
+      duracion: 30,
+      precio: 8000,
+      telefono: "9 1234 5678",
+      estado: "confirmado",
+      abono: 10000,
+      pagado: true,
+    },
+    {
+      id: "2",
+      fecha: new Date(2025, 11, 18),
+      horaInicio: "11:00",
+      cliente: "Matias Palma",
+      servicio: "Corte de cabello",
+      duracion: 30,
+      precio: 8000,
+      telefono: "9 1234 5678",
+      estado: "agendado",
+      abono: 10000,
+      pagado: false,
+    },
+    {
+      id: "3",
+      fecha: new Date(2025, 11, 19),
+      horaInicio: "12:00",
+      cliente: "Ariel Vilxes",
+      servicio: "Corte de cabello",
+      duracion: 30,
+      precio: -8000,
+      telefono: "9 1234 5678",
+      estado: "cancelado",
+      abono: -10000,
+      pagado: false,
+    },
+    {
+      id: "4",
+      fecha: new Date(2025, 11, 20),
+      horaInicio: "13:00",
+      cliente: "Manuel Garcia",
+      servicio: "Corte de cabello",
+      duracion: 30,
+      precio: 8000,
+      telefono: "9 1234 5678",
+      estado: "reagendado",
+      abono: 10000,
+      pagado: false,
+    },
+    {
+      id: "5",
+      fecha: new Date(2025, 11, 20),
+      horaInicio: "14:00",
+      cliente: "Cristian Garcia",
+      servicio: "lavado de cabello",
+      duracion: 30,
+      precio: 8000,
+      telefono: "9 1234 5678",
+      estado: "agendado",
+      abono: 10000,
+      pagado: false,
+    }
+  ]);
+
+  /* ---------------- MES ---------------- */
+  const monthMatrix = useMemo(() => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+
+    const startWeekDay = (firstDay.getDay() + 6) % 7;
+    const matrix: (Date | null)[] = [];
+
+    for (let i = 0; i < startWeekDay; i++) matrix.push(null);
+
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+      matrix.push(new Date(year, month, d));
+    }
+
+    return matrix;
+  }, [currentDate]);
+
+  const goToNextMonth = () =>
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+
+  const goToPreviousMonth = () =>
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+
+  /* ---------------- SEMANA ---------------- */
+  const weekDays = useMemo(() => {
+    const date = new Date(selectedDate);
+    const day = date.getDay();
+    const diff = day === 0 ? -6 : 1 - day;
+
+    const monday = addDays(date, diff);
+
+    return Array.from({ length: 7 }).map((_, i) =>
+      addDays(monday, i)
+    );
+  }, [selectedDate]);
+
+  const goToNextWeek = () =>
+    setSelectedDate(addDays(selectedDate, 7));
+
+  const goToPreviousWeek = () =>
+    setSelectedDate(addDays(selectedDate, -7));
+
+  /* ---------------- EVENTOS ---------------- */
+  const isSameDay = (d1: Date, d2: Date) =>
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth()&&
+    d1.getDate() === d2.getDate();
+
+  const getEventosPorDia = (date: Date) => {
+    return eventos.filter((e) => isSameDay(e.fecha, date));
+  };
+
+  /* ---------------- CARGAR DEL DIA ---------------- */
+  const getCargaDelDia = (date: Date) => {
+    const eventosDelDia = getEventosPorDia(date);
+    const total = eventosDelDia.length;
+
+    if (total === 0) return "libre";
+    if (total <= 2) return "medio";
+    return "lleno";
 };
 
-// --- EJEMPLO: Datos mockeados (luego vendrán del backend) ---
-const mockCitas: DayData[] = [
-  {
-    fecha: "2025-02-01",
-    totalGanado: 38000,
-    totalCitas: 4,
-    citas: [
-      { hora: "10:00", cliente: "Ana", servicio: "Corte", precio: 8000 },
-      { hora: "11:30", cliente: "Tomás", servicio: "Barba", precio: 6000 },
-      { hora: "15:00", cliente: "Claudia", servicio: "Color", precio: 20000 },
-      { hora: "17:30", cliente: "Diego", servicio: "Peinado", precio: 4000 },
-    ],
-  },
-  {
-    fecha: "2025-02-03",
-    totalGanado: 18000,
-    totalCitas: 2,
-    citas: [
-      { hora: "14:00", cliente: "Fernando", servicio: "Corte", precio: 8000 },
-      { hora: "18:00", cliente: "Lucía", servicio: "Uñas", precio: 10000 },
-    ],
-  },
-];
+   const getIngresosDelDia = (date: Date) => {
+    const eventosDelDia = getEventosPorDia(date);
+    return eventosDelDia.reduce((total, evento) => total + evento.precio, 0);
+   };
 
-// --- HOOK PRINCIPAL ---
-export function useDashboardPremiumCalendarioData(selectedDate: string) {
-  // Día seleccionado (o día actual si no hay selección)
-  const fechaSeleccionada = selectedDate || new Date().toISOString().split("T")[0];
+  const getPendientesDePago = (date: Date) => {
+    const eventosDelDia = getEventosPorDia(date);
+    return getEventosPorDia(date).filter(e => !e.pagado).length;
+  };
 
-  // =============== FILTRAR DÍA =====================
-  const diaActual = useMemo(() => {
-    return mockCitas.find((c) => c.fecha === fechaSeleccionada) || null;
-  }, [fechaSeleccionada]);
+  const isDiaAbierto = (date: Date) => {
+    const day = date.getDay();
+    return day !== 0; // cerrado el domingos
+  };
 
-  // =============== ARMAR SEMANA =====================
-  const semana = useMemo(() => {
-    const fecha = new Date(fechaSeleccionada);
-    const diaSemana = fecha.getDay(); // 0 = domingo, 1 = lunes...
-    const lunes = new Date(fecha);
-    lunes.setDate(fecha.getDate() - (diaSemana === 0 ? 6 : diaSemana - 1));
 
-    let diasSemana: {
-      fecha: string;
-      totalGanado: number;
-      totalCitas: number;
-    }[] = [];
+  /* ---------------- BOTON DE ACTUALIZAR ---------------- */
+  const updateEvento = (eventoActualizado: CalendarioEvento) => {
+    setEventos((prev) => 
+      prev.map((e) =>
+        e.id === eventoActualizado.id ? eventoActualizado : e 
+      )
+    );
+  };
 
-    for (let i = 0; i < 7; i++) {
-      const d = new Date(lunes);
-      d.setDate(lunes.getDate() + i);
 
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, "0");
-      const day = String(d.getDate()).padStart(2, "0");
-      const fechaStr = `${y}-${m}-${day}`;
+  const getEstadoDelDia = (date: Date) => {
+    const evts = getEventosPorDia(date);
+    if (evts.length === 0) return null;
 
-      const data = mockCitas.find((c) => c.fecha === fechaStr);
+    if (evts.some((e) => e.estado === "cancelado")) return "cancelado";
+    if (evts.some((e) => e.estado === "reagendado")) return "reagendado";
+    if (evts.some((e) => e.estado === "confirmado")) return "confirmado";
+    return "agendado";
+  };
 
-      diasSemana.push({
-        fecha: fechaStr,
-        totalGanado: data?.totalGanado || 0,
-        totalCitas: data?.totalCitas || 0,
-      });
-    }
+  const [eventoEditado, setEventoEditado] = useState<CalendarioEvento | null>(null);
 
-    return diasSemana;
-  }, [fechaSeleccionada]);
+  /* ---------------- VARIABLES DERIVADAS NUEVO CODIGO ---------------- */
+  const puedeEditarPrecio = useMemo(() => {
+    return !eventoEditado?.pagado;
+  }, [eventoEditado]);
 
-  // =============== ARMAR MES =====================
-  const mes = useMemo(() => {
-    const fecha = new Date(fechaSeleccionada);
-    const year = fecha.getFullYear();
-    const month = fecha.getMonth();
+  const puedeEditarMetodoPago = useMemo(() => {
+    return !eventoEditado?.pagado || eventoEditado?.estado === "agendado";
+  }, [eventoEditado]);
 
-    const diasMes = new Date(year, month + 1, 0).getDate();
 
-    let dias: {
-      fecha: string;
-      totalGanado: number;
-      totalCitas: number;
-    }[] = [];
-
-    for (let i = 1; i <= diasMes; i++) {
-      const y = year;
-      const m = String(month + 1).padStart(2, "0");
-      const day = String(i).padStart(2, "0");
-      const fechaStr = `${y}-${m}-${day}`;
-
-      const data = mockCitas.find((c) => c.fecha === fechaStr);
-
-      dias.push({
-        fecha: fechaStr,
-        totalGanado: data?.totalGanado || 0,
-        totalCitas: data?.totalCitas || 0,
-      });
-    }
-
-    return dias;
-  }, [fechaSeleccionada]);
+  const modoReagendar = useMemo(() => {
+    return eventoEditado?.estado === "reagendado";
+  }, [eventoEditado]);
 
   return {
-    diaActual,
-    semana,
-    mes,
+  currentDate,
+  selectedDate,
+  monthMatrix,
+  weekDays,
+  updateEvento,
+  goToNextMonth,
+  goToPreviousMonth,
+  goToNextWeek,
+  goToPreviousWeek,
+  getEventosPorDia,
+  getEstadoDelDia,
+  getCargaDelDia,
+  getIngresosDelDia,
+  getPendientesDePago,
+  isDiaAbierto,
+  setSelectedDate,
+
+  eventoEditado,
+  setEventoEditado,
+  puedeEditarPrecio,
+  puedeEditarMetodoPago,
+  modoReagendar,
+
+    // DESPUES SE PUEDE USAR A FUTURO
+    //getIngresosRealesDelDia
+    //getIngresosProyectadosDelDia
   };
-}
+};
+
+/* ---------------- HELPERS ---------------- */
+const formatDate = (date: Date) =>
+  date.toISOString().split("T")[0];
+
+const addDays = (date: Date, days: number) => {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+};

@@ -43,6 +43,10 @@ export const styles = StyleSheet.create({
     color: "#333",
   },
 
+   sectionBlock: {
+    marginBottom: 30,
+  },
+
   tabTextActive: {
     color: "#fff",
   },
@@ -63,7 +67,6 @@ export const styles = StyleSheet.create({
   },
 
   // Secciones dinámicas
-
 
   metricsContainer: {
     flexDirection: "row",

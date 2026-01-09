@@ -40,6 +40,16 @@ export const styles = StyleSheet.create({
     borderColor: "#dbdbdb",
   },
 
+  iconContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#303632ff",
+    alignSelf: "auto",
+  },
+
   // PREMIUM
   cardPremium: {
     backgroundColor: "#1f6feb",

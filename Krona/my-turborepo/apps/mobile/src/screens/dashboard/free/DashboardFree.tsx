@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { styles } from "./DashboardFree.styles";
-import { useGanancias } from "../../../../../../packages/hooks/src/dashboard/useDashboardPremiumData";
+//import { useGanancias } from "@packages/hooks";
 
 export default function DashboardFree() {
-  const { gananciasDiarias, totalMes, promedioDia } = useGanancias();
+  //const { gananciasDiarias, totalMes, promedioDia } = useGanancias();
 
   // valores específicos
-  const gananciasHoy = gananciasDiarias.find((d) => d.fecha === "Hoy")?.monto ?? 0;
-  const gananciasAyer = gananciasDiarias.find((d) => d.fecha === "Ayer")?.monto ?? 0;
+ // const gananciasHoy = gananciasDiarias.find((d) => d.fecha === "Hoy")?.monto ?? 0;
+  //const gananciasAyer = gananciasDiarias.find((d) => d.fecha === "Ayer")?.monto ?? 0;
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -20,7 +20,7 @@ export default function DashboardFree() {
         {/* GANANCIAS HOY */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Ganancias de hoy</Text>
-          <Text style={styles.cardValue}>${gananciasHoy.toLocaleString()}</Text>
+          {/*<Text style={styles.cardValue}>${gananciasHoy.toLocaleString()}</Text>*/}
         </View>
 
         {/* CITAS DEL DÍA (placeholder por ahora) */}
@@ -55,8 +55,8 @@ export default function DashboardFree() {
           <Text style={styles.upgradeText}>Accede al Plan Premium para ver:</Text>
 
           <Text style={styles.upgradeBullet}>• Gráficos profesionales</Text>
-          <Text style={styles.upgradeBullet}>• Total del mes: ${totalMes.toLocaleString()}</Text>
-          <Text style={styles.upgradeBullet}>• Promedio por día: ${promedioDia.toLocaleString()}</Text>
+          {/*<Text style={styles.upgradeBullet}>• Total del mes: ${totalMes.toLocaleString()}</Text>*/}
+          {/*<Text style={styles.upgradeBullet}>• Promedio por día: ${promedioDia.toLocaleString()}</Text>*/}
           <Text style={styles.upgradeBullet}>• Ganancias y pérdidas del mes</Text>
           <Text style={styles.upgradeBullet}>• Reportes descargables</Text>
 
