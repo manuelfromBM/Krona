@@ -28,7 +28,7 @@ const RootNavigator: React.FC = () => {
                 )}
             </RootStack.Navigator>
         </NavigationContainer>
-  );
+    );
 };
 
 export default RootNavigator;
