@@ -13,6 +13,8 @@ import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "./EditProfile.styles"
 
+//console.log("ImagePicker exports:", ImagePicker); // <-- AQUÍ
+
 const EditProfileScreen: React.FC = () => { 
     const [name, setName] = useState("Ariel Vilches");
     const [userName, setUserName] = useState("ariel_vilxes")
@@ -29,7 +31,7 @@ const EditProfileScreen: React.FC = () => {
         }
         
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            mediaTypes: [ImagePicker.MediaTypeOptions.Images],
             allowsEditing: true,
             aspect: [1,1],
             quality: 0.8,
@@ -61,14 +63,14 @@ const EditProfileScreen: React.FC = () => {
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : undefined}>
             <ScrollView contentContainerStyle={styles.container}>
-                {/* <LinearGradient 
+                <LinearGradient 
                     colors={["#f58529","#dd2a7b","#8134af"]}
                     start={[0, 0]}
                     end={[1, 1]}
                     style={styles.header}
                     >
                     <Text style={styles.headerTitle}>Editar perfil</Text>
-                    <TouchableOpacity style={styles.logoutBtn} onPress={() => Alert.alert("","")}>
+                    <TouchableOpacity style={styles.logoutBtn} onPress={() => Alert.alert("Cerrar sesion","Aqui iria la logica de logout")}>
                         <Feather name="log-out" size={20} color="#fff"/>
                     </TouchableOpacity>
                 </LinearGradient>
@@ -84,21 +86,52 @@ const EditProfileScreen: React.FC = () => {
                         )}
                     </TouchableOpacity>
                 </View>
-                <View>
-                    <Text></Text>
-                    <TextInput/>
-                    <Text></Text>
-                    <TextInput/>
-                    <Text></Text>
-                    <TextInput/>
-                    <TouchableOpacity>
-                        <Text></Text>
+                <View style={styles.form}>
+                    <Text style={styles.label}>Nombre</Text>
+                    <TextInput 
+                        style={styles.input}
+                        value={name}
+                        onChangeText={setName}
+                        placeholder="Tu nombre"
+                        placeholderTextColor="#9a9a9a"
+                    />
+                    <Text style={styles.label}>Usuario</Text>
+                    <TextInput 
+                        style={styles.input}
+                        value={userName}
+                        onChangeText={setUserName}
+                        placeholder="Tu usuario"
+                        placeholderTextColor="#9a9a9a"
+                        autoCapitalize="none"
+                    />
+                    <Text style={styles.label}>Biografia</Text>
+                    <TextInput 
+                        style={styles.input}
+                        value={bio}
+                        onChangeText={setBio}
+                        placeholder="Cuenta algo de ti"
+                        multiline
+                        numberOfLines={3}
+                        placeholderTextColor="#9a9a9a"
+                    />
+                    <Text style={styles.label}>Correo</Text>
+                    <TextInput 
+                        style={styles.input}
+                        value={email}
+                        onChangeText={setEmail}
+                        keyboardType="email-address"
+                        placeholder="Tu correo"
+                        placeholderTextColor="#9a9a9a"
+                        autoCapitalize="none"
+                    />
+                    <TouchableOpacity style={[styles.saveBtn, loading ? { opacity:0.7} : null]}>
+                        <Text style={styles.saveText}>{loading ? 'Guardando...' : 'Guardar'}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text></Text>*
+                    <TouchableOpacity style={styles.unlinkBtn} onPress={() => Alert.alert("Desvincular cuenta", "Desvincular redes sociales (ejemplo)")}>
+                        <Text style={styles.unlinkText}>Desvincular cuenta</Text>
                     </TouchableOpacity>
                 </View>
-                <View/> */}
+                <View style={{ height: 60 }}/>
             </ScrollView>
         </KeyboardAvoidingView>
     )

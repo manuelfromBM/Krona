@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 const styles = StyleSheet.create({
     Contenedor_Principal_Publicaciones_ScrollView: {
         flex: 1, 
-        backgroundColor: '#0c0c0cff',
+        backgroundColor: '#ffffffff',
     },
     Contenedor_Principal_Publicaciones: {
         alignItems: 'center',
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     contenedor_hijo:{
         width: 430,
         height: 550,
-        backgroundColor: '#0c0c0cff',
+        backgroundColor: '#ffffffff',
         justifyContent: 'center', 
         alignItems: 'center',
         borderRadius: 5,

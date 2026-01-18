@@ -31,6 +31,8 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
+  buttonDisabled: { backgroundColor: "#7aa8d9" },
+  error: { color: "red", marginBottom: 8 },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",

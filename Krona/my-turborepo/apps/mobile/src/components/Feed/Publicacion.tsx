@@ -92,7 +92,7 @@ export default function Publicaciones() {
           }}
         >
           <Animated.View style={{ transform: [{ scale: botonComentario }] }}>
-            <FontAwesome name="comment" size={30} color="white" />
+            <FontAwesome name="comment" size={30} color="black" />
           </Animated.View>
         </TouchableOpacity>
 
