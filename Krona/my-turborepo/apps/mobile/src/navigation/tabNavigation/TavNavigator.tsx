@@ -17,6 +17,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const TabNavigator: React.FC = () => {
     return (
         <Tab.Navigator
+            id={undefined}
             screenOptions={{
                 headerShown: false, // el header lo maneja cada stack si amerita compipi
             }}

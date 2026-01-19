@@ -20,11 +20,7 @@ const Stack = createNativeStackNavigator<FeedStackParamList>();
 
 const FeedStackNavigator: React.FC = () => {
     return (
-        <Stack.Navigator>
-<<<<<<< HEAD
-            <Stack.Screen name="FeedList" component={Publicaciones} options={{ title: "Feed" }} />
-            {/* <Stack.Screen name="ScreenNotificacinoes" component={ScreenNotificacinoes} options={{ title: "ScreenNotificacinoes" }} /> */}
-=======
+        <Stack.Navigator id={undefined}>
             <Stack.Screen name="FeedList" component={Publicaciones} options={({ navigation }) => ({
                 title: "Feed",
                 headerRight: () => (
@@ -34,7 +30,6 @@ const FeedStackNavigator: React.FC = () => {
                 )
             })} />
             <Stack.Screen name="ScreenNotificacinoes" component={ScreenNotificacinoes} options={{ title: "ScreenNotificacinoes" }} />
->>>>>>> ca1f2b5066781ea51c3284b7ff24ae2f3f496a80
             {/* <Stack.Screen name="ScreenAgenda" component={ScreenAgenda} options={{ title: "ScreenAgenda" }} /> */}
             {/* <Stack.Screen name="FeedDetail" component={FeedDetail} options={{ title: "Details" }}/> */}
         </Stack.Navigator>

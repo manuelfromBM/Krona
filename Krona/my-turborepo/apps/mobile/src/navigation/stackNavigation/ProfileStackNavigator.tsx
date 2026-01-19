@@ -8,7 +8,7 @@ import ScreenAgenda from "src/screens/agenda/Agenda";
 //import Settings from "src/components/Profile/Settings";
 //import type { ProfileStackParamList } from "src/navigation/types";
 
-type ProfileStackParamList = {
+export type ProfileStackParamList = {
   Profile: { userId?: string } | undefined;
   EditarPerfil: { userId?: string } | undefined;
   AdministradorScreen: undefined;
@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator<ProfileStackParamList>();
 
 export default function ProfileStackNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator id={undefined}>
       <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: "Perfil" }} />
       <Stack.Screen name="Agenda" component={ScreenAgenda} options={{ title: "Agenda" }}></Stack.Screen>
       <Stack.Screen name="EditarPerfil" component={EditProfileScreen} options={{ title: "EditarPerfil" }} />
