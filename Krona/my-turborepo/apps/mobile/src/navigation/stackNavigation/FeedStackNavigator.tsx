@@ -1,5 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { TouchableOpacity, Text } from 'react-native'
+import { FontAwesome } from "@expo/vector-icons";
 import Publicaciones from "src/components/Feed/Publicacion";
 import ScreenAgenda from "src/screens/agenda/Agenda";
 import ScreenNotificacinoes from "src/screens/notificaciones/notificaciones";
