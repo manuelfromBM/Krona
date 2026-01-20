@@ -1,15 +1,13 @@
-import { NavigationContainer } from "@react-navigation/native"
-import { createStackNavigator } from "@react-navigation/stack";
+import { AuthProvider } from "@packages/hooks";
 import React from 'react';
-import TabNavigator from './src/navigation/tabNavigation/TavNavigator';
-
-const Stack = createStackNavigator();
+import RootNavigator from "src/navigation/rootNavigation/RootNavigator";
 
 const App: React.FC = () => {
   return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
-  );
-}
+    <AuthProvider>
+      <RootNavigator/>
+    </AuthProvider>
+  )
+};
+
 export default App;

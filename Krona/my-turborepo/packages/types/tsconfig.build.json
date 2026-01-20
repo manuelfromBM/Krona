@@ -1,18 +1,12 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "lib",          // Carpeta donde se generará JS
-    "rootDir": "src",//
-    "module": "ESNext",//
-    "target": "ES6",//
-    "declaration": true,      // Para generar .d.ts
+    "outDir": "lib",
+    "rootDir": "src",
+    "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "jsx": "react",//
-    "moduleResolution": "node",
-    "esModuleInterop": true,//
-    "skipLibCheck": true,
-    "strict": true//
+    "sourceMap": true
   },
-  "include": ["src/**/*.ts","src/**/*.tsx"],
-  "exclude": ["node_modules","lib"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "lib"]
 }

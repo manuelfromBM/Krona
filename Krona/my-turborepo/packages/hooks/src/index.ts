@@ -9,3 +9,4 @@ export * from "./agregarTarjeta/UseAgregarTarjeta";
 export * from "./agendar/UseAgendar";
 export { useDashboardPremiumData } from "./dashboard/useDashboardPremiumData";
 export { useDashboardPremiumCalendarioData } from "./dashboard/useDashboardPremiumCalendarioData";
+export * from './context/AuthContext'

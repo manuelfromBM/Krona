@@ -24,7 +24,7 @@ export default function FeedPrincipal() {
                 />
             </View>
             <View style={styles.perfil_publicacion}>
-                <Text style={styles.titulo_perfil}>Eren {index ? `#${index}` : ''}</Text>
+                <Text style={styles.titulo_perfil}>Ere {index ? `#${index}` : ''}</Text>
             </View>
             <View style={styles.imagen_publicacion}>
                 <Image
@@ -36,12 +36,12 @@ export default function FeedPrincipal() {
             <View style={styles.view_iconos}>
                 <TouchableOpacity onPress={() => { animacionIcono(botonComentario); setVisible(true) }}>
                     <Animated.View style={{ transform: [{ scale: botonComentario }] }}>
-                        <FontAwesome name="comment" size={30} color="white" />
+                        <FontAwesome name="comment" size={30} color="black" />
                     </Animated.View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => animacionIcono(botonCompartir)}>
                     <Animated.View style={{ transform: [{ scale: botonCompartir }] }}>
-                        <FontAwesome name="share" size={30} color="white" />
+                        <FontAwesome name="share" size={30} color="black" />
                     </Animated.View>
                 </TouchableOpacity>
             </View>
@@ -86,7 +86,7 @@ export default function FeedPrincipal() {
                             onPress={() => setVisible(false)}
                             style={styles.closeBtn}
                         >
-                            <Text style={{ color: "#fff" }}>Cerrar</Text>
+                            <Text style={{ color: "#000000ff" }}>Cerrar</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

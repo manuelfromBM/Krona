@@ -4,7 +4,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 const styles = StyleSheet.create({
     Contenedor_Principal_Publicaciones_ScrollView: {
         flex: 1, 
-        backgroundColor: '#0c0c0cff',
+        backgroundColor: '#ffffffff',
     },
     Contenedor_Principal_Publicaciones: {
         alignItems: 'center',
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     contenedor_hijo:{
         width: 430,
         height: 550,
-        backgroundColor: '#0c0c0cff',
+        backgroundColor: '#ffffffff',
         justifyContent: 'center', 
         alignItems: 'center',
         borderRadius: 5,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     },
     titulo_perfil:{
         fontSize: 18, 
-        color: 'white',
+        color: 'black',
         fontWeight: 'bold',
     },
     view_iconos:{
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',    
         gap: 20, 
-        backgroundColor: '#0c0c0cff', 
+        backgroundColor: '#ffffffff', 
     },
     contenedorDescripcion: {
         position: 'absolute',
@@ -67,26 +67,26 @@ const styles = StyleSheet.create({
         left:20,
     },
     descripcion: {
-        color: 'white'
+        color: 'black'
     },
     overlay: {
-    flex: 1,
-    justifyContent: "flex-end",
-    backgroundColor: "rgba(0,0,0,0.5)",
+        flex: 1,
+        justifyContent: "flex-end",
+        backgroundColor: "rgba(0,0,0,0.5)",
     },
     modalContent: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    minHeight: "30%",
+        backgroundColor: "#fff",
+        padding: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        minHeight: "30%",
     },
     closeBtn: {
-    marginTop: 20,
-    backgroundColor: "black",
-    padding: 10,
-    borderRadius: 10,
-    alignSelf: "flex-end",
+        marginTop: 20,
+        backgroundColor: "black",
+        padding: 10,
+        borderRadius: 10,
+        alignSelf: "flex-end",
     },
 });
 
