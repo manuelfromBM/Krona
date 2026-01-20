@@ -4,17 +4,17 @@ import { Login } from "src/screens/login/Login";
 import { Register } from "src/screens/register/Register";
 
 export type AuthStackParamList = {
-    Login : undefined;
-    Register : undefined;
+    Login: undefined;
+    Register: undefined;
 }
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 const AuthStack: React.FC = () => {
-    return(
-        <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login} options={{ title: "Login"}}/>
-            <Stack.Screen name="Register" component={Register} options={{ title: "Registrarse"}}/>
+    return (
+        <Stack.Navigator id="">
+            <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
+            <Stack.Screen name="Register" component={Register} options={{ title: "Registrarse" }} />
         </Stack.Navigator>
     );
 };
