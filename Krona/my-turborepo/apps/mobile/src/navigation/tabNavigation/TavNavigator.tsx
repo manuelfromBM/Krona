@@ -28,8 +28,6 @@ const TabNavigator: React.FC = () => {
             <Tab.Screen name="FeedStack" component={FeedStackNavigator} options={{ title: "Feed" }} />
             <Tab.Screen name="ProfileStack" component={ProfileStackNavigator} options={{ title: "Perfil" }} />
             <Tab.Screen name="ExplorerStack" component={MapScreen} options={{ title: "Explorer" }} />
-            <Tab.Screen name="FeedStack" component={FeedStackNavigator} options={{ title: "Feed" }} />
-            <Tab.Screen name="ProfileStack" component={ProfileStackNavigator} options={{ title: "Perfil" }} />
         </Tab.Navigator>
     );
 };
