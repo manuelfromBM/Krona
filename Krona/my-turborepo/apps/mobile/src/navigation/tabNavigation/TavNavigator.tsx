@@ -15,7 +15,7 @@ const TabNavigator: React.FC = () => {
     return (
         <Tab.Navigator
             screenOptions={{
-                headerShown: false, // el header lo maneja cada stack si amerita compipi
+                headerShown: false, // el header lo maneja cada stack si amerita compipi 
             }}
         >
             <Tab.Screen name="FeedStack" component={FeedStackNavigator} options={{ title: "Feed" }}/>
