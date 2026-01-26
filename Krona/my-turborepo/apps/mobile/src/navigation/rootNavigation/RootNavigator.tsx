@@ -20,7 +20,7 @@ const RootNavigator: React.FC = () => {
 
     return (
         <NavigationContainer>
-                <RootStack.Navigator screenOptions={{ headerShown: false }}>
+                <RootStack.Navigator id="RooStack" screenOptions={{ headerShown: false }}>
                 { userToken == null ? (
                     <RootStack.Screen name="Auth" component={AuthStack}></RootStack.Screen>
                     ) : (

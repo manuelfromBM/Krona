@@ -7,12 +7,12 @@ type ProfileStackParamList = {
   Profile: { userId?: string } | undefined;
   EditarPerfil: { userId?: string } | undefined;
 };
-
+//Hola compi
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
 
 export default function ProfileStackNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator id="">
       <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: "Perfil" }} />
       <Stack.Screen name="EditarPerfil" component={EditProfileScreen} options={{ title: "EditarPerfil" }} />
     </Stack.Navigator>

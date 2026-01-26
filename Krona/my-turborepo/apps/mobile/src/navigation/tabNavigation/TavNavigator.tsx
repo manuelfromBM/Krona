@@ -5,12 +5,14 @@ import FeedStackNavigator from "../stackNavigation/FeedStackNavigator";
 import ProfileStackNavigator from "../stackNavigation/ProfileStackNavigator";
 import { Login } from "src/screens/login/Login";
 import { MapScreen } from "src/screens/map/Map";
+import Agendar from "src/screens/agenda/Agenda";
 
 export type TabParamList = {
     FeedStack: undefined;
     ProfileStack: undefined;
     LoginStack:undefined;
     ExplorerStack: undefined;
+    Agenda: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -26,6 +28,7 @@ const TabNavigator: React.FC = () => {
             <Tab.Screen name="FeedStack" component={FeedStackNavigator} options={{ title: "Feed" }}/>
             <Tab.Screen name="ProfileStack" component={ProfileStackNavigator} options={{ title: "Perfil" }}/>
             <Tab.Screen name="ExplorerStack" component={MapScreen} options={{ title: "Explorer" }}/>
+            <Tab.Screen name="Agenda" component={Agendar} options={{ title: "Agenda" }}/>
         </Tab.Navigator>                                                                                                
     );
 };

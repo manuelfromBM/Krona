@@ -19,7 +19,7 @@ const Stack = createNativeStackNavigator<FeedStackParamList>();
 
 const FeedStackNavigator: React.FC = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator id="">
             <Stack.Screen 
                 name="FeedList" 
                 component={Publicaciones} 
