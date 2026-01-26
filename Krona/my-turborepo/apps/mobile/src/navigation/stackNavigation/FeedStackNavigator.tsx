@@ -22,14 +22,31 @@ const Stack = createNativeStackNavigator<FeedStackParamList>();
 const FeedStackNavigator: React.FC = () => {
     return (
         <Stack.Navigator id={undefined}>
-            <Stack.Screen name="FeedList" component={Publicaciones} options={({ navigation }) => ({
-                title: "Feed",
-                headerRight: () => (
-                    <TouchableOpacity onPress={() => navigation.navigate("ScreenNotificacinoes")}>
-                        <FontAwesome name="inbox" size={24} style={{ marginRight: 15 }}></FontAwesome>
-                    </TouchableOpacity>
-                )
-            })} />
+            <Stack.Screen
+                name="FeedList"
+                component={Publicaciones}
+                options={({ navigation }) => ({
+                    headerTitle: () => (
+                        <Image
+                            source={require("assets/KronaLogo.png")}
+                            style={{ width: 120, height: 40 }}
+                            resizeMode="contain"
+                        />
+                    ),
+                    headerStyle: {
+                        backgroundColor: "#ffffffff",
+                    },
+                    headerRight: () => (
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("ScreenNotificacinoes")}
+                            style={{ marginRight: 15 }}
+                        >
+                            <FontAwesome name="inbox" size={24} />
+                        </TouchableOpacity>
+                    ),
+                })}
+            />
+
             <Stack.Screen name="ScreenNotificacinoes" component={ScreenNotificacinoes} options={{ title: "ScreenNotificacinoes" }} />
             {/* <Stack.Screen name="ScreenAgenda" component={ScreenAgenda} options={{ title: "ScreenAgenda" }} /> */}
             {/* <Stack.Screen name="FeedDetail" component={FeedDetail} options={{ title: "Details" }}/> */}
