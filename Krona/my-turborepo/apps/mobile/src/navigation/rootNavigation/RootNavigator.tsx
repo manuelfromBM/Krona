@@ -12,8 +12,8 @@ const RootNavigator: React.FC = () => {
     const { userToken, isLoading } = useContext(AuthContext);
     if (isLoading) {
         return (
-            <View style={{ flex:1, justifyContent: "center", alignItems: "center" }}>
-                <ActivityIndicator size="large"/>
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <ActivityIndicator size="large" />
             </View>
         )
     }
@@ -23,7 +23,7 @@ const RootNavigator: React.FC = () => {
                 <RootStack.Navigator id="RooStack" screenOptions={{ headerShown: false }}>
                 { userToken == null ? (
                     <RootStack.Screen name="Auth" component={AuthStack}></RootStack.Screen>
-                    ) : (
+                ) : (
                     <RootStack.Screen name="Krona" component={TabNavigator}></RootStack.Screen>
                 )}
             </RootStack.Navigator>

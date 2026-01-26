@@ -4,8 +4,8 @@ import { Login } from "src/screens/login/Login";
 import { Register } from "src/screens/register/Register";
 
 export type AuthStackParamList = {
-    Login : undefined;
-    Register : undefined;
+    Login: undefined;
+    Register: undefined;
 }
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();

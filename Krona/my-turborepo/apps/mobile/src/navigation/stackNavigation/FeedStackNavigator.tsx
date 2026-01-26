@@ -25,12 +25,12 @@ const FeedStackNavigator: React.FC = () => {
                 component={Publicaciones} 
                 options={{ 
                     headerTitle: () => (
-                        <Image 
-                            source={require("assets/KronaLogo.png")} style={{ width: 120, height: 40 }} 
-                        />), 
-                            headerStyle: {backgroundColor: "#ffffffff"},
-                        }} 
-                    />
+                        <Image
+                            source={require("assets/KronaLogo.png")} style={{ width: 120, height: 40 }}
+                        />),
+                    headerStyle: { backgroundColor: "#ffffffff" },
+                }}
+            />
             {/* <Stack.Screen name="ScreenNotificacinoes" component={ScreenNotificacinoes} options={{ title: "ScreenNotificacinoes" }} /> */}
             {/* <Stack.Screen name="ScreenAgenda" component={ScreenAgenda} options={{ title: "ScreenAgenda" }} /> */}
             {/* <Stack.Screen name="FeedDetail" component={FeedDetail} options={{ title: "Details" }}/> */}
