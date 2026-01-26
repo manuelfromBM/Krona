@@ -41,7 +41,7 @@ export const useDashboardPremiumCalendarioData = () => {
     // SE CAMBIA ESTE CODIGO: const eventos: CalendarioEvento[] = [
      {
       id: "1",
-      fecha: new Date(2025, 11, 17),
+      fecha: new Date(2026, 0, 11),
       horaInicio: "10:00",
       cliente: "Juan Pérez",
       servicio: "Corte de cabello",
@@ -54,7 +54,7 @@ export const useDashboardPremiumCalendarioData = () => {
     },
     {
       id: "2",
-      fecha: new Date(2025, 11, 18),
+      fecha: new Date(2026, 0, 18),
       horaInicio: "11:00",
       cliente: "Matias Palma",
       servicio: "Corte de cabello",
@@ -67,7 +67,7 @@ export const useDashboardPremiumCalendarioData = () => {
     },
     {
       id: "3",
-      fecha: new Date(2025, 11, 19),
+      fecha: new Date(2026, 0, 19),
       horaInicio: "12:00",
       cliente: "Ariel Vilxes",
       servicio: "Corte de cabello",
@@ -80,7 +80,7 @@ export const useDashboardPremiumCalendarioData = () => {
     },
     {
       id: "4",
-      fecha: new Date(2025, 11, 20),
+      fecha: new Date(2026, 0, 20),
       horaInicio: "13:00",
       cliente: "Manuel Garcia",
       servicio: "Corte de cabello",
@@ -93,7 +93,7 @@ export const useDashboardPremiumCalendarioData = () => {
     },
     {
       id: "5",
-      fecha: new Date(2025, 11, 20),
+      fecha: new Date(2025, 0, 20),
       horaInicio: "14:00",
       cliente: "Cristian Garcia",
       servicio: "lavado de cabello",
@@ -134,7 +134,7 @@ export const useDashboardPremiumCalendarioData = () => {
 
   /* ---------------- SEMANA ---------------- */
   const weekDays = useMemo(() => {
-    const date = new Date(selectedDate);
+    const date = selectedDate; // ✅ ya es Date
     const day = date.getDay();
     const diff = day === 0 ? -6 : 1 - day;
 
@@ -144,6 +144,7 @@ export const useDashboardPremiumCalendarioData = () => {
       addDays(monday, i)
     );
   }, [selectedDate]);
+
 
   const goToNextWeek = () =>
     setSelectedDate(addDays(selectedDate, 7));
