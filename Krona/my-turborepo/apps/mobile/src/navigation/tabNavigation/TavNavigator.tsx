@@ -6,12 +6,15 @@ import ProfileStackNavigator from "../stackNavigation/ProfileStackNavigator";
 import { Login } from "src/screens/login/Login";
 import { MapScreen } from "src/screens/map/Map";
 import ScreenBusqueda from "src/screens/busqueda/busqueda";
+import ScreenNotificacinoes from "src/screens/notificaciones/notificaciones";
 
 export type TabParamList = {
     FeedStack: undefined;
     ProfileStack: undefined;
     Busqueda: undefined;
     ExplorerStack: undefined;
+    LoginStack: undefined;
+    Notificaciones: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();

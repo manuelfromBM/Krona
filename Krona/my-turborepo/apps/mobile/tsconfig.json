@@ -1,10 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "jsx": "react",
+    "strict": true,
     "baseUrl": ".",
     "paths": {
       "@packages/hooks": ["../../packages/hooks/src"]
     }
   },
-  "include": ["src", "App.tsx", "index.ts"]
+  "include": ["src/**/*","src","App.tsx","index.ts"]
 }
