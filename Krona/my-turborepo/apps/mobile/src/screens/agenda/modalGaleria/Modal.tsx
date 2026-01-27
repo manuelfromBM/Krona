@@ -1,5 +1,4 @@
 import React from "react"
-import { useModal } from "@packages/hooks";
 import { styles } from "./Modal.styles";
 import { imagenesCortesClasicos, imagenesCortesDegradados } from '../../../utils/imagenesTest/imagenes'
 import { RenderItemGaleria } from "./../../../utils/imagenesTest/imagenes";

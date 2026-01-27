@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 const AuthStack: React.FC = () => {
     return (
-        <Stack.Navigator id="">
+        <Stack.Navigator id={undefined}>
             <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
             <Stack.Screen name="Register" component={Register} options={{ title: "Registrarse" }} />
         </Stack.Navigator>

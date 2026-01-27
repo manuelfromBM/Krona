@@ -15,7 +15,7 @@ type ProfileStackParamList = {
 
 type Props = NativeStackScreenProps<ProfileStackParamList, 'Profile'>;
 
-export default function ProfileScreen({navigation} : Props) {
+export default function ProfileScreen({ navigation }: Props) {
     const images = [
         'https://media.revistagq.com/photos/5d93360c2c50100008b21511/master/w_1600%2Cc_limit/peaky%2520blinders.jpg',
         'https://www.nintenderos.com/wp-content/uploads/2025/04/Metroid-Prime-4-Beyond.jpg',
@@ -27,7 +27,7 @@ export default function ProfileScreen({navigation} : Props) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
-                <Image source={{uri:"https://assets.weforum.org/sf_account/image/Q_pgt00DjmcLa-vt8s5d3ohkZZtOyY_hPJUMekleFq0.jpg"}} style={styles.avatar}></Image>
+                <Image source={{ uri: "https://assets.weforum.org/sf_account/image/Q_pgt00DjmcLa-vt8s5d3ohkZZtOyY_hPJUMekleFq0.jpg" }} style={styles.avatar}></Image>
                 <View style={{}}>
                     <Text style={styles.name}>Matias Palma</Text>
                     <Text style={styles.handle}>@ariel vilxes</Text>
@@ -47,15 +47,21 @@ export default function ProfileScreen({navigation} : Props) {
                     <Text>54</Text>
                 </View>
             </View>
-            <View style={{ marginTop: 16 }}>
+            {/* <View style={{ marginTop: 16 }}>
                 <Button title='Editar perfil' onPress={() => navigation.navigate('EditarPerfil', { userId: '123' })}></Button>
             </View >
             <View style={{marginTop: 16 }}>
                 <Button title='Ir al Dashboard' onPress={() => navigation.navigate('DashboardSelector')}></Button>
             </View>
+            <View style={{ marginTop: 8 }}>
+                <Button title='Panel Admin' onPress={() => navigation.navigate('AdministradorScreen')}></Button>
+            </View>
+            <View style={{ marginTop: 8 }}>
+                <Button title='Agendar' onPress={() => navigation.navigate('Agenda')}></Button>
+            </View> */}
             <View>
                 <Text >Posts</Text>
-                <Gallerry images={images} numColumns={3}/>
+                <Gallerry images={images} numColumns={3} />
             </View>
         </SafeAreaView>
     );
