@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Pressable, Modal, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Pressable, Modal, Alert, TextInput } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { calendarStyles as styles } from "./CalendarView.styles";
 import { useDashboardPremiumCalendarioData } from "@packages/hooks";
 import { CalendarioEvento } from "@packages/hooks/src/dashboard/useDashboardPremiumCalendarioData";
@@ -320,7 +321,8 @@ export default function CalendarView({ mode }: Props) {
         </View>
         
         {/* ================= MODAL ================= */}
-        <Modal
+        
+                <Modal
           visible={!!eventoSeleccionado}
           animationType="slide"
           transparent
@@ -487,7 +489,8 @@ export default function CalendarView({ mode }: Props) {
                       })}
                     </View>
                   </View>
-     
+                      
+                  {/** BOTONES DE SERVICIO */}
                   <Text style={styles.label}>Servicio</Text>
                   <Pressable style={styles.input}>
                     <Text>{eventoEditado.servicio}</Text>
@@ -497,6 +500,23 @@ export default function CalendarView({ mode }: Props) {
                   <Pressable style={styles.input}>
                     <Text>${eventoEditado.precio}</Text>
                   </Pressable>
+                  
+                  {/**  OBSERVACIONES DEl CLIENTE*/}
+                  <Text style={styles.label}>Observaciones</Text>
+                  <TextInput
+                    multiline
+                    numberOfLines={4}
+                    placeholder="Ej: degradado bajo, barba perfilada..."
+                    value={eventoEditado.observaciones ?? ""}
+                    onChangeText={(text) =>
+                      setEventoEditado({
+                        ...eventoEditado,
+                        observaciones: text,
+                      })
+                    }
+                    style={styles.textArea}
+                  />
+
 
                   {/**MENSAJE DE CONFLICTO Y MUESTRA MENSAJE DE ERROR */}
                   {hayConflicto && (
@@ -552,7 +572,7 @@ export default function CalendarView({ mode }: Props) {
           </Pressable>
         </Modal>
 
-
+        
         {/* =============== FIN MODAL =============== */}
       </View>
     );

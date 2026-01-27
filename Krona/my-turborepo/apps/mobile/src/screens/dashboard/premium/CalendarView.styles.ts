@@ -555,5 +555,27 @@ optionTextSelected: {
   fontWeight: "700",
 },
 
+//================================
+//======== OBSERVACIONES =========
+//================================
+textArea: {
+  backgroundColor: "#F3F4F6",
+  borderRadius: 10,
+  padding: 12,
+  fontSize: 14,
+  color: "#111827",
+  textAlignVertical: "top", // 🔑 Android: empieza arriba
+  minHeight: 90,
+},
+modalNotes: {
+  marginTop: 10,
+  padding: 10,
+  backgroundColor: "#EFF6FF",
+  borderRadius: 8,
+  fontSize: 13,
+  color: "#1D4ED8",
+  fontWeight: "500",
+},
+
 
 });

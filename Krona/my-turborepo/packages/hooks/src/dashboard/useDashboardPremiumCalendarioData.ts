@@ -241,6 +241,7 @@ export const useDashboardPremiumCalendarioData = () => {
   getPendientesDePago,
   isDiaAbierto,
   setSelectedDate,
+  
 
   eventoEditado,
   setEventoEditado,
