@@ -1,7 +1,7 @@
-jest.mock("../http/httpClient");
+jest.mock("@/shared/http/httpClient");
 
 import { DateService } from "../services/agenda.service";
-import { httpClient } from "../http/httpClient";
+import { httpClient } from "@/shared/http/httpClient";
 
 describe("DateService", () => {
     it("should create a date", async () => {

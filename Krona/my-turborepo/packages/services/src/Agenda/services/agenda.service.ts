@@ -1,4 +1,4 @@
-import { httpClient } from "../http/httpClient";
+import { httpClient } from "@/shared/http/httpClient";
 import { AxiosResponse } from "axios";
 
 export type CreateDate = {
