@@ -320,6 +320,7 @@ export default function CalendarView({ mode }: Props) {
         </View>
         
         {/* ================= MODAL ================= */}
+        
         <Modal
           visible={!!eventoSeleccionado}
           animationType="slide"

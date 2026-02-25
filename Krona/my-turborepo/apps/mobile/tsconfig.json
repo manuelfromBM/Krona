@@ -2,8 +2,11 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react",
+    "noEmit": true,
     "strict": true,
     "baseUrl": ".",
+    "lib": ["dom", "es2017"],
+    "target": "es2017",
     "paths": {
       "@packages/hooks": ["../../packages/hooks/src"]
     }

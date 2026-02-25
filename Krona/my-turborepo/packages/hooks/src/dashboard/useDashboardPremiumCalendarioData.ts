@@ -6,7 +6,10 @@ export type EstadoEvento =
   | "reagendado"
   | "cancelado";
 
-  type CargaDia = "libre" | "medio" | "lleno";
+  type CargaDia = 
+    |"libre" 
+    | "medio" 
+    | "lleno";
 
 export interface CalendarioEvento {
   id: string;
@@ -23,13 +26,17 @@ export interface CalendarioEvento {
 
   estado: EstadoEvento;
 
+  pagado: boolean;
   precio: number;
   abono: number;
-  metodoPago?: "efectivo" | "tarjeta" | "transferencia" | "credito";
-  pagado: boolean;
-
-  calificacion?: number; // la calificacion es de 1 al 5 
-  observaciones?: string; // notas del cliente o servicio
+  metodoPago?: 
+    | "efectivo" 
+    | "tarjeta" 
+    | "transferencia" 
+    | "credito";
+  
+  calificacion?: number; 
+  observaciones?: string;
 }
 
 export const useDashboardPremiumCalendarioData = () => {
@@ -134,7 +141,7 @@ export const useDashboardPremiumCalendarioData = () => {
 
   /* ---------------- SEMANA ---------------- */
   const weekDays = useMemo(() => {
-    const date = new Date(selectedDate);
+    const date = selectedDate;
     const day = date.getDay();
     const diff = day === 0 ? -6 : 1 - day;
 
@@ -186,7 +193,6 @@ export const useDashboardPremiumCalendarioData = () => {
     return day !== 0; // cerrado el domingos
   };
 
-
   /* ---------------- BOTON DE ACTUALIZAR ---------------- */
   const updateEvento = (eventoActualizado: CalendarioEvento) => {
     setEventos((prev) => 
@@ -195,7 +201,6 @@ export const useDashboardPremiumCalendarioData = () => {
       )
     );
   };
-
 
   const getEstadoDelDia = (date: Date) => {
     const evts = getEventosPorDia(date);
@@ -254,7 +259,7 @@ export const useDashboardPremiumCalendarioData = () => {
 };
 
 /* ---------------- HELPERS ---------------- */
-const formatDate = (date: Date) =>
+const formatDate = (date: Date) => //DARLE VALOR AL => (formatDate)
   date.toISOString().split("T")[0];
 
 const addDays = (date: Date, days: number) => {
