@@ -1,8 +1,10 @@
+//CalendarView.tsx
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Pressable, Modal, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Pressable, Modal, Alert, TextInput, } from "react-native";
 import { calendarStyles as styles } from "./CalendarView.styles";
 import { useDashboardPremiumCalendarioData } from "@packages/hooks";
 import { CalendarioEvento } from "@packages/hooks/src/dashboard/useDashboardPremiumCalendarioData";
+import { EditarEventoModal } from "./EditarEventoModal";
 
 interface Props {
   mode: "day" | "week" | "month";
@@ -14,6 +16,7 @@ export default function CalendarView({ mode }: Props) {
     selectedDate,
     monthMatrix,
     weekDays,
+    eventos,
     updateEvento,
     goToNextMonth,
     goToPreviousMonth,
@@ -27,25 +30,31 @@ export default function CalendarView({ mode }: Props) {
     getPendientesDePago,
     isDiaAbierto,
     setSelectedDate,
+    getHorasDisponibles,
+    
     //formatDate,
     //NUEVO CODIGO
-    puedeEditarPrecio,
-    puedeEditarMetodoPago,
-    modoReagendar,
-  } = useDashboardPremiumCalendarioData();
+  } = useDashboardPremiumCalendarioData();  
 
-  const [modoEdicion, setModoEdicion] = useState(false);
-  const [eventoEditado, setEventoEditado] =
-  useState<CalendarioEvento | null>(null);
+  /* ===========================
+    Agregando estado para 
+    Editar fecha/hora
+     creze lo tengo que mover auseDashboardMetrics()
+   ========================== */
+  const [eventoEditado, setEventoEditado] = useState<CalendarioEvento | null>(null);
+  const [modoEditarFecha, setModoEditarFecha] = useState(false);
+  const [modoEdicion, setModoEdicion] = useState(false)
 
+  const handleGuardarCambios = (eventoActualizado: CalendarioEvento) => {
+    updateEvento(eventoActualizado);
+  };
 
   /* ===========================
       Agregando el estado modal
       CONTROLA SI EL MODAL ESTA
           ABIERTO O CERRADO
    =========================== */
-  const [eventoSeleccionado, setEventoSeleccionado] =
-    React.useState<CalendarioEvento | null>(null);
+  const [eventoSeleccionado, setEventoSeleccionado] = React.useState<CalendarioEvento | null>(null);
 
   /* ===========================
       Helpers sin dayjs
@@ -130,7 +139,111 @@ export default function CalendarView({ mode }: Props) {
   /* ==========================================================
      =====================  VISTA MES  ========================
      ========================================================== */
+
+  // ==========================
+  // RESUMEN PREMIUM DEL MES
+  // ==========================
+
+  const eventosDelMes = eventos.filter((evento) => {
+    return (
+      evento.fecha.getMonth() === currentDate.getMonth() &&
+      evento.fecha.getFullYear() === currentDate.getFullYear()
+    );
+  });
+
+  const totalMes = eventosDelMes
+    .filter(e => e.estado !== "cancelado")
+    .reduce((acc, e) => acc + e.precio, 0);
+
+  const totalCobrado = eventosDelMes
+    .filter(e => e.pagado && e.estado !== "cancelado")
+    .reduce((acc, e) => acc + e.precio, 0);
+
+  const totalPendiente = totalMes - totalCobrado;
+
+  const totalCitas = eventosDelMes.length;
+
+  const totalCanceladas = eventosDelMes.filter(
+    e => e.estado === "cancelado"
+  ).length;
+
+  const porcentajeCobrado =
+    totalMes > 0 ? (totalCobrado / totalMes) * 100 : 0;
+
   if (mode === "month") {
+
+    //=========================
+    // RESUMEN FINANCIERO
+    //=========================
+    const ingresos = eventosDelMes
+      .filter(e => e.estado !== "cancelado")
+      .reduce((acc, e) => acc + e.precio, 0);
+
+    const perdidas = eventosDelMes
+      .filter(e => e.estado === "cancelado")
+      .reduce((acc, e) => acc + e.precio, 0);
+    
+    const ganancias = ingresos - perdidas;
+
+    // ==========================
+    // MÉTRICAS AVANZADAS MES
+    // ==========================
+
+    // Total citas del mes
+    const totalCitas = eventosDelMes.length;
+
+    // Total canceladas
+    const totalCanceladas = eventosDelMes.filter(
+      e => e.estado === "cancelado"
+    ).length;
+
+    // Tasa cancelación %
+    const tasaCancelacion =
+      totalCitas > 0 ? (totalCanceladas / totalCitas) * 100 : 0;
+
+    // Meta mensual (temporal fija)
+    const metaMensual = 500000;
+
+    // Total cobrado real
+    const totalCobrado = eventosDelMes
+      .filter(e => e.pagado && e.estado !== "cancelado")
+      .reduce((acc, e) => acc + e.precio, 0);
+
+    // Porcentaje cumplimiento meta
+    const porcentajeMeta =
+      metaMensual > 0 ? (totalCobrado / metaMensual) * 100 : 0;
+
+    // ==========================
+    // OBSERVACIONES AUTOMÁTICAS
+    // ==========================
+
+    const observaciones: string[] = [];
+
+    if (totalCitas > 0) {
+      const porcentajeCancel = Math.round(tasaCancelacion);
+    
+      if (porcentajeCancel > 30) {
+        observaciones.push(
+          `Tienes una tasa de cancelación del ${porcentajeCancel}%. Considera activar recordatorios automáticos.`
+        );
+      }
+    
+      if (totalPendiente > 0) {
+        observaciones.push(
+          `Tienes $${totalPendiente.toLocaleString("es-CL")} pendientes de pago.`
+        );
+      }
+    
+      if (porcentajeMeta >= 100) {
+        observaciones.push(
+          "¡Felicitaciones! Superaste tu meta mensual."
+        );
+      }
+    }
+
+    if (observaciones.length === 0) {
+      observaciones.push("Tu rendimiento mensual es estable.");
+    }
 
     return (
       <View style={styles.container}>
@@ -330,6 +443,7 @@ export default function CalendarView({ mode }: Props) {
           <Pressable
             style={styles.modalOverlay}
             onPress={() => {
+              if (modoEditarFecha) return;
               setEventoSeleccionado(null);
               setModoEdicion(false);
             }}
@@ -381,21 +495,48 @@ export default function CalendarView({ mode }: Props) {
                     <Pressable
                       style={[styles.actionBtn, styles.reagendarBtn]}
                       onPress={() => {
-                        setEventoEditado(eventoSeleccionado as CalendarioEvento); // aseguramos tipo
+                        setEventoEditado(eventoSeleccionado as CalendarioEvento);
                         setModoEdicion(true);
-                        //setModoReagendar(true); // activamos solo reagendar
+                        
                       }}
                     >
                       <Text style={styles.actionText}>🔁 Reagendar</Text>
                     </Pressable>
 
-                    
-                    
+                    {/*Metodo de cancelar al cliente junto con su nombre y hora*/}
                     <Pressable
                       style={[styles.actionBtn, styles.cancelBtn]}
-                      onPress={() => console.log("Cancelar evento", eventoSeleccionado?.id)}
+                      onPress={() => {
+                        if (!eventoSeleccionado) return;
+
+                        Alert.alert(
+                          "Cancelar cita",
+                          `¿Deseas cancelar la cita de ${eventoSeleccionado.cliente} a las ${eventoSeleccionado.horaInicio}?`,
+                          [
+                            {
+                              text: "No",
+                              style: "cancel",
+                            },
+                            {
+                              text: "Sí, cancelar",
+                              style: "destructive",
+                              onPress: () => {
+                                updateEvento({
+                                  ...eventoSeleccionado,
+                                  estado: "cancelado",
+                                });
+
+                                Alert.alert("Cita cancelada correctamente");
+
+                                setEventoSeleccionado(null);
+                              },
+                            },
+                          ]
+                        );
+                      }}
                     >
                       <Text style={styles.actionText}>❌ Cancelar</Text>
+                      {/*Cuando selecione CANCELADO SALDRA EN ROJO*/}
                     </Pressable>
                     
                     {!eventoSeleccionado?.pagado && (
@@ -423,118 +564,98 @@ export default function CalendarView({ mode }: Props) {
                 <View style={styles.form}>
                   <Text style={styles.formTitle}>Editar evento</Text>
 
-                  {/* HOLA*/}
-                  <Text style={styles.label}>Hora</Text>
-                  <View style={styles.hourGrid}>
-                    {horasDelDia.map((hora) => {
-                      const isSelected = eventoEditado.horaInicio === hora;
-                      
-                      //MODAL EDITAR HORAS
-                      return (
-                        <Pressable
-                        key={hora}
-                        onPress={() => 
-                          setEventoEditado({
-                            ...eventoEditado,
-                            horaInicio: hora,
-                          })
-                        }
-                        style={[
-                          styles.hourSlot,
-                          isSelected && styles.hourSlotSelected,
-                        ]}
-                        >
-                          <Text 
-                            style={[
-                              styles.hourText,
-                              isSelected && styles.hourTextSelected,
-                            ]}
-                          >
-                            {hora}
-                          </Text>
-                        </Pressable>
-                      )
-                    })}
-                    <Text style={styles.label}>Duración</Text>
+                  {/* ================= FECHA RESERVADA ================= */}
+                  <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
+                    <Text style={styles.label}>Fecha reservada:</Text>
 
-                    <View style={styles.durationRow}>
-                      {[30, 45, 60, 90].map((min) => {
-                        const isSelected = eventoEditado.duracion === min;
-                      
-                        return (
-                          <Pressable
-                            key={min}
-                            onPress={() =>
-                              setEventoEditado({
-                                ...eventoEditado,
-                                duracion: min,
-                              })
-                            }
-                            style={[
-                              styles.durationBtn,
-                              isSelected && styles.durationSelected,
-                            ]}
-                          >
-                            <Text
-                              style={[
-                                styles.durationText,
-                                isSelected && styles.durationTextSelected,
-                              ]}
-                            >
-                              {min} min
-                            </Text>
-                          </Pressable>
-                        );
+                    <Text style={styles.originalDate}>
+                      {eventoEditado.fecha.toLocaleDateString("es-CL", {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
                       })}
-                    </View>
+                    </Text>
+                    
+                    <Pressable
+                      style={{ marginLeft: 8 }}
+                      onPress={() => {
+                        setModoEditarFecha(true); //  abre SOLO el modal pequeño
+                      }}
+                    >
+                      <Text style={{ fontSize: 18 }}>✏️</Text>
+                    </Pressable>
                   </View>
-     
-                  <Text style={styles.label}>Servicio</Text>
-                  <Pressable style={styles.input}>
-                    <Text>{eventoEditado.servicio}</Text>
-                  </Pressable>
-              
-                  <Text style={styles.label}>Precio</Text>
-                  <Pressable style={styles.input}>
-                    <Text>${eventoEditado.precio}</Text>
-                  </Pressable>
+                    
+                  {/* ================= MODAL PEQUEÑO ================= */}
+                  {modoEditarFecha && (
+                    <EditarEventoModal
+                      visible={modoEditarFecha}
+                      eventoEditado={eventoEditado}
+                      weekDays={weekDays}
+                      horasDelDia={horasDelDia}
+                      eventos={eventos}
+                      onClose={() => setModoEditarFecha(false)}
+                      onGuardar={(eventoActualizado) => {
+                        setEventoEditado(eventoActualizado); // actualiza local
+                        updateEvento(eventoActualizado);     // guarda fecha/hora
+                        setModoEditarFecha(false);           // cierra solo pequeño
+                      }}
+                    />
+                  )}
 
-                  {/**MENSAJE DE CONFLICTO Y MUESTRA MENSAJE DE ERROR */}
+                  {/* ================= SERVICIO ================= */}
+                  <Text style={styles.label}>Servicio</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={eventoEditado.servicio}
+                    onChangeText={(text) =>
+                      setEventoEditado({
+                        ...eventoEditado,
+                        servicio: text,
+                      })
+                    }
+                  />
+
+                  {/* ================= PRECIO ================= */}
+                  <Text style={styles.label}>Precio</Text>
+                  <TextInput
+                    style={styles.input}
+                    keyboardType="numeric"
+                    value={eventoEditado.precio.toString()}
+                    onChangeText={(text) =>
+                      setEventoEditado({
+                        ...eventoEditado,
+                        precio: Number(text) || 0,
+                      })
+                    }
+                  />
+
+                  {/* ================= CONFLICTO ================= */}
                   {hayConflicto && (
                     <Text style={styles.errorText}>
-                      ⚠️ Este horario se cruza con otra cita
+                      Este horario se cruza con otra cita
                     </Text>
                   )}
+
+                  {/* ================= BOTONES ================= */}
                   <View style={styles.formActions}>
                     <Pressable
                       disabled={hayConflicto}
                       style={[
                         styles.saveBtn,
-                        hayConflicto && {opacity: 0.4},
+                        hayConflicto && { opacity: 0.4 },
                       ]}
-                      onPress={() =>{
+                      onPress={() => {
                         if (!eventoEditado) return;
-                        try {
-                            // actualiza el evento al estado global osea BACKEND
-                            updateEvento(eventoEditado);
-
-                            //MENSAJE DE EXITO
-                            Alert.alert(
-                              "Datos guardados",
-                              "Los cambios del evento se guardaron correctamente"
-                            );
-
-                            // Cierra el modal
-                            setModoEdicion(false);
-                            setEventoSeleccionado(null);
-                          } catch (error) {
-                            
-                            //Mensaje de error
-                            Alert.alert(
-                              "Datos no guardados",
-                              "Ocurrio un error al guardar los cambios"
-                            );
-                          }
+                      
+                        updateEvento(eventoEditado);
+                      
+                        Alert.alert("Cambios guardados correctamente");
+                      
+                        setModoEdicion(false);
+                        setEventoSeleccionado(null);
+                        setEventoEditado(null);
                       }}
                     >
                       <Text style={styles.saveText}>Guardar</Text>
@@ -542,7 +663,11 @@ export default function CalendarView({ mode }: Props) {
                     
                     <Pressable
                       style={styles.cancelEditBtn}
-                      onPress={() => setModoEdicion(false)}
+                      onPress={() => {
+                        setModoEdicion(false);
+                        setEventoSeleccionado(null);
+                        setEventoEditado(null);
+                      }}
                     >
                       <Text>Cancelar</Text>
                     </Pressable>

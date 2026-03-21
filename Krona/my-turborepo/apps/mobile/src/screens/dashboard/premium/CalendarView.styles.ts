@@ -4,10 +4,13 @@ export const calendarStyles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     padding: 15,
-    borderRadius: 16,
-    elevation: 2,
+    borderRadius: 20,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOpacity: 0.06,
+    shadowRadius: 15,
+    shadowOffset: { width: 0, height: 6 },
     marginTop: 30,
-    overflow: "visible",
   },
 
   /* ===========================================================
@@ -165,6 +168,172 @@ export const calendarStyles = StyleSheet.create({
   selectedText: {
     color: "#fff",
     fontWeight: "700",
+  },
+
+  /* =======================================
+     CARD RESUMEN MES PREMIUM
+  ======================================= */
+
+  monthSummaryCard: {
+    marginTop: 25,
+    padding: 20,
+    borderRadius: 22,
+    backgroundColor: "#FFFFFF",
+
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 10 },
+  },
+
+  monthSummaryLabel: {
+    fontSize: 13,
+    color: "#6B7280",
+    fontWeight: "600",
+  },
+
+  monthSummaryMoney: {
+    fontSize: 28,
+    fontWeight: "900",
+    color: "#111827",
+    marginTop: 4,
+  },
+
+  monthPending: {
+    marginTop: 4,
+    fontSize: 13,
+    color: "#F59E0B",
+    fontWeight: "600",
+  },
+
+  progressBarBackground: {
+    height: 8,
+    backgroundColor: "#E5E7EB",
+    borderRadius: 6,
+    marginTop: 14,
+    overflow: "hidden",
+  },
+
+  progressBarFill: {
+    height: 8,
+    backgroundColor: "#22C55E",
+    borderRadius: 6,
+  },
+
+  monthStatsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 18,
+  },
+
+  statItem: {
+    alignItems: "center",
+  },
+
+  statNumber: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: "#111827",
+  },
+
+  statLabel: {
+    fontSize: 12,
+    color: "#6B7280",
+    marginTop: 2,
+  },
+
+  /* ===============================
+     FINANCIAL SUMMARY CARD
+  ================================ */
+  
+  financialCard: {
+    marginTop: 20,
+    padding: 18,
+    borderRadius: 20,
+    backgroundColor: "#FFFFFF",
+  
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOpacity: 0.06,
+    shadowRadius: 15,
+    shadowOffset: { width: 0, height: 6 },
+  },
+  
+  financialTitle: {
+    fontSize: 15,
+    fontWeight: "700",
+    marginBottom: 14,
+    color: "#111827",
+  },
+  
+  financialRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  
+  financialLabel: {
+    fontSize: 14,
+    color: "#6B7280",
+  },
+  
+  financialIncome: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#16A34A",
+  },
+  
+  financialLoss: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#EF4444",
+  },
+  
+  financialDivider: {
+    height: 1,
+    backgroundColor: "#E5E7EB",
+    marginVertical: 10,
+  },
+  
+  financialTotalLabel: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#111827",
+  },
+  
+  financialTotal: {
+    fontSize: 16,
+    fontWeight: "800",
+  },
+
+  /* ===============================
+   OBSERVACIONES AUTOMÁTICAS
+  ================================ */
+  
+  observacionesCard: {
+    marginTop: 20,
+    padding: 18,
+    borderRadius: 16,
+    backgroundColor: "#F9FAFB",
+  
+    borderWidth: 1.5,
+    borderColor: "#1F2937", // borde oscuro elegante
+  },
+  
+  observacionesTitle: {
+    fontSize: 15,
+    fontWeight: "800",
+    marginBottom: 12,
+    color: "#111827",
+  },
+  
+  observacionItem: {
+    fontSize: 13,
+    color: "#374151",
+    marginBottom: 6,
+    lineHeight: 18,
   },
 
   /* ===========================================================
@@ -429,6 +598,12 @@ export const calendarStyles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#F3F4F6",
   },
+
+  originalDate: {
+    fontSize: 16,
+    color: "#374151", // gris oscuro
+    marginBottom: 8,
+  },
   
   formActions: {
     marginTop: 20,
@@ -553,6 +728,26 @@ optionText: {
 optionTextSelected: {
   color: "#fff",
   fontWeight: "700",
+},
+
+//NUEVO MODAL QUE CREE
+/* Fecha individual en la selección */
+dateSlot: {
+  width: 60,
+  height: 70,
+  borderRadius: 12,
+  backgroundColor: "#F3F4F6",
+  justifyContent: "center",
+  alignItems: "center",
+  marginRight: 8,
+  borderWidth: 1,
+  borderColor: "#E5E7EB",
+},
+
+/* Fecha seleccionada */
+dateSlotSelected: {
+  backgroundColor: "#3B82F6",
+  borderColor: "#3B82F6",
 },
 
 

@@ -4,10 +4,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "./Dasboard.styles";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ProfileStackParamList } from "src/navigation/stackNavigation/ProfileStackNavigator";
 
+type Props = NativeStackScreenProps< ProfileStackParamList, "DashboardSelector" >;
 
-export default function DashboardSelectorScreen() {
-   const navigation = useNavigation();
+export default function DashboardSelectorScreen({ navigation }: Props ) {
+
 
     return (
       <SafeAreaView style={styles.container}>

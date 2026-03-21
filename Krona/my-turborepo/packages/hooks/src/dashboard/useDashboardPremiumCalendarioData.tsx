@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Alert } from "react-native";
 
 export type EstadoEvento =
   | "agendado" 
@@ -48,20 +49,20 @@ export const useDashboardPremiumCalendarioData = () => {
     // SE CAMBIA ESTE CODIGO: const eventos: CalendarioEvento[] = [
      {
       id: "1",
-      fecha: new Date(2025, 11, 17),
+      fecha: new Date(2026, 2, 17),
       horaInicio: "10:00",
       cliente: "Juan Pérez",
       servicio: "Corte de cabello",
       duracion: 30,
-      precio: 8000,
+      precio: 10000,
       telefono: "9 1234 5678",
       estado: "confirmado",
-      abono: 10000,
+      abono: 8000,
       pagado: true,
     },
     {
       id: "2",
-      fecha: new Date(2025, 11, 18),
+      fecha: new Date(2026, 2, 18),
       horaInicio: "11:00",
       cliente: "Matias Palma",
       servicio: "Corte de cabello",
@@ -74,7 +75,7 @@ export const useDashboardPremiumCalendarioData = () => {
     },
     {
       id: "3",
-      fecha: new Date(2025, 11, 19),
+      fecha: new Date(2026, 2, 19),
       horaInicio: "12:00",
       cliente: "Ariel Vilxes",
       servicio: "Corte de cabello",
@@ -87,7 +88,7 @@ export const useDashboardPremiumCalendarioData = () => {
     },
     {
       id: "4",
-      fecha: new Date(2025, 11, 20),
+      fecha: new Date(2026, 2, 20),
       horaInicio: "13:00",
       cliente: "Manuel Garcia",
       servicio: "Corte de cabello",
@@ -100,7 +101,7 @@ export const useDashboardPremiumCalendarioData = () => {
     },
     {
       id: "5",
-      fecha: new Date(2025, 11, 20),
+      fecha: new Date(2026, 2, 20),
       horaInicio: "14:00",
       cliente: "Cristian Garcia",
       servicio: "lavado de cabello",
@@ -193,6 +194,16 @@ export const useDashboardPremiumCalendarioData = () => {
     return day !== 0; // cerrado el domingos
   };
 
+  const getHorasDisponibles = (date: Date, horaSlots: string[], eventos: CalendarioEvento[]) => {
+  // Obtener eventos que coincidan con la fecha
+  const eventosDelDia = eventos.filter(e =>
+    e.fecha.toDateString() === date.toDateString()
+  );
+
+  // Filtrar horas que NO estén ocupadas
+  return horaSlots.filter(h => !eventosDelDia.some(e => e.horaInicio === h));
+  };
+
   /* ---------------- BOTON DE ACTUALIZAR ---------------- */
   const updateEvento = (eventoActualizado: CalendarioEvento) => {
     setEventos((prev) => 
@@ -211,28 +222,12 @@ export const useDashboardPremiumCalendarioData = () => {
     if (evts.some((e) => e.estado === "confirmado")) return "confirmado";
     return "agendado";
   };
-
-  const [eventoEditado, setEventoEditado] = useState<CalendarioEvento | null>(null);
-
-  /* ---------------- VARIABLES DERIVADAS NUEVO CODIGO ---------------- */
-  const puedeEditarPrecio = useMemo(() => {
-    return !eventoEditado?.pagado;
-  }, [eventoEditado]);
-
-  const puedeEditarMetodoPago = useMemo(() => {
-    return !eventoEditado?.pagado || eventoEditado?.estado === "agendado";
-  }, [eventoEditado]);
-
-
-  const modoReagendar = useMemo(() => {
-    return eventoEditado?.estado === "reagendado";
-  }, [eventoEditado]);
-
   return {
   currentDate,
   selectedDate,
   monthMatrix,
   weekDays,
+  eventos,
   updateEvento,
   goToNextMonth,
   goToPreviousMonth,
@@ -245,12 +240,11 @@ export const useDashboardPremiumCalendarioData = () => {
   getPendientesDePago,
   isDiaAbierto,
   setSelectedDate,
+  getHorasDisponibles,
 
-  eventoEditado,
-  setEventoEditado,
-  puedeEditarPrecio,
-  puedeEditarMetodoPago,
-  modoReagendar,
+  //puedeEditarPrecio,
+  //puedeEditarMetodoPago,
+  //modoReagendar,
 
     // DESPUES SE PUEDE USAR A FUTURO
     //getIngresosRealesDelDia

@@ -9,7 +9,7 @@ import DashboardPremium from "src/screens/dashboard/premium/DashboardPremium";
 //import Settings from "src/components/Profile/Settings";
 //import type { ProfileStackParamList } from "src/navigation/types";
 
-type ProfileStackParamList = {
+export type ProfileStackParamList = {
   Profile: { userId?: string } | undefined;
   EditarPerfil: { userId?: string } | undefined;
   DashboardSelector: { userId?: string } | undefined; // aca agregamos el Dashboard
