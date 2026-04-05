@@ -67,31 +67,65 @@ export const styles = StyleSheet.create({
     color: "#000",
   },
 
-  // Secciones dinámicas
+// Reemplaza metricsContainer, metricCard, metricLabel, metricValue por esto:
 
   metricsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
     marginBottom: 10,
+    gap: 10,
   },
-
+  
   metricCard: {
     width: "48%",
-    backgroundColor: "#F1F1F1",
-    padding: 15,
-    borderRadius: 12,
-    marginBottom: 12,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 14,
+    paddingVertical: 16,
+    paddingHorizontal: 14,
+    alignItems: "center",
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOpacity: 0.07,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3,
   },
-
+  
+  // Nueva — para el Promedio/cita que va solo abajo
+  metricCardFull: {
+    width: "100%",
+  },
+  
+  // Nueva — barrita de color arriba de cada card
+  metricColorBar: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 4,
+    borderRadius: 14,
+  },
+  
+  metricIcon: {
+    fontSize: 22,
+    marginBottom: 8,
+    marginTop: 6,
+  },
+  
   metricLabel: {
-    fontSize: 14,
-    color: "#555",
+    fontSize: 12,
+    color: "#6B7280",
+    marginTop: 4,
+    textAlign: "center",
+    fontWeight: "500",
   },
-
+  
   metricValue: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: "800",
+    color: "#111827",
+    textAlign: "center",
   },
 
   sectionTitle: {
@@ -392,7 +426,43 @@ modalCloseButtonText: {
   color: "#fff",
   fontWeight: "600",
 },
+
+/* ===============================
+   ASISTENTE IA CARD
+================================ */
+
+input: {
+  marginTop: 10,
+  borderWidth: 1,
+  borderColor: "#E5E7EB",
+  borderRadius: 10,
+  padding: 10,
+  fontSize: 13,
+  backgroundColor: "#F9FAFB",
+},
+
+button: {
+  marginTop: 10,
+  backgroundColor: "#3B82F6",
+  paddingVertical: 10,
+  borderRadius: 10,
+  alignItems: "center",
+},
+
+buttonText: {
+  color: "#FFF",
+  fontWeight: "600",
+  fontSize: 13,
+},
+
+iaAnswer: {
+  marginTop: 10,
+  fontSize: 13,
+  color: "#111827",
+  lineHeight: 18,
+},
+
+
+
+
 });
-
-
-

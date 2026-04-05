@@ -1,12 +1,21 @@
 // DashboardPremium.tsx
 import React, { useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity, Dimensions, TextInput } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Dimensions, TextInput, Modal } from "react-native";
 import { styles } from "./DashboardPremium.styles";
-import CalendarView from "./CalendarView";
-import { useDashboardPremiumCalendarioData } from "@packages/hooks";
-import { LineChart, PieChart } from "react-native-chart-kit";
-import { Modal } from "react-native";
 
+import CalendarView from "./CalendarView";
+import { FinancialSummaryCard } from "../components/FinancialSummary";
+import { ObservacionesCard } from "../components/ObservacionesCard";
+import { RiesgoFinancieroCard } from "../components/RiesgoFinancieroCard";
+import { AlertasCard } from "../components/AlertasCard";
+import { ClientesFrecuentesCard } from "../components/ClientesFrecuentesCard";
+import { MejoresServiciosCard } from "../components/MejoresServiciosCard";
+import { AsistenteIACard } from "../components/AccionesRapidas";
+import { TendenciaChart } from "../components/TendenciaChart";
+import { PagosVsPresupuestoChart } from "../components/PagosVsPresupuestoChart";
+import { MetricsCards } from "../components/MetricsCards";
+
+import { useDashboardPremiumCalendarioData } from "@packages/hooks";
 export default function DashboardPremium() {
   const { eventos, currentDate } = useDashboardPremiumCalendarioData();
   const [viewMode, setViewMode] = useState<"day" | "week" | "month">("day");
@@ -119,26 +128,17 @@ export default function DashboardPremium() {
       
 
       {/* Métricas del mes */}
-      <View style={styles.metricsContainer}>
-        {[
-          { label: "Citas", value: totalCitas },
-          { label: "Canceladas", value: totalCanceladas },
-          { label: "Cobrado", value: `$${totalCobrado.toLocaleString("es-CL")}` },
-          { label: "Pendiente", value: `$${totalPendiente.toLocaleString("es-CL")}` },
-        ].map((m, i) => (
-          <TouchableOpacity
-            key={i}
-            style={styles.metricCard}
-            onPress={() => {
-              setSelectedMetric(m.label);
-              setShowModal(true);
-            }}
-          >
-            <Text style={styles.metricLabel}>{m.label}</Text>
-            <Text style={styles.metricValue}>{m.value}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      <MetricsCards
+        totalCitas={totalCitas}
+        totalCanceladas={totalCanceladas}
+        totalCobrado={totalCobrado}
+        totalPendiente={totalPendiente}
+        onPress={(label) => {
+          setSelectedMetric(label);
+          setShowModal(true);
+        }}
+      />
+      
 
       {/* Tabs de calendario */}
       <View style={styles.tabsContainer}>
@@ -156,236 +156,63 @@ export default function DashboardPremium() {
       </View>
 
       {/* Calendario */}
-      <CalendarView mode={viewMode} />
+      <CalendarView
+        mode={viewMode}
+        onSwitchToDay={() => setViewMode("day")}
+      />
 
       {/* Resumen financiero */}
-      <View style={styles.financialCard}>
-        <Text style={styles.financialTitle}>💼 Resumen financiero</Text>
-        {[
-          { label: "Ingresos", value: ingresos, color: "#16A34A" },
-          { label: "Pérdidas", value: perdidas, color: "#EF4444" },
-        ].map((f, i) => (
-          <View key={i} style={styles.financialRow}>
-            <Text style={styles.financialLabel}>{f.label}</Text>
-            <Text style={{ color: f.color }}>${f.value.toLocaleString("es-CL")}</Text>
-          </View>
-        ))}
-        <View style={styles.financialDivider} />
-        <View style={styles.financialRow}>
-          <Text style={styles.financialTotalLabel}>Ganancias</Text>
-          <Text style={{ color: ganancias >= 0 ? "#16A34A" : "#EF4444" }}>
-            ${ganancias.toLocaleString("es-CL")}
-          </Text>
-        </View>
-      </View>
+      <FinancialSummaryCard
+        ingresos={ingresos}
+        perdidas={perdidas}
+        ganancias={ganancias}
+      />
 
       {/* Observaciones */}
-      <View style={styles.observacionesCard}>
-        <Text style={styles.observacionesTitle}>🧠 Observaciones automáticas</Text>
-        {observaciones.map((obs, i) => (
-          <Text key={i} style={styles.observacionItem}>• {obs}</Text>
-        ))}
-      </View>
+      <ObservacionesCard observaciones={observaciones} />
 
       {/* Riesgo financiero */}
-      <View style={[styles.card, { backgroundColor: "#F3F4F6", marginTop: 10 }]}>
-        <Text style={styles.cardTitle}>⚠️ Riesgo financiero</Text>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            color:
-              totalPendiente > 100000 ? "#EF4444" :
-              totalPendiente > 50000 ? "#F59E0B" :
-              "#16A34A",
-          }}
-        >
-          {totalPendiente > 100000 ? "Alto" : totalPendiente > 50000 ? "Medio" : "Bajo"}
-        </Text>
-        <Text style={{ fontSize: 12, color: "#6B7280" }}>Basado en pagos pendientes y cancelaciones</Text>
-      </View>
+      <RiesgoFinancieroCard totalPendiente={totalPendiente} />
+            
+      <AlertasCard
+        alertas={alertas}
+        setSelectedMetric={setSelectedMetric}
+        setShowModal={setShowModal}
+      />
+            
+      {/* Clientes frecuentes */}
+      <ClientesFrecuentesCard clientesFrecuentes={clientesFrecuentes} />
+            
+      {/* Mejores servicios */}
+      <MejoresServiciosCard
+        mejoresServicios={mejoresServicios}
+        setSelectedMetric={setSelectedMetric}
+        setShowModal={setShowModal}
+      />
+            
+     {/* Asistente IA */}
+      <AsistenteIACard
+        tasaCancelacion={tasaCancelacion}
+        totalPendiente={totalPendiente}
+        totalCobrado={totalCobrado}
+        metaMensual={metaMensual}
+        userQuestion={userQuestion}
+        setUserQuestion={setUserQuestion}
+        iaAnswer={iaAnswer}
+        handleAskIA={handleAskIA}
+      />
 
-      {/* Alertas */}
-      <View style={{ marginTop: 10 }}>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>⚠️ Alertas del mes</Text>
-          {alertas.map((a, i) => (
-            <TouchableOpacity
-              key={i}
-              onPress={() => {
-                setSelectedMetric(a);
-                setShowModal(true);
-              }}
-            >
-              <Text style={styles.item}>• {a}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+      <TendenciaChart
+        tendencia={tendencia}
+        tipoGrafico={tipoGrafico}
+        setTipoGrafico={setTipoGrafico}
+      />
 
-        {/* Clientes frecuentes */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>👥 Clientes frecuentes</Text>
-          {clientesFrecuentes.map((c, i) => (
-            <TouchableOpacity
-              key={i}
-              style={styles.rowBetween}
-              onPress={() => console.log("Cliente seleccionado:", c.nombre)}
-            >
-              <Text>{c.nombre}</Text>
-              <Text>{c.citas} citas</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Mejores servicios */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>🏆 Mejores servicios</Text>
-          {mejoresServicios.map((s, i) => (
-            <TouchableOpacity
-              key={i}
-              style={styles.rowBetween}
-              onPress={() => {
-                setSelectedMetric(s.nombre);
-                setShowModal(true);
-              }}
-            >
-              <Text>{s.nombre}</Text>
-              <Text>${s.total.toLocaleString("es-CL")}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Asistente de IA interactivo */}
-        <View style={[styles.card, { backgroundColor: "#E0F2FE", marginTop: 10 }]}>
-          <Text style={styles.cardTitle}>🤖 Asistente de IA</Text>
-
-          {/* Consejos automáticos */}
-          <View style={{ marginTop: 5 }}>
-            {(() => {
-              const consejos: string[] = [];
-              if (tasaCancelacion > 20)
-                consejos.push("Envía recordatorios automáticos para reducir cancelaciones.");
-              if (totalPendiente > 50000)
-                consejos.push("Ofrece métodos de pago flexibles para agilizar cobros.");
-              if (totalCobrado < metaMensual * 0.7)
-                consejos.push("Promociona tus servicios más populares para alcanzar la meta.");
-              if (clientesFrecuentes.length > 0)
-                consejos.push(`Premia a tus clientes frecuentes como ${clientesFrecuentes[0].nombre}.`);
-              if (consejos.length === 0)
-                consejos.push("Tu desempeño es bueno, sigue así para mantener resultados estables.");
-              return consejos.map((c, i) => (
-                <Text key={i} style={{ fontSize: 14, marginBottom: 4 }}>• {c}</Text>
-              ));
-            })()}
-          </View>
-          
-          {/* Chat con IA */}
-          <View style={{ marginTop: 10 }}>
-            <Text style={{ fontWeight: "bold", marginBottom: 5 }}>Hazle una pregunta a la IA:</Text>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput
-                style={{
-                  flex: 1,
-                  borderWidth: 1,
-                  borderColor: "#9CA3AF",
-                  borderRadius: 8,
-                  paddingHorizontal: 10,
-                  height: 40,
-                }}
-                placeholder="Escribe tu pregunta..."
-                value={userQuestion}
-                onChangeText={setUserQuestion}
-              />
-              <TouchableOpacity
-                onPress={handleAskIA}
-                style={{ marginLeft: 8, padding: 10, backgroundColor: "#3B82F6", borderRadius: 8 }}
-              >
-                <Text style={{ color: "#fff" }}>Enviar</Text>
-              </TouchableOpacity>
-            </View>
-              
-            {iaAnswer && (
-              <View style={{ marginTop: 10, backgroundColor: "#fff", padding: 10, borderRadius: 8 }}>
-                <Text style={{ fontSize: 14 }}>{iaAnswer}</Text>
-              </View>
-            )}
-          </View>
-        </View>
-
-        {/* Tendencia */}
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>📊 Tendencia</Text>
-            <TouchableOpacity onPress={() => setTipoGrafico(tipoGrafico === "line" ? "pie" : "line")}>
-              <Text style={{ color: "#3B82F6" }}>{tipoGrafico === "line" ? "Circular" : "Línea"}</Text>
-            </TouchableOpacity>
-          </View>
-          {tipoGrafico === "line" ? (
-            <LineChart
-              data={{
-                labels: tendencia.map((t) => t.mes),
-                datasets: [{ data: tendencia.map((t) => t.total) }],
-              }}
-              width={screenWidth}
-              height={220}
-              yAxisSuffix="$"
-              chartConfig={{
-                backgroundColor: "#fff",
-                backgroundGradientFrom: "#fff",
-                backgroundGradientTo: "#fff",
-                decimalPlaces: 0,
-                color: (opacity = 1) => `rgba(59,130,246,${opacity})`,
-                labelColor: (opacity = 1) => `rgba(0,0,0,${opacity})`,
-                propsForDots: { r: "4", strokeWidth: "2", stroke: "#3B82F6" },
-              }}
-              style={{ borderRadius: 16, marginTop: 10 }}
-            />
-          ) : (
-            <PieChart
-              data={tendencia.map((t, i) => ({
-                name: t.mes,
-                population: t.total,
-                color: ["#3B82F6", "#F59E0B", "#16A34A"][i % 3],
-                legendFontColor: "#000",
-                legendFontSize: 12,
-              }))}
-              width={screenWidth}
-              height={220}
-              accessor="population"
-              backgroundColor="transparent"
-              paddingLeft="15"
-              absolute
-              chartConfig={{ color: (opacity = 1) => `rgba(0,0,0,${opacity})` }}
-              style={{ borderRadius: 16, marginTop: 10 }}
-            />
-          )}
-        </View>
-
-        {/* Pagos vs Presupuesto */}
-        <View style={[styles.card, { marginTop: 10 }]}>
-          <Text style={styles.cardTitle}>💰 Pagos vs Presupuesto</Text>
-          <LineChart
-            data={{
-              labels: ["Semana 1", "Semana 2", "Semana 3", "Semana 4"],
-              datasets: [
-                { data: [100000, 200000, 350000, totalCobrado], color: () => "#3B82F6" },
-                { data: [metaMensual / 4, metaMensual / 4, metaMensual / 4, metaMensual / 4], color: () => "#FBBF24" },
-              ],
-            }}
-            width={screenWidth}
-            height={220}
-            chartConfig={{
-              backgroundColor: "#fff",
-              backgroundGradientFrom: "#fff",
-              backgroundGradientTo: "#fff",
-              decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(59,130,246,${opacity})`,
-              labelColor: () => "#000",
-            }}
-            style={{ borderRadius: 16, marginTop: 10 }}
-          />
-        </View>
-      </View>
+      <PagosVsPresupuestoChart
+        totalCobrado={totalCobrado}
+        metaMensual={metaMensual}
+      />
+      
       
       {/* Modal general */}
       {/* Lo que se puede hacer con este modal es crear una pantalla aparte 

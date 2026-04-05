@@ -360,51 +360,67 @@ export const calendarStyles = StyleSheet.create({
     borderRadius: 4,
     marginTop: 3,
   },
+
  /*codigo nuevo semana*/
   weekGrid: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
+  flexDirection: "row",
+  justifyContent: "space-between",
+  paddingHorizontal: 2,
+},
 
-  weekCard: {
-    flex: 1,
-    backgroundColor: "#fff",
-    marginHorizontal: 4,
-    borderRadius: 14,
-    padding: 10,
-    alignItems: "center",
-    elevation: 1,
-  },
-  weekDayLabel: {
-    fontSize: 12,
-    color: "#6B7280",
-    fontWeight: "600",
-  },
+weekCard: {
+  flex: 1,
+  backgroundColor: "#fff",
+  marginHorizontal: 2,
+  borderRadius: 12,
+  paddingVertical: 8,
+  paddingHorizontal: 2,
+  alignItems: "center",
+  elevation: 2,
+  shadowColor: "#000",
+  shadowOpacity: 0.05,
+  shadowRadius: 6,
+  shadowOffset: { width: 0, height: 2 },
+  borderWidth: 1,
+  borderColor: "#F3F4F6",
+  minHeight: 100,
+},
 
-  weekDayNumber: {
-    fontSize: 20,
-    fontWeight: "800",
-    marginVertical: 4,
-  },
+weekDayLabel: {
+  fontSize: 9,
+  color: "#6B7280",
+  fontWeight: "600",
+  textAlign: "center",
+},
 
-  loadIndicator: {
-    width: 20,
-    height: 6,
-    borderRadius: 3,
-    marginVertical: 6,
-  },
+weekDayNumber: {
+  fontSize: 16,
+  fontWeight: "800",
+  marginVertical: 4,
+  color: "#111827",
+},
 
-  weekMoney: {
-    fontSize: 12,
-    fontWeight: "700",
-    marginTop: 4,
-  },
+loadIndicator: {
+  width: 16,
+  height: 5,
+  borderRadius: 3,
+  marginVertical: 4,
+},
 
-  weekPending: {
-    fontSize: 11,
-    color: "#DC2626",
-    marginTop: 2,
-  },
+weekMoney: {
+  fontSize: 9,
+  fontWeight: "700",
+  color: "#111827",
+  textAlign: "center",
+},
+
+weekPending: {
+  fontSize: 8,
+  color: "#DC2626",
+  marginTop: 2,
+  textAlign: "center",
+  fontWeight: "600",
+},
   /* ===========================================================
      ======================== VISTA DÍA =========================
      =========================================================== */
