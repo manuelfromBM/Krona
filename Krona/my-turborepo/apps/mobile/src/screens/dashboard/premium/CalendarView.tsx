@@ -5,9 +5,9 @@ import { calendarStyles as styles } from "./CalendarView.styles";
 import { useDashboardPremiumCalendarioData } from "@packages/hooks";
 import { CalendarioEvento } from "@packages/hooks/src/dashboard/useDashboardPremiumCalendarioData";
 import { EditarEventoModal } from "./EditarEventoModal";
+import { useDashboardMetricasData } from "@packages/hooks";
 
 import { CartolaMensual } from "../components/CartolaMensual";
-import { ClientesFrecuentesCard } from "../components/ClientesFrecuentesCard";
 
 interface Props {
   mode: "day" | "week" | "month";
@@ -39,6 +39,8 @@ export default function CalendarView({ mode, onSwitchToDay }: Props) {
     //formatDate,
     //NUEVO CODIGO
   } = useDashboardPremiumCalendarioData();  
+
+  const metricas = useDashboardMetricasData({ eventos, currentDate });
 
   /* ===========================
     Agregando estado para 
@@ -249,6 +251,30 @@ export default function CalendarView({ mode, onSwitchToDay }: Props) {
       observaciones.push("Tu rendimiento mensual es estable.");
     }
 
+    const clientesFrecuentes = Object.entries(
+      eventosDelMes.reduce((acc, evento) => {
+        if (evento.estado !== "cancelado") {
+          acc[evento.cliente] = (acc[evento.cliente] || 0) + 1;
+        }
+        return acc;
+      }, {} as Record<string, number>)
+    )
+    .map(([nombre, citas]) => ({ nombre, citas }))
+    .sort((a, b) => b.citas - a.citas)
+    .slice(0, 5);
+
+    const mejoresServicios = Object.entries(
+      eventosDelMes.reduce((acc, evento) => {
+        if (evento.estado !== "cancelado") {
+          acc[evento.servicio] = (acc[evento.servicio] || 0) + evento.precio;
+        }
+        return acc;
+      }, {} as Record<string, number>)
+    )
+    .map(([nombre, total]) => ({ nombre, total }))
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 5);
+
     return (
       <View style={styles.container}>
         {/* HEADER */}
@@ -344,19 +370,36 @@ export default function CalendarView({ mode, onSwitchToDay }: Props) {
 
         <CartolaMensual
           eventos={eventosDelMes}
-          ingresos={ingresos}
-          perdidas={perdidas}
-          ganancias={ganancias}
-          totalCobrado={totalCobrado}
-          totalPendiente={totalPendiente}
-          totalCitas={totalCitas}
-          totalCanceladas={totalCanceladas}
-          clientesFrecuentes={ClientesFrecuentes}
+          mesAnio={currentDate.toLocaleDateString("es-CL", { month: "long", year: "numeric" })}
+                
+          // Financiero
+          ingresos={metricas.ingresos}
+          perdidas={metricas.perdidas}
+          ganancias={metricas.ganancias}
+          totalCobrado={metricas.totalCobrado}
+          totalPendiente={metricas.totalPendiente}
+          metaMensual={metricas.metaMensual}
+          porcentajeMeta={metricas.porcentajeMeta}
+                
+          // Citas
+          totalCitas={metricas.totalCitas}
+          totalCanceladas={metricas.totalCanceladas}
+          tasaCancelacion={metricas.tasaCancelacion}
+                
+          // Rankings
+          clientesFrecuentes={clientesFrecuentes}
           mejoresServicios={mejoresServicios}
-          mesAnio={currentDate.toLocaleDateString("es-CL", {
-            month: "long",
-            year: "numeric",
-          })}
+                
+          // Métricas avanzadas
+          clienteVIP={metricas.clienteVIP}
+          clientesPerdidos={metricas.clientesPerdidos}
+          horaMasRentable={metricas.horaMasRentable}
+          rankingHoras={metricas.rankingHoras}
+          diaMasRentable={metricas.diaMasRentable}
+          rankingDias={metricas.rankingDias}
+          servicioMasCancelado={metricas.servicioMasCancelado}
+          prediccionProximoMes={metricas.prediccionProximoMes}
+          tendenciaPorcentaje={metricas.tendenciaPorcentaje}
         />
 
 

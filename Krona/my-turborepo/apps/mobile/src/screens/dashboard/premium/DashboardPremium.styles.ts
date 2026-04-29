@@ -462,6 +462,59 @@ iaAnswer: {
   lineHeight: 18,
 },
 
+/* ===============================
+   CLIENTE VIP CARD
+================================ */
+
+vipEmptyText: {
+  fontSize: 13,
+  color: "#6B7280",
+  fontStyle: "italic",
+  marginTop: 6,
+},
+
+vipName: {
+  fontSize: 18,
+  fontWeight: "800",
+  color: "#111827",
+  marginTop: 8,
+},
+
+vipMoney: {
+  fontSize: 24,
+  fontWeight: "900",
+  color: "#16A34A",
+  marginTop: 6,
+},
+
+vipSubtext: {
+  fontSize: 13,
+  color: "#6B7280",
+  marginTop: 4,
+},
+
+emptyText: {
+  fontSize: 13,
+  color: "#6B7280",
+  fontStyle: "italic",
+  marginTop: 6,
+  textAlign: "center",
+},
+
+vipBadge: {
+  alignSelf: "flex-start",
+  backgroundColor: "#FEF3C7",
+  paddingHorizontal: 10,
+  paddingVertical: 4,
+  borderRadius: 999,
+  marginBottom: 8,
+},
+
+vipBadgeText: {
+  fontSize: 12,
+  fontWeight: "700",
+  color: "#92400E",
+},
 
 
 
