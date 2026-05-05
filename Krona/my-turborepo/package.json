@@ -1,6 +1,7 @@
 {
   "name": "my-turborepo",
   "workspaces": [
+    "apps/*",
     "packages/*"
   ],
   "private": true,
@@ -20,7 +21,7 @@
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "pnpm": {
     "peerDependencyRules": {
@@ -36,8 +37,6 @@
     }
   },
   "dependencies": {
-    "axios": "^1.13.4",
-    "expo-modules-core": "^3.0.22",
-    "react-native-screens": "~4.16.0"
+    
   }
 }

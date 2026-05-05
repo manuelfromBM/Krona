@@ -1,5 +1,11 @@
 node_modules
 .git
+.turbo
+dist
+build
+apps/web
+apps/mobile
+**/.next
 .next
 dist
 .env
