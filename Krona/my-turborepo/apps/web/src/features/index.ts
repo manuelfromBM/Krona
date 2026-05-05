@@ -1,0 +1,1 @@
+export {default as SeccionHero} from './Hero/Hero'
