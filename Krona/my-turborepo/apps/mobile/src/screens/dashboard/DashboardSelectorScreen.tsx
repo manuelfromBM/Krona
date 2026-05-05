@@ -43,7 +43,9 @@ export default function DashboardSelectorScreen({ navigation }: Props ) {
             <Text style={styles.itemMuted}>❌ Calendario inteligente</Text>
             <Text style={styles.itemMuted}>❌ Exportar datos</Text>
   
-            <TouchableOpacity style={[styles.button, styles.freeButton]}>
+            <TouchableOpacity style={[styles.button, styles.freeButton]}
+              onPress={() => navigation.navigate('DashboardFree')}
+            >
               <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
           </View>
