@@ -5,7 +5,7 @@ WORKDIR /krona
 #____________________________________________________________________________
 FROM base AS pruner
 COPY . .
-RUN pnpm dlx turbo prune --scope=backend --docker
+RUN pnpm dlx turbo prune --scope=@krona/backend --docker
 
 #____________________________________________________________________________
 FROM base AS builder
@@ -15,8 +15,8 @@ COPY --from=pruner /krona/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install --frozen-lockfile
 
 COPY --from=pruner /krona/out/full/ .
-RUN pnpm turbo build --filter=backend
-RUN pnpm --filter=backend prisma generate
+RUN pnpm turbo build --filter=@krona/backend
+RUN pnpm --filter=@krona/backend exec prisma generate
 
 #____________________________________________________________________________
 
