@@ -34,9 +34,12 @@
       "react": "19.1.0",
       "react-native": "0.81.5",
       "@types/react": "~19.1.10"
-    }
-  },
-  "dependencies": {
-    
+    },
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/engines",
+      "prisma",
+      "esbuild"
+    ]
   }
 }
