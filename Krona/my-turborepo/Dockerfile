@@ -27,9 +27,7 @@ WORKDIR /krona
 COPY --from=builder /krona/apps/backend/package.json .
 COPY --from=builder /krona/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=builder /krona/apps/backend/dist ./dist
-COPY --from=builder /krona/node_modules/.pnpm ./node_modules/.pnpm
-COPY --from=builder /krona/apps/backend/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /krona/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /krona/apps/backend/src/generated ./src/generated
 RUN pnpm install --prod
 
 EXPOSE 3000
