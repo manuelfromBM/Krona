@@ -25,10 +25,9 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /krona
  
 COPY --from=builder /krona/apps/backend/package.json .
-COPY --from=builder /krona/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=builder /krona/apps/backend/dist ./dist
 COPY --from=builder /krona/apps/backend/src/generated ./src/generated
-RUN pnpm install --prod
+COPY --from=builder /krona/node_modules ./node_modules
 
 EXPOSE 3000
 CMD ["node", "dist/main.js"]
