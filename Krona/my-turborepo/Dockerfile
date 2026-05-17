@@ -28,6 +28,7 @@ COPY --from=builder /krona/apps/backend/package.json .
 COPY --from=builder /krona/apps/backend/dist ./dist
 COPY --from=builder /krona/apps/backend/src/generated ./src/generated
 COPY --from=builder /krona/node_modules ./node_modules
+COPY --from=builder /krona/apps/backend/node_modules ./apps/backend/node_modules
 
 EXPOSE 3000
 CMD ["node", "dist/main.js"]

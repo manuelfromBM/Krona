@@ -32,10 +32,7 @@ const TabNavigator: React.FC = () => {
             <Tab.Screen name="FeedStack" component={FeedStackNavigator} options={{ title: "Feed" }}/>
             <Tab.Screen name="ProfileStack" component={ProfileStackNavigator} options={{ title: "Perfil" }}/>
             <Tab.Screen name="ExplorerStack" component={MapScreen} options={{ title: "Explorer" }}/>
-            <Tab.Screen name="Agenda" component={Agendar} options={{ title: "Agenda" }}/>                                                                                           
-            <Tab.Screen name="FeedStack" component={FeedStackNavigator} options={{ title: "Feed" }} />
-            <Tab.Screen name="ProfileStack" component={ProfileStackNavigator} options={{ title: "Perfil" }} />
-            <Tab.Screen name="ExplorerStack" component={MapScreen} options={{ title: "Explorer" }} />
+            <Tab.Screen name="Agenda" component={Agendar} options={{ title: "Agenda" }}/>
             <Tab.Screen name="Busqueda" component={ScreenBusqueda} options={{ title: "Busqueda" }}></Tab.Screen>
         </Tab.Navigator>
     );
