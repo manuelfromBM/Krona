@@ -2,33 +2,25 @@ FROM node:22-alpine AS base
 RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /krona
 
-#____________________________________________________________________________
 FROM base AS pruner
 COPY . .
 RUN pnpm dlx turbo prune --scope=@krona/backend --docker
 
-#____________________________________________________________________________
 FROM base AS builder
-
 COPY --from=pruner /krona/out/json/ .
 COPY --from=pruner /krona/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install --frozen-lockfile
-
 COPY --from=pruner /krona/out/full/ .
 RUN pnpm turbo build --filter=@krona/backend
 RUN pnpm --filter=@krona/backend exec prisma generate
 
-#____________________________________________________________________________
+FROM base AS runner
+COPY --from=pruner /krona/out/json/ .
+COPY --from=pruner /krona/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN pnpm install --frozen-lockfile --prod
+COPY --from=builder /krona/apps/backend/dist ./apps/backend/dist
+COPY --from=builder /krona/apps/backend/src/generated ./apps/backend/src/generated
 
-FROM node:22-alpine AS runner
-RUN corepack enable && corepack prepare pnpm@latest --activate
-WORKDIR /krona
- 
-COPY --from=builder /krona/apps/backend/package.json .
-COPY --from=builder /krona/apps/backend/dist ./dist
-COPY --from=builder /krona/apps/backend/src/generated ./src/generated
-COPY --from=builder /krona/node_modules ./node_modules
-
+WORKDIR /krona/apps/backend
 EXPOSE 3000
 CMD ["node", "dist/main.js"]
-#____________________________________________________________________________
