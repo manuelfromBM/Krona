@@ -70,7 +70,7 @@ export default function DashboardSelectorScreen() {
             <Text style={styles.itemLight}>✅ Clientes fieles, frecuentes y más</Text>
   
             <TouchableOpacity style={[styles.button, styles.premiumButton]}
-              onPress={() => navigation.navigate('DashboardPremium')}
+              onPress={() => navigation.navigate("PremiumSubscriptionScreen" as never)}
             >
               <Text style={styles.buttonText}>Entrar Premium</Text>
             </TouchableOpacity>
