@@ -1,4 +1,4 @@
-import FeedPage from "../features/feed/FeedPage";
+import FeedPage from "../../features/Feed/FeedPage";
 
 export default function usuarios() {
     return (
