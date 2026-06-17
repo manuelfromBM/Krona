@@ -1,10 +1,30 @@
+//import { Navbar }   from "./components/Navbar/Navbar";
+//import { Stories }  from "./components/Stories/Stories";
+import { FreeList } from "./components/FreeList/FreeList";
+//import { Footer }   from "./components/Footer/Footer";
+import styles from "./FeedPage.module.css";
 
-const FeedPage = () => {
+export const FeedPage = () => {
     return (
-        <div>
-            <h1>Feed</h1>
-            <p>HOLA MUNDO BB.</p>
-        </div>
+        <>
+            
+
+            <div className={styles.layout}>
+
+              {/* Centro — feed principal */}
+              <main className={styles.center}>
+                
+                <FreeList />
+                
+              </main>
+
+              {/* Derecha — sugerencias/publicidad (puedes llenarlo después) */}
+              <aside className={styles.right}>
+                    {/* <RightPanel /> */}
+              </aside>
+
+            </div>
+        </>
     );
 };
 

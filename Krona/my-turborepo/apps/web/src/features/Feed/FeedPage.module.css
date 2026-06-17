@@ -1,0 +1,28 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  gap: 2rem;
+}
+
+.center {
+  min-width: 0; /* evita overflow en grid */
+}
+
+.right {
+  padding-top: 1rem;
+  position: sticky;
+  top: 80px;
+  height: fit-content;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .right {
+    display: none;
+  }
+}

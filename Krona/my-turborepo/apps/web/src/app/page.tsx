@@ -1,4 +1,5 @@
 import Sidebar from "../components/layout/Sidebar/Sidebar";
+import FeedPage from "../features/Feed/FeedPage";
 
 export default function pagePrincipal() {
     return (
@@ -6,7 +7,8 @@ export default function pagePrincipal() {
             <Sidebar></Sidebar>
 
             <section style={{flex: 1, padding: "2rem"}}>
-                <h1>Feed de Krona</h1>
+                
+                <FeedPage></FeedPage>
             </section>
         </main>
     );
