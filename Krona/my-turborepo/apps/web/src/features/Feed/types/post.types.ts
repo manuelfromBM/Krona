@@ -1,20 +1,10 @@
-export type MediaType = "Image" | "video" | "tiktok" | "carousel";
-
+import { User } from "./user.types";
+import { Media }from "./media.types";
 
 export interface Post {
     id: string;
-    user: {
-        username: string;
-        avatar?: string;
-        initials: string;
-        verified?: boolean;
-        isFollowing?: boolean;
-    };
-    media: {
-        type: MediaType;
-        urls:string[];                  //ESTO ERA PARA IMAGENES Y VIDEOS PARA EL CARRUSEL//
-        duration?: string;              // SOLO VIDEOS EJEMPLO 1M//
-    };
+    user: User;
+    media: Media;
     likes: number;
     likedBy?: string;
     caption: string;
