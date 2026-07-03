@@ -10,8 +10,12 @@ interface StorySlide {
 export interface Story {
     id: string;
     username: string;
-    avatar?: string;
-    initials: string;
+
+    avatar?: string;    //FOTO DEL EMPRENDEDOR
+
+                        // !!!!ESTA INICIAL SE DEJA PARA NO ROMPER EL CODIGO DEL BACKENDT 
+    initials: string; //<=== AL MOMENTO DE ESTAR EN PRODUCION | SI EL CLIENTE NO COLOCA LA 
+                        // IMAGEN SE COLOCARA SU INICIALES!!!
     color?: string;
     time: string;
     slides: StorySlide[]; // URLS DE IMAGEN O VIDEO

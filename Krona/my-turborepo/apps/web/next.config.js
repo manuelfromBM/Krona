@@ -12,6 +12,10 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "viara.cl",
             },
+            {
+                protocol: "https",
+                hostname: "media.istockphoto.com"
+            },
             
         ],
     },

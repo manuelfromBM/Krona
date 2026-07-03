@@ -1,0 +1,21 @@
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.link {
+    font-size: 11px;
+    color: #bbb;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #888;
+}
+
+.copy {
+    font-size: 11px;
+    color: #ccc;
+}

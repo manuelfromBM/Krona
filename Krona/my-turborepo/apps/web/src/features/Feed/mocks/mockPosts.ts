@@ -4,7 +4,7 @@ export const mockPosts: Post[] = [
 
     {
         id: "1",
-        user: { username: "rap_ratcl", initials: "RT", verified: true, isFollowing: true },
+        user: { username: "rap_ratcl", initials: "RT", verified: true, isFollowing: true, avatar: "" },
         media: { 
             type: "image",
             urls: ["https://rapratsupply.com/cdn/shop/files/60D6D4F6-858F-402C-874B-B4564FB2CAB2.png?v=1779256736&width=1920"] 
@@ -16,7 +16,7 @@ export const mockPosts: Post[] = [
     },
     {
         id: "2",
-        user: { username: "Viara", initials: "VR", verified: true, isFollowing: false },
+        user: { username: "Viara", initials: "VR", verified: true, isFollowing: false,  avatar: ""},
         media: { 
             type: "carrusel",
              urls: [
@@ -32,7 +32,7 @@ export const mockPosts: Post[] = [
     },  
     {   
         id: "3",
-        user: { username: "24horaschile", initials: "24", verified: true, isFollowing: false },
+        user: { username: "24horaschile", initials: "24", verified: true, isFollowing: false,  avatar:""},
         media: { 
             type: "video", 
             urls: ["https://media.istockphoto.com/id/2206860352/video/watching-online-news-article-on-mobile-phone-and-laptop.mp4?s=mp4-640x640-is&k=20&c=CxdODOZJTzOy5b2YMaRsrY0Zu2jG_QNfttOx36Q9Zs0="], 

@@ -5,6 +5,8 @@ import Image from "next/image";
 import StoryModal from "./StoryModal/StoryModal";
 import { mockStories } from "../../mocks/mockStories";
 import type { Story } from "../../types/story.types";
+import { useCallback } from "react";
+import { hostname } from "os";
 
 export const Stories = () => {
     const [Stories, setStories] = useState<Story[]>(mockStories);
@@ -18,11 +20,17 @@ export const Stories = () => {
         setSelected(null);
     }
 
-    function markSeen(id: string) {
+    const markSeen = useCallback(( id: string) => {
         setStories(prev =>
-            prev.map(s => s.id === id ? { ...s, seen: true } : s)
+            prev.map(story =>
+                story.id === id
+                ? {...story, seen: true }
+                : story
+            )
         );
-    }
+    }, []);
+
+
     return (
         <>
             <div className={styles.bar}>
@@ -45,9 +53,10 @@ export const Stories = () => {
                                         fill style={{objectFit:"cover"}} 
                                     ></Image>
 
-                                    : <span>{story.initials}</span>
+                                    : <span>{story.initials}</span>   
                                 }
                             </div>
+                            <span className={styles.title}>{story.username}</span>
                         </div>
 
                     </button>

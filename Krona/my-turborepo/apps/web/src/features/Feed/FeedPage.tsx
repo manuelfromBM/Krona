@@ -2,6 +2,7 @@
 //import { Stories }  from "./components/Stories/Stories";
 import { FreeList } from "./components/FreeList/FreeList";
 import { Stories } from "./components/Stories/Stories";
+import { RightPanel } from "../../components/layout/RightPanel/RightPanel";
 //import { Footer }   from "./components/Footer/Footer";
 import styles from "./FeedPage.module.css";
 
@@ -20,7 +21,7 @@ export const FeedPage = () => {
 
               {/* Derecha — sugerencias/publicidad (puedes llenarlo después) */}
               <aside className={styles.right}>
-                    {/* <RightPanel /> */}
+                    { <RightPanel /> }
               </aside>
 
             </div>

@@ -15,7 +15,7 @@ export default function PostCard({ post }: PostCardProps) {
     const [saved, setSaved]         = useState(false);
     const [slide, setSlide]         = useState(0);
     
-    const isCarousel  = post.media.type === "carousel";
+    const isCarousel  = post.media.type === "carrusel";
     const total       = post.media.urls.length;
 
     function goSlide(dir: number) {
@@ -36,7 +36,7 @@ export default function PostCard({ post }: PostCardProps) {
             <div className={styles.header}>
                 <div className={`${styles.avatar} ${!post.user.isFollowing ? styles.hasStory : ""}`}>
                     {post.user.avatar
-                        ? <Image src={post.user.avatar} alt={post.user.username} fill style={{ objectFit:"cover" }} />
+                        ? <Image src={post.user.avatar} alt={post.user.username} fill style={{ objectFit:"cover" }}></Image>
                         : <span>{post.user.initials}</span>
                     }
                 </div>
@@ -66,7 +66,7 @@ export default function PostCard({ post }: PostCardProps) {
             <div className={styles.media}>
 
                 {/* Imagen */}
-                {post.media.type === "Image" && post.media.urls.length > 0 && ( 
+                {post.media.type === "image" && post.media.urls.length > 0 && ( 
                     //Solo muestra la imagen si existe al menos una URL dentro del arreglo.
 
                     <Image
@@ -78,7 +78,7 @@ export default function PostCard({ post }: PostCardProps) {
                 )}
 
                 {/* Video */}
-                {post.media.type === "tiktok" && (
+                {post.media.type === "video" && (
                     <div className={styles.videoWrap}>
                         <iframe
                             width="100%"
