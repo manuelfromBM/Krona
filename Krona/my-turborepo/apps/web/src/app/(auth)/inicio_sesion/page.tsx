@@ -1,7 +1,9 @@
+import { InicioSesionForm } from "../../../features/Auth/components/InicioSesionForm";
+
 export default function InicioSesionPage() {
     return (
         <div>
-            <h1>Inicio de Sesión</h1>
+            <InicioSesionForm />
         </div>
     );
 }

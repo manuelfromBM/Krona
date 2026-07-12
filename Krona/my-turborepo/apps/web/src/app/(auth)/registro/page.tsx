@@ -1,7 +1,9 @@
+import { RegistroForm } from "../../../features/Auth/components/RegistroForm";
+
 export default function registro() {
     return (
         <div>
-            <h1>registro</h1>
+            <RegistroForm />
         </div>
     );
 }

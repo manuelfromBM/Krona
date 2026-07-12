@@ -41,7 +41,6 @@
   overflow: hidden;
 }
 
-/* Decoración de fondo — círculos sutiles */
 .panel_lateral::before {
   content: '';
   position: absolute;
