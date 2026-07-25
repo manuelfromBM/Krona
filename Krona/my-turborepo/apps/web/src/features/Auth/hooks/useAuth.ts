@@ -1,18 +1,16 @@
-import { useCallback, useContext, useState } from "react";
-import { authService, type LoginDTO } from "@packages/services";
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
+import { authService, type LoginDTO, type AuthResponse } from "@packages/services";
 
 export function useAuth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { setAuth } = useContext(AuthContext);
 
-  const login = useCallback(async (data: LoginDTO) => {
+  const login = async (data: LoginDTO): Promise<AuthResponse | null> => {
     setLoading(true);
     setError(null);
     try {
       const response = await authService.iniciosesion(data);
-      setAuth(response.user, response.access_token);
+      // TODO: persistir token (localStorage, cookie, context, etc.)  
       return response;
     } catch (e: unknown) {
       const message = e instanceof Error ? e.message : "Error al iniciar sesion";
@@ -21,7 +19,7 @@ export function useAuth() {
     } finally {
       setLoading(false);
     }
-  }, [setAuth]);
+  };
 
   return { login, loading, error };
 }
