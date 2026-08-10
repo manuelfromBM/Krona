@@ -7,7 +7,10 @@ export default function KronaLogo() {
       alt="Krona"
       height={190}
       width={160}
-      style={{ objectFit: "contain" }}
+      style={{ 
+        objectFit: "contain" 
+        
+      }}
       priority
     />
   );

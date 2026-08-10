@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Heart, MessageCircle } from "lucide-react";
 import styles from "./StoryModal.module.css";
 import type { Story } from "../../../types/story.types";
 
@@ -20,6 +20,13 @@ export default function StoryModal({stories, initialIndex, onClose, onSeen}: Sto
     const [storyIdx, setStoryIdx] = useState(initialIndex);
     const [slideIdx, setSlideIdx] = useState(0);
     const [progress, setProgress] = useState(0);
+
+    // LLAMAMOS LAS VARIABLES DE COMENTARIO Y LIKE DE STORY
+    const [liked, setLiked] = useState(false);
+    const [likes, setLikes] = useState(0);
+    const [showComments, setShowComments] = useState(false);
+    const [comment, setComment] = useState("");
+    const [comments, setComments] = useState<string[]>([]);
 
     //***se podria agregar un contador para recibir los datos con el backen
     // const [contadorHistoria, setContadorHistoria] = useState([]); */
@@ -170,6 +177,64 @@ export default function StoryModal({stories, initialIndex, onClose, onSeen}: Sto
                     <ChevronRight size={24} />
                 </button>
               
+                {/**FOOTER DEL LIKE Y COMENTARIOS */}
+                <div className={styles.footer}>
+
+                    {/**BOTON DE ME GUSTA O LIKE */}
+                    <button 
+                        className={`${styles.actionBtn} ${liked ? styles.liked : ""}`}
+                        onClick={() => { setLiked(p => !p); setLikes(p => p + (liked ? -1 : 1)); }}
+                        aria-label="Me gusta"
+                    >
+                        <Heart size={22} fill={liked ? "#e05252" : "none"} color={liked ? "#e05252" : "#fff"} />
+                        <span>{likes > 0 ? likes : ""}</span>
+                    </button>
+
+                    {/**BOTON DE COMENTARIO */}
+                    <button
+                        className={styles.actionBtn}
+                        onClick={() => setShowComments (p => !p)}
+                        aria-label="Comentar"
+                    >
+                        <MessageCircle size={22} color="#fff"></MessageCircle>
+                        <span>{comments.length > 0 ? comments.length : ""}</span>
+                    </button>
+
+                    {/** INPUT DEL COMENTARIO*/}
+                    <div className={styles.commenInput}>
+                        <input 
+                            type="text"
+                            placeholder="Añade un comentario.."
+                            value={comment}
+                            onChange={e => setComment(e.target.value)}
+                            onKeyDown={e => {
+                                if (e.key === "Enter" && comment.trim()) {
+                                    setComments(p => [...p, comment.trim()]);
+                                    setComment("");
+                                }
+                            }}
+                        ></input>
+                        {comment.trim () && (
+                            <button onClick={() => {
+                                setComments(p => [...p, comment.trim()]);
+                                setComment("");
+                            }}>
+                                Publicar
+                            </button>
+                        )}
+                    </div>
+                </div>
+
+                {/**LISTA DE COMENTARIO */}
+                {showComments && comments.length > 0 && (
+                    <div className={styles.commentsList}>
+                        {comments.map((c, i) => (
+                            <p key={i} className={styles.commentItem}>
+                                <strong>tu</strong> {c}
+                            </p>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
 

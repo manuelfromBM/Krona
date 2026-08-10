@@ -1,0 +1,19 @@
+.banner {
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0d2a1f, #0d3b2e);
+  border: 1px solid rgba(32,178,130,0.2);
+  padding: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.text h3 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.text p  { color: rgba(255,255,255,0.6); font-size: 11px; line-height: 1.4; margin-bottom: 12px; }
+.btn {
+  display: inline-block;
+  background: #20b282; color: #fff;
+  border-radius: 8px; padding: 8px 14px;
+  font-size: 12px; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn:hover { opacity: 0.88; }
+.icon { font-size: 36px; flex-shrink: 0; }

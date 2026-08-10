@@ -98,3 +98,94 @@
 .navBtn:hover { background: rgba(255,255,255,0.3); }
 .left  { left: 10px; }
 .right { right: 10px; }
+
+/* Footer*/
+
+.footer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  z-index: 3;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 13px;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.actionBtn:hover {
+  background: rgba(255,255,255,0.1);
+}
+.actionBtn.liked {
+  color: #e05252;
+}
+
+.commentInput {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 6px 14px;
+}
+
+.commentInput input {
+  flex: 1;
+  background: none;
+  outline: none;
+  color: #fff;
+  font-size: 13px;
+}
+
+.commentInput input::placeholder {
+  color: rgba(255,255,255,0.5); 
+}
+
+.commentInput button {
+  background: none;
+  border: none;
+  color: #4B3FA0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Lista comentarios */
+.commentsList {
+  position: absolute;
+  bottom: 64px; left: 0; right: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 3;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+
+.commentItem {
+  font-size: 13px;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.commentItem strong {
+  font-weight: 600;
+  margin-right: 5px;
+}

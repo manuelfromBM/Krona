@@ -4,7 +4,6 @@ import { Media }from "./media.types";
 export interface Post {
     id: string;
     user: User;
-    avatar: string;
     media: Media;
     likes: number;
     likedBy?: string;

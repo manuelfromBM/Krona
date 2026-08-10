@@ -1,11 +1,11 @@
 import type { Story } from "../types/story.types";
 
-export const mockStories: Story[] = [
+export const mockStories: Story [] = [
     { 
         id:"1", 
         username:"Barberia_",
         avatar: "https://media.istockphoto.com/id/95421130/photo/neon-beauty-salon-sign.jpg?s=2048x2048&w=is&k=20&c=pXlgOby4OckSxSdBbmF69RQM05tkQylbbQKs_egnUd4=",
-        initials:"BA",      //ACA DEBERIA SALIR LA FOTO DEL USUARIO
+        initials:"BA",      
         time: "hace 2h",
         slides:[ {
             type: "video",

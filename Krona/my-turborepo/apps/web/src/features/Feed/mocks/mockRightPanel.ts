@@ -20,6 +20,4 @@ export const mockAd: AdBanner = {
     ctaHref: "/negocios/fleiva-burger",
 
     
-
-    
 };

@@ -1,32 +1,40 @@
-//import { Navbar }   from "./components/Navbar/Navbar";
-//import { Stories }  from "./components/Stories/Stories";
-import { FreeList } from "./components/FreeList/FreeList";
-import { Stories } from "./components/Stories/Stories";
-import { RightPanel } from "../../components/layout/RightPanel/RightPanel";
-//import { Footer }   from "./components/Footer/Footer";
 import styles from "./FeedPage.module.css";
 
-export const FeedPage = () => {
-    return (
-        <>
-            <div className={styles.layout}>
+import { Stories } from "./components/Stories/Stories";
+import PostCard from "./components/PostCard/PostCard";
+import { CenterPanel } from "./components/CenterPanel/CenterPanel";
 
-              {/* Centro — feed principal */}
-              <main className={styles.center}>
-                <Stories/>
-                
-                <FreeList />
-                
-              </main>
+import { mockPosts } from "./mocks/mockPosts";
 
-              {/* Derecha — sugerencias/publicidad (puedes llenarlo después) */}
-              <aside className={styles.right}>
-                    { <RightPanel /> }
-              </aside>
+export default function FeedPage() {
+  return (
+    <div className={styles.feed}>
 
-            </div>
-        </>
-    );
-};
+      {/* HISTORIAS */}
+      <section className={styles.storiesSection}>
+        <Stories />
+      </section>
 
-export default FeedPage;
+      {/* CONTENIDO PRINCIPAL */}
+      <div className={styles.feedContent}>
+
+        {/* PUBLICACIONES */}
+        <section className={styles.postsSection}>
+          {mockPosts.map((post) => (
+            <PostCard
+              key={post.id}
+              post={post}
+            />
+          ))}
+        </section>
+
+        {/* PANEL DE APOYO */}
+        <aside className={styles.centerPanel}>
+          <CenterPanel />
+        </aside>
+
+      </div>
+
+    </div>
+  );
+}

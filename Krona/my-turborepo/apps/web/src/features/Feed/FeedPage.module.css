@@ -1,28 +1,82 @@
-.layout {
+.feed {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+
+/* ─────────────────────────
+   STORIES
+───────────────────────── */
+
+.storiesSection {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* ─────────────────────────
+   CONTENIDO INFERIOR
+───────────────────────── */
+
+.feedContent {
   display: grid;
-  grid-template-columns: 1fr 350px;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  gap: 2rem;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    300px;
+
+  gap: 20px;
+
+  width: 100%;
+  min-width: 0;
+
+  align-items: start;
 }
 
-.center {
-  min-width: 0; /* evita overflow en grid */
+
+/* ─────────────────────────
+   POSTS
+───────────────────────── */
+
+.postsSection {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
 }
 
-.right {
-  padding-top: 1rem;
+
+/* ─────────────────────────
+   CENTER PANEL
+───────────────────────── */
+
+.centerPanel {
+  width: 100%;
+  min-width: 0;
+
   position: sticky;
-  top: 80px;
-  height: fit-content;
+  top: 84px;
 }
 
-@media (max-width: 900px) {
-  .layout {
+
+/* ─────────────────────────
+   RESPONSIVE
+───────────────────────── */
+
+@media (max-width: 1250px) {
+  .feedContent {
     grid-template-columns: 1fr;
   }
-  .right {
-    display: none;
+
+  .centerPanel {
+    position: static;
   }
 }

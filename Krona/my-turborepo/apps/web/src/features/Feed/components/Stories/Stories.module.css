@@ -1,69 +1,291 @@
-.bar {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  padding: 15px 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.bar::-webkit-scrollbar { display: none; }
+.wrap {
+  width: 100%;
+  min-width: 0;
 
-.item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  flex-shrink: 0;
-}
+  box-sizing: border-box;
 
-.ring {
-  width: 80px; 
-  height: 80px;
-  border-radius: 50%;
-  padding: 3px;
-  background: linear-gradient(135deg, #1B3A6B, #4B3FA0, #2ECC71);
-  transition: transform 0.2s;
-}
-.ring:hover { transform: scale(1.06); }
-.ring.seen  { background: #ddd; }
+  background: #fff;
 
-.avatar {
-  width: 100%; 
-  height: 100%;
-  border-radius: 50%;
-  background: #f0f0f0;
-  border: 2.5px solid #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 600; color: #555;
-  position: relative;
+  border-radius: 16px;
+  border: 1px solid #ebebeb;
+
+  padding: 12px 14px;
+
   overflow: hidden;
 }
+
+/* Fila horizontal de historias */
+.bar {
+  width: 100%;
+
+  display: flex;
+  align-items: stretch;
+
+  gap: 10px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.bar::-webkit-scrollbar {
+  display: none;
+}
+
+.bar::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* ─────────────────────────
+   TARJETAS
+───────────────────────── */
+
+.card {
+  width: 120px;
+  min-width: 120px;
+  height: 160px;
+
+  flex: 0 0 120px;
+
+  position: relative;
+
+  border: none;
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  padding: 0;
+
+  cursor: pointer;
+
+  background: #1B3A6B;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.card.seen {
+  opacity: 0.65;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card.seen {
+  opacity: 0.6;
+}
+
+
+/* ─────────────────────────
+   CREAR HISTORIA
+───────────────────────── */
+
+.createCard {
+  background: #f0f0f8;
+
+  border: 2px dashed #c0b8e8;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+}
+
+.createPlus {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  background: #1B3A6B;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.createLabel {
+  font-size: 11px;
+  font-weight: 600;
+
+  color: #1B3A6B;
+
+  text-align: center;
+  line-height: 1.3;
+}
+
+
+/* ─────────────────────────
+   FONDO
+───────────────────────── */
+
+.colorBg {
+  position: absolute;
+  inset: 0;
+}
+
+
+/* ─────────────────────────
+   OVERLAY
+───────────────────────── */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.2) 55%,
+    transparent 100%
+  );
+}
+
+
+/* ─────────────────────────
+   AVATAR
+───────────────────────── */
+
+.storyAvatar {
+  position: absolute;
+
+  top: 8px;
+  left: 8px;
+
+  z-index: 2;
+}
+
+.initials {
+  width: 26px;
+  height: 26px;
+
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  color: #1B3A6B;
+}
+
+
+/* ─────────────────────────
+   INFORMACIÓN
+───────────────────────── */
+
+.bottom {
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 8px;
+
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+
+/* ─────────────────────────
+   BADGES
+───────────────────────── */
+
+.badge {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 3px;
+
+  padding: 2px 7px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  width: fit-content;
+
+  margin-bottom: 2px;
+}
+
+.badgeGreen {
+  background: rgba(32, 178, 130, 0.92);
+  color: #fff;
+}
+
+.badgeOrange {
+  background: rgba(255, 152, 0, 0.92);
+  color: #fff;
+}
+
+.badgeBlue {
+  background: rgba(27, 58, 107, 0.92);
+  color: #fff;
+}
+
+.badgePurple {
+  background: rgba(75, 63, 160, 0.92);
+  color: #fff;
+}
+
+
+/* ─────────────────────────
+   TEXTO
+───────────────────────── */
 
 .name {
   font-size: 11px;
-  color: #777;
-  max-width: 64px;
+  font-weight: 700;
+
+  color: #fff;
+
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.title {
-  margin-top:8px;
-  width:82px;
-  text-align:center;
-  font-size:13px;
-  font-weight:600;
-  color:#6f5ca5;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
+.sub {
+  font-size: 9px;
 
+  color: rgba(255, 255, 255, 0.75);
 }
 
-.title {
-  color: #82719e;
+
+/* ─────────────────────────
+   RESPONSIVE
+───────────────────────── */
+
+@media (max-width: 768px) {
+  .wrap {
+    border-radius: 12px;
+    padding: 10px;
+  }
+
+  .card {
+    width: 105px;
+    min-width: 105px;
+    height: 145px;
+  }
 }

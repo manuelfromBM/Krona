@@ -1,26 +1,53 @@
-import styles from './NavBar.module.css'
+"use client";
+import { useState } from "react";
+import { Search, MapPin, Bell, ChevronDown } from "lucide-react";
+import Image from "next/image";
+import styles from "./Navbar.module.css";
 
-export default function Navbar() {
-    return (
-        <nav className={styles.navbar}>
-            <div className={styles.container}>
+export const NavBar = () => {
+  const [notifs] = useState(3);
 
-                <div className={styles.logo}>
-                    Krona
-                </div>
+  return (
+    <header className={styles.navbar}>
 
-                <ul className={styles.links}>
-                    <li>Servicios</li>
-                    <li>Cómo funciona</li>
-                    <li>Precios</li>
-                </ul>
+      {/* Buscador */}
+      <div className={styles.search}>
+        <Search size={16} className={styles.searchIcon} />
+        <input
+          type="text"
+          placeholder="Buscar servicios o negocios"
+        />
+      </div>
 
-                <div className={styles.actions}>
-                    <button className={styles.login}>Ingresar</button>
-                    <button className={styles.signup}>Comenzar</button>
-                </div>
+      {/* Derecha */}
+      <div className={styles.right}>
 
-            </div>
-        </nav>
-    )
-}
+        {/* Ubicación */}
+        <button className={styles.location}>
+          <MapPin size={14} className={styles.locationPin} />
+          <span>Santiago, Chile</span>
+        </button>
+
+        {/* Notificaciones */}
+        <button className={styles.notifBtn} aria-label="Notificaciones">
+          <Bell size={18} />
+          {notifs > 0 && (
+            <span className={styles.notifBadge}>{notifs}</span>
+          )}
+        </button>
+
+        {/* Avatar */}
+        <button className={styles.avatarBtn}>
+          <div className={styles.avatar}>
+            {/* Cuando tengas auth real, pon la imagen del usuario */}
+            <span>EA</span>
+          </div>
+          <ChevronDown size={14} className={styles.chevron} />
+        </button>
+
+      </div>
+    </header>
+  );
+};
+
+export default  NavBar;
