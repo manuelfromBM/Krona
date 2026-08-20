@@ -1,40 +1,31 @@
 import styles from "./MainLayout.module.css";
 
 import Sidebar from "../Sidebar/Sidebar";
-import { NavBar } from "../Navbar/NavBar";
+import Navbar  from "../Navbar/Navbar";
 
 interface MainLayoutProps {
   center: React.ReactNode;
   right: React.ReactNode;
 }
 
-export default function MainLayout({
-  center,
-  right,
-}: MainLayoutProps) {
+export default function MainLayout({ center, right, }: MainLayoutProps) {
   return (
     <div className={styles.container}>
-
-      {/* SIDEBAR */}
-      <div className={styles.sidebarArea}>
+      <aside className={styles.sidebar}>
         <Sidebar />
-      </div>
+      </aside>
 
-      {/* NAVBAR SUPERIOR */}
-      <div className={styles.navbarArea}>
-        <NavBar />
-      </div>
+      <header className={styles.navbar}>
+        <Navbar></Navbar>
+      </header>
 
-      {/* CONTENIDO PRINCIPAL */}
       <main className={styles.content}>
         {center}
       </main>
 
-      {/* PANEL DERECHO */}
       <aside className={styles.right}>
         {right}
       </aside>
-
     </div>
   );
 }

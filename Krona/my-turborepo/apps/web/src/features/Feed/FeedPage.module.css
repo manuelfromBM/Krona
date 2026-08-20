@@ -5,46 +5,42 @@
   display: flex;
   flex-direction: column;
 
-  gap: 18px;
+  gap: 16px;
 }
 
 
-/* ─────────────────────────
-   STORIES
-───────────────────────── */
+/* STORIES */
 
-.storiesSection {
+.stories {
   width: 100%;
   min-width: 0;
 }
 
 
-/* ─────────────────────────
-   CONTENIDO INFERIOR
-───────────────────────── */
+/* POST + PANEL */
 
-.feedContent {
+.content {
+  width: 100%;
+  min-width: 0;
+
   display: grid;
 
   grid-template-columns:
-    minmax(0, 1fr)
-    300px;
+    minmax(0, 640px)
+    280px;
 
   gap: 20px;
 
-  width: 100%;
-  min-width: 0;
-
   align-items: start;
+  justify-content: center;
 }
 
 
-/* ─────────────────────────
-   POSTS
-───────────────────────── */
+/* POSTS */
 
-.postsSection {
+.posts {
   width: 100%;
+  max-width: 640px;
   min-width: 0;
 
   display: flex;
@@ -53,30 +49,24 @@
   gap: 18px;
 }
 
-
-/* ─────────────────────────
-   CENTER PANEL
-───────────────────────── */
+/* CENTER PANEL */
 
 .centerPanel {
   width: 100%;
   min-width: 0;
 
   position: sticky;
-  top: 84px;
+
+  top: 90px;
 }
 
 
-/* ─────────────────────────
-   RESPONSIVE
-───────────────────────── */
-
 @media (max-width: 1250px) {
-  .feedContent {
+  .content {
     grid-template-columns: 1fr;
   }
 
   .centerPanel {
-    position: static;
+    display: none;
   }
 }

@@ -9,17 +9,12 @@ import { mockPosts } from "./mocks/mockPosts";
 export default function FeedPage() {
   return (
     <div className={styles.feed}>
-
-      {/* HISTORIAS */}
-      <section className={styles.storiesSection}>
+      <section className={styles.stories}>
         <Stories />
       </section>
 
-      {/* CONTENIDO PRINCIPAL */}
-      <div className={styles.feedContent}>
-
-        {/* PUBLICACIONES */}
-        <section className={styles.postsSection}>
+      <div className={styles.content}>
+        <section className={styles.posts}>
           {mockPosts.map((post) => (
             <PostCard
               key={post.id}
@@ -28,13 +23,10 @@ export default function FeedPage() {
           ))}
         </section>
 
-        {/* PANEL DE APOYO */}
         <aside className={styles.centerPanel}>
           <CenterPanel />
         </aside>
-
       </div>
-
     </div>
   );
 }
