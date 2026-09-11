@@ -1,7 +1,13 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 //ACA SE AGREGA LOS DOMINIOS DE LAS IAMGENES SEGUN SU THHPS O TIPOCO //NOMBRE
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    outputFileTracingRoot: repoRoot,
     images: {
         remotePatterns: [
             {

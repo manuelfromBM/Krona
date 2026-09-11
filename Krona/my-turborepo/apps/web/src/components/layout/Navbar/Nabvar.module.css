@@ -98,50 +98,6 @@
 }
 
 
-/* NOTIFICACIÓN */
-
-.notification {
-  position: relative;
-
-  width: 40px;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: none;
-  border-radius: 50%;
-
-  background: #f3f4f6;
-
-  cursor: pointer;
-}
-
-.badge {
-  position: absolute;
-
-  top: -2px;
-  right: -2px;
-
-  min-width: 17px;
-  height: 17px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 2px solid #ffffff;
-  border-radius: 50%;
-
-  background: #ef4444;
-
-  color: #ffffff;
-
-  font-size: 9px;
-}
-
-
 /* PERFIL */
 
 .profile {

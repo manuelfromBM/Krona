@@ -1,193 +1,120 @@
 "use client";
-import { useState } from "react";
-import { Heart, MessageCircle, Send, Bookmark, ChevronLeft, ChevronRight, MoreHorizontal, CheckCircle2, LayoutGrid, Play } from "lucide-react";
+
 import styles from "./PostCard.module.css";
+import { UsePostActions } from "../../hooks/usePostActions";
 import type { Post } from "../../types/post.types";
-import Image from "next/image";
+import { PostHeader } from "./Header/PostHeader";
+import { PostMedia } from "./Media/PostMedia";
+import { PostActions } from "./Actions/PostActions";
+import { CommentsPanel } from "./Comments/CommentsPanel";
+import { SharePanel } from "./Share/SharePanel";
+import ReservationModal from "./Reservation/ReservationModal";
+import { ReservationToast } from "./Reservation/ReservationToast";
+import { useComments } from "./hooks/useComments";
+import { useReservation } from "./hooks/useReservation";
+import { useShare } from "./hooks/useShare";
 
 interface PostCardProps {
-    post: Post;
+  post: Post;
 }
 
+// PostCard solo coordina los módulos que componen una publicación.
 export default function PostCard({ post }: PostCardProps) {
-    const [liked, setLiked]         = useState(false);
-    const [likes, setLikes]         = useState(post.likes);
-    const [saved, setSaved]         = useState(false);
-    const [slide, setSlide]         = useState(0);
-    
-    const isCarousel  = post.media.type === "carrusel";
-    const total       = post.media.urls.length;
+  const actions = UsePostActions({
+    initialLiked: false,
+    initialSaved: false,
+    initialFollowing: post.user.isFollowing ?? false,
+    initialLikes: post.likes,
+  });
+  const comments = useComments(post.commentsCount);
+  const share = useShare();
+  const reservation = useReservation();
 
-    function goSlide(dir: number) {
-        setSlide(prev => {
-            const next = prev + dir;
-            
-            if (next <0) return total - 1;
-            if (next >= total) return 0;
+  const commentsPanelId = `comments-${post.id}`;
+  const sharePanelId = `share-${post.id}`;
 
-            return next;
-        });
-    };
+  return (
+    <>
+      <article id={`post-${post.id}`} className={styles.card}>
+        <PostHeader
+          post={post}
+          following={actions.following}
+          onToggleFollow={actions.toggleFollow}
+        />
 
-    return (
-        <article className={styles.card}>
+        <PostMedia post={post} />
 
-            {/* ── Header ── */}
-            <div className={styles.header}>
-                <div className={`${styles.avatar} ${!post.user.isFollowing ? styles.hasStory : ""}`}>
-                    {post.user.avatar
-                        ? <Image src={post.user.avatar} alt={post.user.username} fill style={{ objectFit:"cover" }}></Image>
-                        : <span>{post.user.initials}</span>
-                    }
-                </div>
-            
-              <div className={styles.meta}>
-                    <strong>
-                        {post.user.username}
-                        {post.user.verified && <CheckCircle2 size={13} className={styles.verified} />}
-                    </strong>
-                    <span>
-                        {post.createdAt}
-                        {post.isSuggestion && " · Sugerencia"}
-                    </span>
-              </div>
-            
-              {post.user.isFollowing === false && (
-                <button className={styles.followBtn}>Seguir</button>
-              )}
+        <div className={styles.body}>
+          <PostActions
+            liked={actions.liked}
+            likes={actions.likes}
+            saved={actions.saved}
+            reserved={reservation.isReserved}
+            commentsOpen={comments.isOpen}
+            commentsTotal={comments.total}
+            commentsPanelId={commentsPanelId}
+            shareOpen={share.isOpen}
+            sharePanelId={sharePanelId}
+            onToggleLike={actions.toggleLike}
+            onToggleComments={comments.toggle}
+            onToggleShare={share.toggle}
+            onToggleSave={actions.toggleSave}
+            onReserve={reservation.open}
+          />
 
-              <button className={styles.menuBtn} aria-label="Opciones">
-                <MoreHorizontal size={18} />
-              </button>
-              
-            </div>
-          
-            {/* ── Media ── */}
-            <div className={styles.media}>
+          {share.isOpen && (
+            <SharePanel id={sharePanelId} message={share.message} onSelect={share.selectOption} />
+          )}
 
-                {/* Imagen */}
-                {post.media.type === "image" && post.media.urls.length > 0 && ( 
-                    //Solo muestra la imagen si existe al menos una URL dentro del arreglo.
+          {post.likedBy ? (
+            <p className={styles.likedBy}>
+              Les gusta a <strong>{post.likedBy}</strong> y otras personas
+            </p>
+          ) : (
+            <p className={styles.likedBy}><strong>{actions.likes} me gusta</strong></p>
+          )}
 
-                    <Image
-                        src={post.media.urls[0]!}
-                        alt={post.caption}
-                        width={600} height={480}
-                        style={{ width:"100%", height:"auto", objectFit:"cover" }}
-                    ></Image>
-                )}
+          <p className={styles.caption}>
+            <strong>{post.user.username}</strong> {post.caption}
+          </p>
 
-                {/* Video */}
-                {post.media.type === "video" && (
-                    <div className={styles.videoWrap}>
-                        <iframe
-                            width="100%"
-                            height="680"
-                            src="https://media.istockphoto.com/id/2206860352/video/watching-online-news-article-on-mobile-phone-and-laptop.mp4?s=mp4-640x640-is&k=20&c=CxdODOZJTzOy5b2YMaRsrY0Zu2jG_QNfttOx36Q9Zs0="
-                            title="YouTube video player"
-                            allowFullScreen 
-                            //src={post.media.urls[0]} 
-                            //controls 
-                            className={styles.video}
-                        />
+          {comments.total > 0 && (
+            <button
+              type="button"
+              className={styles.commentsLink}
+              onClick={comments.toggle}
+              aria-expanded={comments.isOpen}
+              aria-controls={commentsPanelId}
+            >
+              {comments.isOpen ? "Ocultar" : "Ver los"} {comments.total} comentarios
+            </button>
+          )}
 
-                        <div className={styles.videoBadge}>
-                            <Play size={11} /> {post.media.duration}
-                        </div>
-                    </div>
-                )}
+          {comments.isOpen && (
+            <CommentsPanel
+              id={commentsPanelId}
+              initialCount={post.commentsCount}
+              initialComments={post.comments}
+              comments={comments.comments}
+              draft={comments.draft}
+              onDraftChange={comments.setDraft}
+              onSubmit={comments.submit}
+            />
+          )}
 
-                {/* Carrusel */}
-                {isCarousel && (
-                    <div className={styles.carousel}>
-                        <div
-                            className={styles.track}
-                            style={{ transform: `translateX(-${slide * 100}%)` }}
-                        >
-                            {post.media.urls.map((url, i) => (
-                                <div key={i} className={styles.slide}>
-                                    <Image src={url} alt={`Slide ${i+1}`} width={600} height={480}
-                                        style={{ width:"100%", height:"auto", objectFit:"cover" }} />
-                                </div>
-                            ))}
-                        </div>
-                      
-                        {slide > 0 && (
-                            <button className={`${styles.carBtn} ${styles.prev}`}
-                                onClick={() => goSlide(-1)} aria-label="Anterior">
-                                <ChevronLeft size={16} />
-                            </button>
-                        )}
+          <span className={styles.time}>{post.createdAt}</span>
+        </div>
+      </article>
 
-                        {slide < total - 1 && (
-                            <button className={`${styles.carBtn} ${styles.next}`}
-                                onClick={() => goSlide(1)} aria-label="Siguiente">
-                                <ChevronRight size={16} />
-                            </button>
-                        )}
+      {reservation.isOpen && (
+        <ReservationModal
+          businessName={post.user.username}
+          onClose={reservation.close}
+          onConfirm={reservation.confirm}
+        />
+      )}
 
-                        <div className={styles.dots}>
-                            {post.media.urls.map((_, i) => (
-                                <span key={i} className={`${styles.dot} ${i === slide ? styles.active : ""}`} />
-                            ))}
-                        </div>
-                      
-                        <div className={styles.badge}>
-                            <LayoutGrid size={11} /> {slide + 1}/{total}
-                        </div>
-                    </div>
-                )}
-            </div>
-          
-            {/* ── Body ── */}
-            <div className={styles.body}>
-                <div className={styles.reactions}>
-                    <button
-                        className={`${styles.reactBtn} ${liked ? styles.liked : ""}`}
-                        onClick={() => { setLiked(p => !p); setLikes(p => p + (liked ? -1 : 1)); }}
-                        aria-label="Me gusta"
-                    >
-                        <Heart size={22} fill={liked ? "#e05252" : "none"} />
-                        <span>{likes}</span>
-                    </button>
-
-                    <button className={styles.reactBtn} aria-label="Comentar">
-                        <MessageCircle size={22} />
-                        <span>{post.commentsCount}</span>
-                    </button>
-
-                    <button className={styles.reactBtn} aria-label="Compartir">
-                        <Send size={20} />
-                    </button>
-
-                    <button
-                        className={`${styles.saveBtn} ${saved ? styles.saved : ""}`}
-                        onClick={() => setSaved(p => !p)}
-                        aria-label="Guardar"
-                    >
-                        <Bookmark size={20} fill={saved ? "#1B3A6B" : "none"} />
-                    </button>
-                </div>
-                
-                {post.likedBy
-                    ? <p className={styles.likedBy}>Les gusta a <strong>{post.likedBy}</strong> y otras personas</p>
-                    : <p className={styles.likedBy}><strong>{likes} me gusta</strong></p>
-                }
-
-                <p className={styles.caption}>
-                    <strong>{post.user.username}</strong>{" "}
-                    {post.caption}
-                </p>
-              
-                {post.commentsCount > 0 && (
-                    <button className={styles.commentsLink}>
-                        Ver los {post.commentsCount} comentarios
-                    </button>
-                )}
-
-                <span className={styles.time}>{post.createdAt}</span>
-            </div>
-
-        </article>
-    );
-};
+      {reservation.notice && <ReservationToast message={reservation.notice} />}
+    </>
+  );
+}

@@ -1,6 +1,6 @@
-import FeedPage from "../../features/Feed/FeedPage";
+import FeedPage from "../../../features/Feed/FeedPage";
 
-export default function usuarios() {
+export default function UsuariosPage() {
     return (
         <div>
             <FeedPage />

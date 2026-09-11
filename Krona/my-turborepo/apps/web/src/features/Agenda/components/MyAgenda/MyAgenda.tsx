@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import { ChevronDown, ChevronUp, UserRound } from "lucide-react";
 
 import styles from "./MyAgenda.module.css";
-
 import type { AgendaItem } from "../../types/agenda.types";
-import { mock } from "node:test";
 
 interface MyAgendaProps {
   appointments: AgendaItem[];
@@ -13,141 +13,91 @@ interface MyAgendaProps {
 
 type AgendaTab = "proximas" | "reservas" | "pasadas";
 
-export const MyAgenda = ({
-  appointments,
-}: MyAgendaProps) => {
-  const [activeTab, setActiveTab] =
-    useState<AgendaTab>("proximas");
+export const MyAgenda = ({ appointments }: MyAgendaProps) => {
+  const [activeTab, setActiveTab] = useState<AgendaTab>("proximas");
+
+  // CONTROLA SI LA AGENDA ESTÁ ABIERTA O CONTRAÍDA.
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <section className={styles.card}>
-      {/* CABECERA */}
+    <section className={`${styles.card} ${!isOpen ? styles.collapsed : ""}`}>
+      {/* CABECERA: permanece visible incluso cuando la agenda está cerrada. */}
       <div className={styles.header}>
-        <div>
-          <span className={styles.eyebrow}>
-            AGENDA
-          </span>
-
-          <h3 className={styles.title}>
-            Mi agenda
-          </h3>
-        </div>
-
+        <h3 className={styles.title}>Mi agenda</h3>
         <button
           type="button"
-          className={styles.closeBtn}
+          className={styles.toggleBtn}
+          onClick={() => setIsOpen((current) => !current)}
+          aria-expanded={isOpen}
+          aria-controls="my-agenda-content"
         >
-          Cerrar
+          {isOpen ? "Cerrar" : "Abrir"}
+          {isOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
         </button>
       </div>
 
-      {/* TABS */}
-      <div className={styles.tabs}>
-        <button
-          type="button"
-          className={`${styles.tab} ${
-            activeTab === "proximas"
-              ? styles.activeTab
-              : ""
-          }`}
-          onClick={() =>
-            setActiveTab("proximas")
-          }
-        >
-          Próximas
-        </button>
-
-        <button
-          type="button"
-          className={`${styles.tab} ${
-            activeTab === "reservas"
-              ? styles.activeTab
-              : ""
-          }`}
-          onClick={() =>
-            setActiveTab("reservas")
-          }
-        >
-          Reservas
-        </button>
-
-        <button
-          type="button"
-          className={`${styles.tab} ${
-            activeTab === "pasadas"
-              ? styles.activeTab
-              : ""
-          }`}
-          onClick={() =>
-            setActiveTab("pasadas")
-          }
-        >
-          Pasadas
-        </button>
-      </div>
-
-      {/* CONTENIDO */}
-      <div className={styles.list}>
-        {activeTab === "proximas" &&
-          appointments
-            .slice(0, 3)
-            .map((appointment) => (
-              <div
-                key={appointment.id}
-                className={styles.item}
+      {/* El contenido aparece hacia abajo al presionar Abrir. */}
+      {isOpen && (
+        <div id="my-agenda-content" className={styles.content}>
+          {/* PESTAÑAS DE LA AGENDA */}
+          <div className={styles.tabs} role="tablist" aria-label="Secciones de agenda">
+            {(["proximas", "reservas", "pasadas"] as AgendaTab[]).map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                className={`${styles.tab} ${activeTab === tab ? styles.activeTab : ""}`}
+                onClick={() => setActiveTab(tab)}
+                role="tab"
+                aria-selected={activeTab === tab}
               >
-                <div className={styles.time}>
-                  {appointment.time}
+                {tab === "proximas" ? "Próximas" : tab === "reservas" ? "Reservas" : "Pasadas"}
+              </button>
+            ))}
+          </div>
+
+          {/* RESERVAS PRÓXIMAS CON FOTO, SERVICIO, FECHA, HORA Y NEGOCIO. */}
+          <div className={styles.list}>
+            {activeTab === "proximas" && appointments.slice(0, 3).map((appointment) => (
+              <article key={appointment.id} className={styles.item}>
+                <div className={styles.avatar}>
+                  {appointment.avatar ? (
+                    <Image
+                      src={appointment.avatar}
+                      alt={appointment.businessName ?? appointment.service}
+                      width={38}
+                      height={38}
+                    />
+                  ) : (
+                    <span>{appointment.clientName.slice(0, 2).toUpperCase()}</span>
+                  )}
                 </div>
 
                 <div className={styles.info}>
-                  <p>
-                    {appointment.clientName}
-                  </p>
-
-                  <span>
-                    {appointment.service}
-                  </span>
+                  <p>{appointment.service}</p>
+                  <span>{appointment.date} · {appointment.time}</span>
+                  <small>{appointment.businessName ?? appointment.clientName}</small>
                 </div>
 
-                <span
-                  className={`${styles.status} ${
-                    styles[appointment.status]
-                  }`}
-                >
-                  {appointment.status}
-                </span>
-              </div>
+                <UserRound size={18} className={styles.userIcon} aria-hidden="true" />
+              </article>
             ))}
 
-        {activeTab === "reservas" && (
-          <div className={styles.empty}>
-            <p>
-              Todas tus reservas aparecerán
-              aquí.
-            </p>
+            {activeTab === "reservas" && (
+              <div className={styles.empty}>Todas tus reservas aparecerán aquí.</div>
+            )}
+            {activeTab === "pasadas" && (
+              <div className={styles.empty}>Tus reservas pasadas aparecerán aquí.</div>
+            )}
           </div>
-        )}
 
-        {activeTab === "pasadas" && (
-          <div className={styles.empty}>
-            <p>
-              Tus reservas pasadas aparecerán
-              aquí.
-            </p>
+          {/* Solo visual: la navegación será implementada por otro integrante. */}
+          <div className={styles.footer}>
+            <button type="button" className={styles.viewAll}>
+              Ver todas mis reservas <span aria-hidden="true">→</span>
+            </button>
           </div>
-        )}
-      </div>
-
-      {/* FOOTER */}
-      <div className={styles.footer}>
-        <button
-          type="button"
-          className={styles.viewAll}
-        >
-          Ver todas mis reservas →
-        </button>
-      </div>
+        </div>
+      )}
     </section>
   );
 };

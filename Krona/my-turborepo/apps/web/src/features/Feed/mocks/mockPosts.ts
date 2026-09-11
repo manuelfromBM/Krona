@@ -19,6 +19,22 @@ export const mockPosts: Post[] = [
         likes: 329, likedBy: "raulito.prou",
         caption: "La temperatura ya comenzo y nosotros estamos trabajando para traerles una oferta imperdible para quienes quieran su conjunto completo.",
         commentsCount: 31,
+        comments: [
+            {
+                id: "comment-1-1",
+                username: "Juan P.",
+                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=96&h=96&fit=crop",
+                text: "Excelente atención y muy profesional 👌",
+                createdAt: "2 h",
+            },
+            {
+                id: "comment-1-2",
+                username: "María G.",
+                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop",
+                text: "Me encantó el resultado, 100% recomendado.",
+                createdAt: "1 h",
+            },
+        ],
         createdAt: "hace 9 horas",
     },
     {
@@ -40,6 +56,22 @@ export const mockPosts: Post[] = [
         likes: 148,
         caption: "Descubre los mejores negocios cerca de ti ",
         commentsCount: 12,
+        comments: [
+            {
+                id: "comment-2-1",
+                username: "Camila R.",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=96&h=96&fit=crop",
+                text: "Qué lindo trabajo, quiero reservar una hora.",
+                createdAt: "45 min",
+            },
+            {
+                id: "comment-2-2",
+                username: "Sofía M.",
+                avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=96&h=96&fit=crop",
+                text: "La atención es excelente 💚",
+                createdAt: "20 min",
+            },
+        ],
         createdAt: "hace 2 horas",
     },  
     {   
@@ -57,6 +89,22 @@ export const mockPosts: Post[] = [
         likes: 892,
         caption: "Últimas noticias del día en vivo.",
         commentsCount: 74,
+        comments: [
+            {
+                id: "comment-3-1",
+                username: "Diego A.",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop",
+                text: "Gracias por mantenernos informados.",
+                createdAt: "3 h",
+            },
+            {
+                id: "comment-3-2",
+                username: "Valentina C.",
+                avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=96&h=96&fit=crop",
+                text: "Muy buena cobertura de la noticia.",
+                createdAt: "2 h",
+            },
+        ],
         createdAt: "hace 7 horas",
         isSuggestion: true,
     },

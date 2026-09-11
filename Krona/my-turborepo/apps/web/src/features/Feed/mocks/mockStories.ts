@@ -81,6 +81,7 @@ export const mockStories: Story [] = [
     { 
         id:"7",
         username:"Tecnico_ip",
+        avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=96&h=96&fit=crop",
         initials:"TI", 
         time: "hace 20h", 
         slides:[

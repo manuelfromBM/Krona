@@ -8,4 +8,6 @@ export interface AgendaItem {
     | "confirmada"
     | "pendiente"
     | "cancelada";
+  businessName?: string;
+  avatar?: string;
 }

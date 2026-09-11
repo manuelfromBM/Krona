@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 
-import { Search, MapPin, Bell, ChevronDown, } from "lucide-react";
+import { Search, MapPin, ChevronDown } from "lucide-react";
 
 import styles from "./Nabvar.module.css";
+import { NotificationBell } from "./Notifications/NotificationBell";
 
 export const Navbar = () => {
   return (
@@ -30,16 +31,7 @@ export const Navbar = () => {
           <span>Santiago, Chile</span>
         </button>
 
-        <button
-          className={styles.notification}
-          type="button"
-        >
-          <Bell size={19} />
-
-          <span className={styles.badge}>
-            3
-          </span>
-        </button>
+        <NotificationBell />
 
         <button
           className={styles.profile}

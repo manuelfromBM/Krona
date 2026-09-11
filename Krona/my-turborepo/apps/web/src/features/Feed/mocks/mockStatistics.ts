@@ -1,4 +1,4 @@
-import type { StatisticsData } from "../types/statistics.types";
+import type { StatisticsData } from "../../Statistics/types/statistics.types";
 
 export const mockStatistics: StatisticsData = {
   reservations: 24,

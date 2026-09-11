@@ -1,6 +1,6 @@
 "use client";
 import styles from "./Stories.module.css";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Plus } from "lucide-react";
 import StoryModal from "./StoryModal/StoryModal";
@@ -17,15 +17,49 @@ const BADGE_CONFIG: Record<StoryBadge, { label: string; cls: string | undefined 
 export const Stories = () => {
   const [stories, setStories] = useState<Story[]>(mockStories);
   const [selected, setSelected] = useState<number | null>(null);
+  const storyInputRef = useRef<HTMLInputElement>(null);
+
+  // RECUPERA LAS HISTORIAS VISTAS PARA QUE NO SE PIERDAN AL RECARGAR.
+  useEffect(() => {
+    const seenIds = JSON.parse(localStorage.getItem("krona-seen-stories") ?? "[]") as string[];
+    setStories((current) => current.map((story) => ({
+      ...story,
+      seen: seenIds.includes(story.id),
+    })));
+  }, []);
 
   function openStory(idx: number) { setSelected(idx); }
   function closeStory()           { setSelected(null); }
 
   const markSeen = useCallback((id: string) => {
-    setStories(prev =>
-      prev.map(story => story.id === id ? { ...story, seen: true } : story)
-    );
+    setStories((previous) => {
+      // Si ya estaba vista, conserva la misma referencia y evita un render innecesario.
+      if (previous.find((story) => story.id === id)?.seen) return previous;
+
+      const updated = previous.map((story) => story.id === id ? { ...story, seen: true } : story);
+      const seenIds = updated.filter((story) => story.seen).map((story) => story.id);
+      localStorage.setItem("krona-seen-stories", JSON.stringify(seenIds));
+      return updated;
+    });
   }, []);
+
+  // CREA UNA HISTORIA LOCAL A PARTIR DE UNA FOTO O VIDEO DEL EQUIPO.
+  function addStory(file: File) {
+    const mediaUrl = URL.createObjectURL(file);
+    const mediaType: "image" | "video" = file.type.startsWith("video/") ? "video" : "image";
+    const newStory: Story = {
+      id: `local-${Date.now()}`,
+      username: "Tu historia",
+      initials: "TÚ",
+      avatar: mediaType === "image" ? mediaUrl : undefined,
+      time: "ahora",
+      slides: [{ type: mediaType, url: mediaUrl }],
+      seen: false,
+    };
+
+    setStories((current) => [newStory, ...current]);
+    setSelected(0);
+  }
   return (
   <>
     <section className={styles.wrap}>
@@ -35,6 +69,7 @@ export const Stories = () => {
         <button
           type="button"
           className={`${styles.card} ${styles.createCard}`}
+          onClick={() => storyInputRef.current?.click()}
         >
           <div className={styles.createPlus}>
             <Plus size={22} color="#fff" />
@@ -44,6 +79,19 @@ export const Stories = () => {
             Crear historia
           </span>
         </button>
+
+        {/* INPUT OCULTO PARA AGREGAR MÁS HISTORIAS MOCK. */}
+        <input
+          ref={storyInputRef}
+          type="file"
+          accept="image/*,video/*"
+          className={styles.storyInput}
+          onChange={(event) => {
+            const file = event.target.files?.[0];
+            if (file) addStory(file);
+            event.target.value = "";
+          }}
+        />
 
 
         {/* Historias */}
@@ -94,11 +142,21 @@ export const Stories = () => {
               <div className={styles.overlay} />
 
 
-              {/* Iniciales */}
+              {/* FOTO DE PERFIL: usa iniciales solamente si no existe avatar. */}
               <div className={styles.storyAvatar}>
-                <div className={styles.initials}>
-                  {story.initials}
-                </div>
+                {story.avatar ? (
+                  <Image
+                    src={story.avatar}
+                    alt={`Foto de perfil de ${story.username}`}
+                    fill
+                    sizes="30px"
+                    className={styles.avatarImage}
+                  />
+                ) : (
+                  <div className={styles.initials}>
+                    {story.initials}
+                  </div>
+                )}
               </div>
 
 

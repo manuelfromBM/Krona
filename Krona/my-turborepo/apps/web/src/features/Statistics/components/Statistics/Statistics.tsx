@@ -1,5 +1,5 @@
 import styles from "./Statistics.module.css";
-import type { StatisticsData } from "../../../types/statistics.types";
+import type { StatisticsData } from "../../types/statistics.types";
 
 interface Props {
   data: StatisticsData;
