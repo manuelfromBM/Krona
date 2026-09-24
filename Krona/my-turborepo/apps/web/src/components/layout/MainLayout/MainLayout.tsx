@@ -1,7 +1,7 @@
 import styles from "./MainLayout.module.css";
 
 import Sidebar from "../Sidebar/Sidebar";
-import Navbar  from "../Navbar/Navbar";
+import Navbar  from "../Navbar/NavBar";
 
 interface MainLayoutProps {
   center: React.ReactNode;
