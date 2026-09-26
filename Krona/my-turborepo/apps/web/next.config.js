@@ -7,9 +7,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-<<<<<<< HEAD
   transpilePackages: ["@packages/services"],
-=======
     outputFileTracingRoot: repoRoot,
     images: {
         remotePatterns: [
@@ -32,7 +30,6 @@ const nextConfig = {
             
         ],
     },
->>>>>>> develop
 };
 
 export default nextConfig;
