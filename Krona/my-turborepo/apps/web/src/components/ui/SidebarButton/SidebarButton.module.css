@@ -1,0 +1,44 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #555555;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s;
+}
+
+.button:hover {
+  background: #f2f0ff;
+  color: #6c4ff5;
+}
+
+.button:hover .icon {
+  color: #6c4ff5;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  transition: color 0.15s;
+}
+
+/* Variante Crear */
+.crear .icon {
+  background: linear-gradient(135deg, #6c4ff5, #3bb57a);
+  color: #ffffff;
+}
+
+.crear {
+  color: #1a1a1a;
+  margin-top: 8px;
+}

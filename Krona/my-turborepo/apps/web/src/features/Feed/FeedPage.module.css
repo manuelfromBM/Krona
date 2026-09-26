@@ -1,0 +1,72 @@
+.feed {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+
+/* STORIES */
+
+.stories {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* POST + PANEL */
+
+.content {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 640px)
+    280px;
+
+  gap: 20px;
+
+  align-items: start;
+  justify-content: center;
+}
+
+
+/* POSTS */
+
+.posts {
+  width: 100%;
+  max-width: 640px;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+/* CENTER PANEL */
+
+.centerPanel {
+  width: 100%;
+  min-width: 0;
+
+  position: sticky;
+
+  top: 90px;
+}
+
+
+@media (max-width: 1250px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .centerPanel {
+    display: none;
+  }
+}
