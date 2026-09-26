@@ -6,18 +6,21 @@ import Navbar  from "../Navbar/Navbar";
 interface MainLayoutProps {
   center: React.ReactNode;
   right: React.ReactNode;
+  showNavbar?: boolean;
 }
 
-export default function MainLayout({ center, right, }: MainLayoutProps) {
+export default function MainLayout({ center, right, showNavbar = true, }: MainLayoutProps) {
   return (
     <div className={styles.container}>
       <aside className={styles.sidebar}>
         <Sidebar />
       </aside>
-
-      <header className={styles.navbar}>
-        <Navbar></Navbar>
-      </header>
+      
+      {showNavbar && (
+        <header className={styles.navbar}>
+          <Navbar></Navbar>
+        </header>
+      )}
 
       <main className={styles.content}>
         {center}

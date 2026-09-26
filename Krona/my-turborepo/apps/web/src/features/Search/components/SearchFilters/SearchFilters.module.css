@@ -1,0 +1,57 @@
+.filters {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 4px 0;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filterButton {
+  flex-shrink: 0;
+
+  padding: 8px 16px;
+
+  border: 1px solid #e2e2e2;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  color: #555555;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border 0.15s ease;
+}
+
+.filterButton:hover {
+  background: #f3f4f5;
+}
+
+.active {
+  border-color: #10a37f;
+
+  background: #10a37f;
+
+  color: #ffffff;
+}
+
+.active:hover {
+  background: #0d8f70;
+}
