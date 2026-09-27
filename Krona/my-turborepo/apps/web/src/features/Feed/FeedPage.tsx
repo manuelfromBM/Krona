@@ -1,5 +1,4 @@
 import styles from "./FeedPage.module.css";
-
 import { Stories } from "./components/Stories/Stories";
 import PostCard from "./components/PostCard/PostCard";
 import { CenterPanel } from "./components/CenterPanel/CenterPanel";

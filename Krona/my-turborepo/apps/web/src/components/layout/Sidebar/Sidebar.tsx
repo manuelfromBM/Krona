@@ -1,5 +1,4 @@
 "use client"
-import { usePathname } from "next/navigation";
 import styles from "./Sidebar.module.css";
 import SidebarButton from "../../ui/SidebarButton/SidebarButton";
 import KronaLogo from "../../ui/KronaLogo/KronaLogo";

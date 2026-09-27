@@ -11,6 +11,25 @@ import { mockBusinesses, mockSuggestedUsers, } from "../../../features/Search/mo
 import type { SearchResult } from "../../../features/Search/types/search.types";
 
 export const Navbar = () => {
+  // Al momento que el cliente hace enter lo lleva Search
+  const handleSearchKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key !== "Enter") {
+      return;
+    }
+
+    const value = searchValue.trim();
+
+    if (!value) {
+      return;
+    }
+
+    router.push(
+       `/search?q=${encodeURIComponent(value)}`
+    );
+  };
+
   // Estado del buscador rapido
   const [ searchValue, setSearchValue ] = useState ("");
   const quickResults = useMemo<SearchResult[]>(() => {
@@ -129,6 +148,7 @@ export const Navbar = () => {
             onChange={(event) =>
               setSearchValue(event.target.value)
             }
+            onKeyDown={handleSearchKeyDown}
           />
         </div>
           
