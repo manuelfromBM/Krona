@@ -39,7 +39,9 @@
       "@nestjs/core",
       "@prisma/engines",
       "prisma",
-      "esbuild"
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
     ]
   }
 }

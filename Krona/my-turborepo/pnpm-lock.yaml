@@ -150,43 +150,6 @@ importers:
         specifier: ^8.20.0
         version: 8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
 
-  apps/docs:
-    dependencies:
-      '@repo/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      next:
-        specifier: ^15.5.0
-        version: 15.5.10(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.1.0))(react@19.1.0)
-      react:
-        specifier: 19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.2.4(react@19.1.0)
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
-      '@types/node':
-        specifier: ^22.15.3
-        version: 22.19.7
-      '@types/react':
-        specifier: ~19.1.10
-        version: 19.1.17
-      '@types/react-dom':
-        specifier: 19.1.1
-        version: 19.1.1(@types/react@19.1.17)
-      eslint:
-        specifier: ^9.34.0
-        version: 9.39.2(jiti@2.6.1)
-      typescript:
-        specifier: 5.9.2
-        version: 5.9.2
-
   apps/mobile:
     dependencies:
       '@expo/vector-icons':
@@ -12554,30 +12517,6 @@ snapshots:
       postcss: 8.4.31
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
-      styled-jsx: 5.1.6(react@19.1.0)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 15.5.7
-      '@next/swc-darwin-x64': 15.5.7
-      '@next/swc-linux-arm64-gnu': 15.5.7
-      '@next/swc-linux-arm64-musl': 15.5.7
-      '@next/swc-linux-x64-gnu': 15.5.7
-      '@next/swc-linux-x64-musl': 15.5.7
-      '@next/swc-win32-arm64-msvc': 15.5.7
-      '@next/swc-win32-x64-msvc': 15.5.7
-      babel-plugin-react-compiler: 1.0.0
-      sharp: 0.34.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
-  next@15.5.10(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.1.0))(react@19.1.0):
-    dependencies:
-      '@next/env': 15.5.10
-      '@swc/helpers': 0.5.15
-      caniuse-lite: 1.0.30001766
-      postcss: 8.4.31
-      react: 19.1.0
-      react-dom: 19.2.4(react@19.1.0)
       styled-jsx: 5.1.6(react@19.1.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.5.7
