@@ -1,6 +1,6 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export class ApiError extends Error {
+export class ApiError extends Error { 
   constructor(
     public status: number,
     message: string,
@@ -49,3 +49,4 @@ export const apiClient = {
       body: data !== undefined ? JSON.stringify(data) : undefined,
     }),
 };
+//listo para produccion
