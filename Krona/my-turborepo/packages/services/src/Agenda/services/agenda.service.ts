@@ -1,5 +1,4 @@
 import { httpClient } from "@/shared/http/httpClient";
-import { AxiosResponse } from "axios";
 
 export type CreateDate = {
     date:string;
@@ -20,8 +19,9 @@ export type DateResponse = {
 
 export const DateService = {
     create(payload: CreateDate): Promise<DateResponse> {
-        return httpClient
-            .post("/dates", payload)
-            .then((res => res.data))
+        return httpClient<DateResponse>("/dates", {
+            method: "POST",
+            body: JSON.stringify(payload),
+        });
     },
 };

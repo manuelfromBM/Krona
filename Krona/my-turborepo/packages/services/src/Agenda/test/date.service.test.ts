@@ -5,13 +5,11 @@ import { httpClient } from "@/shared/http/httpClient";
 
 describe("DateService", () => {
     it("should create a date", async () => {
-        (httpClient.post as jest.Mock).mockResolvedValue({
-            data: {
-                id: "1",
-                date: "2026-02-15",
-                time: "10:30",
-                status: "CONFIRMED",
-            },
+        (httpClient as jest.Mock).mockResolvedValue({
+            id: "1",
+            date: "2026-02-15",
+            time: "10:30",
+            status: "CONFIRMED",
         });
 
         const result = await DateService.create({
@@ -32,7 +30,7 @@ describe("DateService", () => {
         });
     });
     it("should throw when api fails", async () => {
-        (httpClient.post as jest.Mock).mockRejectedValue(
+        (httpClient as jest.Mock).mockRejectedValue(
             new Error("Network error")
         );
 

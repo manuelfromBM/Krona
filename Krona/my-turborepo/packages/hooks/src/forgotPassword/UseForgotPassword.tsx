@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import type { StackNavigationProp  } from "@react-navigation/stack";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export const useForgotPassword = () => {
     const [email, setEmail] = useState("");
-    const navigation = useNavigation<StackNavigationProp<any>>();
+    const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
     const validarCorreo = (email: string) => {
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
