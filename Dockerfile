@@ -11,6 +11,7 @@ COPY --from=pruner /krona/out/json/ .
 COPY --from=pruner /krona/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install --frozen-lockfile
 COPY --from=pruner /krona/out/full/ .
+COPY --from=pruner /krona/tsconfig.base.json ./tsconfig.base.json
 RUN pnpm turbo build --filter=@krona/backend
 RUN pnpm --filter=@krona/backend exec prisma generate
 
@@ -19,7 +20,7 @@ COPY --from=pruner /krona/out/json/ .
 COPY --from=pruner /krona/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install --frozen-lockfile --prod
 COPY --from=builder /krona/apps/backend/dist ./apps/backend/dist
-COPY --from=builder /krona/apps/backend/src/generated ./apps/backend/src/generated
+COPY --from=builder /krona/apps/backend/generated ./apps/backend/generated
 
 WORKDIR /krona/apps/backend
 EXPOSE 3000
