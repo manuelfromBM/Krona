@@ -1,3 +1,3 @@
 export const env = {
-  apiUrl: process.env.API_URL as string,
+  apiUrl: process.env.NEXT_PUBLIC_API_URL as string,
 };

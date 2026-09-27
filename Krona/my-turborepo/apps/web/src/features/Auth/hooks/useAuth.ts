@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { authService, type LoginDTO, type AuthResponse } from "@packages/services";
+import { authService, type LoginDTO, type RegistroDTO, type AuthResponse } from "@packages/services";
 
 export function useAuth() {
   const [loading, setLoading] = useState(false);
@@ -10,7 +10,7 @@ export function useAuth() {
     setError(null);
     try {
       const response = await authService.iniciosesion(data);
-      // TODO: persistir token (localStorage, cookie, context, etc.)  
+      // TODO: persistir token (localStorage, cookie, context, etc.)
       return response;
     } catch (e: unknown) {
       const message = e instanceof Error ? e.message : "Error al iniciar sesion";
@@ -21,5 +21,21 @@ export function useAuth() {
     }
   };
 
-  return { login, loading, error };
+  const register = async (data: RegistroDTO): Promise<AuthResponse | null> => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await authService.registro(data);
+      // TODO: persistir token (localStorage, cookie, context, etc.)
+      return response;
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Error al registrarse";
+      setError(message);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { login, register, loading, error };
 }
