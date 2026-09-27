@@ -19,7 +19,7 @@ export default function Sidebar () {
 
             {/*NAV PRINCIPAL*/}
             <nav className={styles.menu}>
-                <SidebarButton icon={<Home />}          label="inicio"          href="/Inicio"></SidebarButton>
+                <SidebarButton icon={<Home />}          label="Inicio"          href="/"></SidebarButton>
                 <SidebarButton icon={<Compass />}       label="Descubrir"       href="/buscar"></SidebarButton>
                 <SidebarButton icon={<Calendar />}      label="Agenda"          href="/agenda"></SidebarButton>
                 <SidebarButton icon={<Store />}         label="Mis Negocios"    href="/negocios"></SidebarButton>
