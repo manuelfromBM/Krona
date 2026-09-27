@@ -1,4 +1,3 @@
-import { link } from "fs";
 import styles from "./PanelFooter.module.css";
 
 const links = [

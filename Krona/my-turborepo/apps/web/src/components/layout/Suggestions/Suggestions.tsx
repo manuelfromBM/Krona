@@ -15,9 +15,11 @@ export const Suggestions = ({ suggestions }: SuggestionsProps) => {
         setFollowing(prev => {
             const next = new Set(prev);
 
-            next.has(id) 
-                ?next.delete(id) 
-                : next.add(id);
+            if (next.has(id)) {
+                next.delete(id);
+            } else {
+                next.add(id);
+            }
 
             return next;
         });
@@ -25,7 +27,7 @@ export const Suggestions = ({ suggestions }: SuggestionsProps) => {
 
     return (
         <div>
-            
+
             <div className={styles.header}>
                 <span className={styles.title}>Sugerencias para ti</span>
                 <button className={styles.viewAll}>Ver todos</button>
@@ -46,7 +48,7 @@ export const Suggestions = ({ suggestions }: SuggestionsProps) => {
                             <p className={styles.mutual}>{s.mutualinfo}</p>
                         </div>
                         <button
-                            className={'${styles.followBtn} ${following.has(s.id) ? styles.following : ""}'}
+                            className={`${styles.followBtn} ${following.has(s.id) ? styles.following : ""}`}
                             onClick={() => toggle(s.id)}
                         >
                             {following.has(s.id) ? "Siguendo" : "Seguir"}
