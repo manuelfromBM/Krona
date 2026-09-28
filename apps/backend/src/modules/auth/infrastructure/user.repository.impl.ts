@@ -8,6 +8,8 @@ export class PrismaUserRepository implements UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findByEmail(email: string): Promise<User | null> {
+    console.log("3. user.repository.impl.ts")
+    console.log("5. user.repository.ts")
     const row = await this.prisma.user.findUnique({ where: { email } });
     if (!row) return null;
     return new User(row.id, row.email, row.role, row.name, row.password);
@@ -19,6 +21,8 @@ export class PrismaUserRepository implements UserRepository {
     passwordHash: string;
     role: 'CLIENT' | 'PROVIDER';
   }): Promise<User> {
+    console.log("3. user.repository.impl.ts")
+    console.log("5. user.repository.ts")
     const row = await this.prisma.user.create({
       data: {
         email: data.email,

@@ -10,6 +10,8 @@ export class AuthController {
 
   @Post('registro')
   async register(@Body() dto: RegisterDto) {
+    console.log("1. auth.module.ts")
+    console.log("2. auth.controller.ts")
     try {
       return await this.registerUseCase.execute(dto);
     } catch (err) {

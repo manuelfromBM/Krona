@@ -5,7 +5,9 @@ export class User {
     public readonly name: string,
     public readonly role: string,
     private readonly passwordHash: string,
-  ) {}
+  ) {
+    console.log("6. user.entity.ts")
+  }
 
   toPublic() {
     return { id: this.id, email: this.email, name: this.name };

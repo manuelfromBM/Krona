@@ -1,6 +1,10 @@
 import { IsEmail, IsString, MinLength } from 'class-validator';
 
 export class RegisterDto {
+  constructor() {
+    console.log("4. register.dto.ts")
+  }
+
   @IsEmail({}, { message: 'El correo no es valido' })
   email!: string;
 

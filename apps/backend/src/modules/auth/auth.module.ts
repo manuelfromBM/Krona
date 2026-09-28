@@ -6,6 +6,7 @@ import { RegisterUseCase } from './application/register.usecase';
 import { USER_REPOSITORY } from './domain/repositories/user.repository';
 import { PrismaUserRepository } from './infrastructure/user.repository.impl';
 
+
 @Module({
   imports: [
     JwtModule.registerAsync({

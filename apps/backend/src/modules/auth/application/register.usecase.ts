@@ -22,6 +22,7 @@ export class RegisterUseCase {
   ) {}
 
   async execute(dto: RegisterDto) {
+    console.log("7. register.usercase.ts")
     const existe = await this.users.findByEmail(dto.email);
     if (existe) {
       this.logger.warn(`Registro rechazado: correo ya existe (${dto.email})`);
