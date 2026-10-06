@@ -35,6 +35,30 @@
 }
 
 
+.profileLink,
+.profileNameLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.profileLink {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.profileNameLink:hover {
+  text-decoration: none;
+}
+
+.profileNameLink strong {
+  cursor: pointer;
+}
+
+.profileNameLink strong:hover {
+  text-decoration: underline;
+}
+
+
 /* AVATAR */
 
 .avatar {
@@ -914,4 +938,660 @@
   .commentForm input {
     flex-basis: 100%;
   }
+}
+
+
+/* MODO COMPACTO PARA PUBLICACIONES DENTRO DE PERFILES */
+.compactCard {
+  max-width: none;
+  border-radius: 10px;
+}
+
+.compactCard .header {
+  gap: 7px;
+  padding: 9px 10px;
+}
+
+.compactCard .avatar {
+  width: 32px;
+  height: 32px;
+}
+
+.compactCard .meta strong {
+  font-size: 11px;
+  margin-bottom: 1px;
+}
+
+.compactCard .meta span {
+  font-size: 9px;
+}
+
+.compactCard .followBtn {
+  padding: 4px 7px;
+  font-size: 9px;
+}
+
+.compactCard .menuBtn {
+  padding: 3px;
+}
+
+.compactCard .media {
+  max-height: 245px;
+}
+
+.compactCard .video,
+.compactCard .carousel,
+.compactCard .videoWrap {
+  max-height: 245px;
+}
+
+.compactCard .body {
+  padding: 7px 9px 10px;
+}
+
+.compactCard .reactions {
+  gap: 1px;
+  margin-bottom: 5px;
+}
+
+.compactCard .reactBtn {
+  gap: 3px;
+  padding: 4px 5px;
+}
+
+.compactCard .reactBtn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.compactCard .reactBtn span {
+  font-size: 10px;
+}
+
+.compactCard .saveBtn {
+  gap: 3px;
+  padding: 4px 5px;
+  font-size: 9px;
+}
+
+.compactCard .saveBtn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.compactCard .reserveBtn {
+  padding: 5px 7px;
+  gap: 3px;
+}
+
+.compactCard .reserveBtn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.compactCard .reserveBtn span {
+  font-size: 9px;
+}
+
+.compactCard .likedBy {
+  margin-bottom: 4px;
+  font-size: 10px;
+}
+
+.compactCard .caption {
+  margin-bottom: 4px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.compactCard .commentsLink {
+  margin-bottom: 4px;
+  font-size: 9px;
+}
+
+.compactCard .time {
+  font-size: 8px;
+}
+
+.compactCard .commentsPanel {
+  margin-top: 7px;
+  padding-top: 7px;
+}
+
+.compactCard .commentItem {
+  font-size: 10px;
+}
+
+.compactCard .commentTime {
+  font-size: 8px;
+}
+
+@media (max-width: 1100px) {
+  .compactCard .reserveBtn span {
+    display: none;
+  }
+
+  .compactCard .saveBtn span {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .compactCard .media {
+    max-height: 280px;
+  }
+
+  .compactCard .video,
+  .compactCard .carousel,
+  .compactCard .videoWrap {
+    max-height: 280px;
+  }
+}
+
+
+/* PERFIL: CARDS UNIFORMES, MÁS LEGIBLES Y COMPACTAS */
+.compactCard {
+  width: 100%;
+  height: 600px;
+  min-height: 600px;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.compactCard .header {
+  flex: 0 0 58px;
+  min-height: 58px;
+  box-sizing: border-box;
+  gap: 9px;
+  padding: 10px 12px;
+}
+
+.compactCard .avatar {
+  width: 38px;
+  height: 38px;
+  font-size: 12px;
+}
+
+.compactCard .meta strong {
+  font-size: 13px;
+  gap: 4px;
+}
+
+.compactCard .meta span {
+  font-size: 10px;
+}
+
+.compactCard .menuBtn {
+  padding: 5px;
+}
+
+.compactCard .media {
+  flex: 0 0 238px;
+  width: 100%;
+  height: 238px;
+  max-height: 238px;
+  min-height: 238px;
+}
+
+.compactCard .media > img,
+.compactCard .media .slide img {
+  width: 100% !important;
+  height: 238px !important;
+  min-height: 238px;
+  max-height: 238px;
+  object-fit: cover !important;
+}
+
+.compactCard .videoWrap,
+.compactCard .carousel {
+  width: 100%;
+  height: 238px;
+  max-height: 238px;
+  min-height: 238px;
+}
+
+.compactCard .video {
+  width: 100%;
+  height: 238px !important;
+  max-height: 238px;
+  object-fit: cover;
+}
+
+.compactCard .body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 10px 12px 12px;
+}
+
+.compactCard .reactions {
+  flex: 0 0 auto;
+  gap: 3px;
+  margin-bottom: 7px;
+}
+
+.compactCard .reactBtn {
+  gap: 4px;
+  padding: 5px 6px;
+}
+
+.compactCard .reactBtn svg {
+  width: 19px;
+  height: 19px;
+}
+
+.compactCard .reactBtn span {
+  font-size: 11px;
+}
+
+.compactCard .saveBtn {
+  gap: 4px;
+  padding: 5px 6px;
+  font-size: 10px;
+}
+
+.compactCard .saveBtn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.compactCard .reserveBtn {
+  padding: 6px 9px;
+  gap: 4px;
+}
+
+.compactCard .reserveBtn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.compactCard .reserveBtn span {
+  font-size: 10px;
+}
+
+.compactCard .likedBy {
+  flex: 0 0 auto;
+  max-height: 17px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.45;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.compactCard .caption {
+  flex: 0 0 auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  max-height: 50px;
+  margin: 0 0 6px;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.compactCard .commentsLink {
+  flex: 0 0 auto;
+  max-width: 100%;
+  margin: 0 0 6px;
+  overflow: hidden;
+  font-size: 10px;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.compactCard .time {
+  flex: 0 0 auto;
+  margin-top: auto;
+  font-size: 9px;
+}
+
+.compactCard .commentsPanel {
+  display: none;
+}
+
+/* BOTTOM SHEET DE COMENTARIOS */
+.commentsSheetBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(10, 20, 35, 0.46);
+  animation: commentsBackdropIn 160ms ease-out;
+}
+
+.commentsSheet {
+  width: min(760px, 100%);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 18px 18px 0 0;
+  background: #ffffff;
+  box-shadow: 0 -18px 50px rgba(10, 30, 50, 0.22);
+  animation: commentsSheetIn 220ms cubic-bezier(.2,.8,.2,1);
+}
+
+.commentsSheetHandle {
+  width: 42px;
+  height: 4px;
+  flex-shrink: 0;
+  margin: 9px auto 4px;
+  border-radius: 999px;
+  background: #d5dae1;
+}
+
+.commentsSheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 8px 18px 12px;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.commentsSheetHeader > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.commentsSheetHeader strong {
+  font-size: 15px;
+  color: #172033;
+}
+
+.commentsSheetHeader span {
+  font-size: 10px;
+  color: #8993a3;
+}
+
+.commentsSheetClose {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: #f3f5f7;
+  color: #536071;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.commentsSheetClose:hover {
+  background: #e9edf1;
+}
+
+.commentsSheetPost {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 14px;
+  padding: 12px 18px;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.commentsSheetPost .media {
+  width: 170px;
+  height: 125px;
+  min-height: 125px;
+  max-height: 125px;
+  border-radius: 9px;
+}
+
+.commentsSheetPost .media > img,
+.commentsSheetPost .media .slide img,
+.commentsSheetPost .media .video {
+  width: 100% !important;
+  height: 125px !important;
+  min-height: 125px;
+  max-height: 125px;
+  object-fit: cover !important;
+}
+
+.commentsSheetPost .videoWrap,
+.commentsSheetPost .carousel {
+  height: 125px;
+  min-height: 125px;
+  max-height: 125px;
+}
+
+.commentsSheetCaption {
+  align-self: center;
+  max-height: 78px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #303946;
+}
+
+.commentsSheetList {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 18px 18px;
+}
+
+.commentsSheetList .commentsPanel {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 0;
+}
+
+.commentsSheetList .commentsList {
+  gap: 13px;
+}
+
+.commentsSheetList .commentAvatar,
+.commentsSheetList .currentUserAvatar {
+  width: 34px;
+  height: 34px;
+}
+
+.commentsSheetList .commentItem {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.commentsSheetList .commentTime {
+  font-size: 9px;
+}
+
+.commentsSheetList .commentForm {
+  position: sticky;
+  bottom: 0;
+  margin-top: 10px;
+  padding-top: 10px;
+  background: #ffffff;
+}
+
+@keyframes commentsBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes commentsSheetIn {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@media (max-width: 1100px) {
+  .compactCard {
+    height: 600px;
+    min-height: 600px;
+    max-height: 600px;
+  }
+
+  .compactCard .reserveBtn span,
+  .compactCard .saveBtn span {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .compactCard {
+    height: 590px;
+    min-height: 590px;
+    max-height: 590px;
+  }
+
+  .compactCard .media,
+  .compactCard .videoWrap,
+  .compactCard .carousel {
+    flex-basis: 235px;
+    height: 235px;
+    min-height: 235px;
+    max-height: 235px;
+  }
+
+  .compactCard .media > img,
+  .compactCard .media .slide img,
+  .compactCard .media .video {
+    height: 235px !important;
+    min-height: 235px;
+    max-height: 235px;
+  }
+
+  .commentsSheet {
+    max-height: 92vh;
+  }
+
+  .commentsSheetPost {
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 11px;
+    padding: 10px 14px;
+  }
+
+  .commentsSheetPost .media,
+  .commentsSheetPost .videoWrap,
+  .commentsSheetPost .carousel {
+    width: 110px;
+    height: 92px;
+    min-height: 92px;
+    max-height: 92px;
+  }
+
+  .commentsSheetPost .media > img,
+  .commentsSheetPost .media .slide img,
+  .commentsSheetPost .media .video {
+    height: 92px !important;
+    min-height: 92px;
+    max-height: 92px;
+  }
+}
+
+
+/* PERFIL: TIPOGRAFÍA MÁS LEGIBLE Y SIN ESPACIO ARTIFICIAL ENTRE COMENTARIOS Y FECHA */
+.compactCard .meta strong {
+  font-size: 14px;
+}
+
+.compactCard .meta span {
+  font-size: 11px;
+}
+
+.compactCard .body {
+  padding: 10px 13px 11px;
+}
+
+.compactCard .reactions {
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.compactCard .reactBtn {
+  gap: 5px;
+  padding: 5px 7px;
+}
+
+.compactCard .reactBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.compactCard .reactBtn span {
+  font-size: 12px;
+}
+
+.compactCard .saveBtn {
+  gap: 5px;
+  padding: 5px 7px;
+  font-size: 11px;
+}
+
+.compactCard .saveBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.compactCard .reserveBtn {
+  padding: 6px 10px;
+  gap: 5px;
+}
+
+.compactCard .reserveBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.compactCard .reserveBtn span {
+  font-size: 11px;
+}
+
+.compactCard .likedBy {
+  margin-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.compactCard .caption {
+  margin: 0 0 5px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.compactCard .commentsLink {
+  margin: 0 0 3px;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.compactCard .time {
+  margin-top: 0;
+  font-size: 10px;
+  line-height: 1.3;
+  letter-spacing: 0.35px;
+}
+
+
+/* PERFIL: ALTURA NATURAL DE TODAS LAS POSTCARDS */
+.compactCard {
+  height: auto;
+  min-height: 0;
+  max-height: none;
+}
+
+.compactCard .body {
+  flex: 0 0 auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+.compactCard .time {
+  margin-top: 0;
 }

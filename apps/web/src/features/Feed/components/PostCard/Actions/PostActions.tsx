@@ -17,6 +17,7 @@ interface PostActionsProps {
   onToggleShare: () => void;
   onToggleSave: () => void;
   onReserve: () => void;
+  showReserve?: boolean;
 }
 
 export function PostActions(props: PostActionsProps) {
@@ -34,9 +35,11 @@ export function PostActions(props: PostActionsProps) {
       <button type="button" className={`${styles.saveBtn} ${props.saved ? styles.saved : ""}`} onClick={props.onToggleSave} aria-label="Guardar publicación" aria-pressed={props.saved}>
         <Bookmark size={18} fill={props.saved ? "currentColor" : "none"} /><span>{props.saved ? "Guardado" : "Guardar"}</span>
       </button>
-      <button type="button" className={`${styles.reserveBtn} ${props.reserved ? styles.reserved : ""}`} onClick={props.onReserve} aria-label="Reservar" aria-pressed={props.reserved}>
-        <CalendarCheck size={18} /><span>{props.reserved ? "Reservado" : "Reservar"}</span>
-      </button>
+      {props.showReserve !== false && (
+        <button type="button" className={`${styles.reserveBtn} ${props.reserved ? styles.reserved : ""}`} onClick={props.onReserve} aria-label="Reservar" aria-pressed={props.reserved}>
+          <CalendarCheck size={18} /><span>{props.reserved ? "Reservado" : "Reservar"}</span>
+        </button>
+      )}
     </div>
   );
 }

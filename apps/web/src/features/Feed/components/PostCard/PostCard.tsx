@@ -16,10 +16,12 @@ import { useShare } from "./hooks/useShare";
 
 interface PostCardProps {
   post: Post;
+  compact?: boolean;
+  ownerView?: boolean;
 }
 
 // PostCard solo coordina los módulos que componen una publicación.
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post, compact = false, ownerView = false }: PostCardProps) {
   const actions = UsePostActions({
     initialLiked: false,
     initialSaved: false,
@@ -35,11 +37,13 @@ export default function PostCard({ post }: PostCardProps) {
 
   return (
     <>
-      <article id={`post-${post.id}`} className={styles.card}>
+      <article id={`post-${post.id}`} className={compact ? `${styles.card} ${styles.compactCard}` : styles.card}>
         <PostHeader
           post={post}
           following={actions.following}
           onToggleFollow={actions.toggleFollow}
+          showFollow={!compact}
+          ownerView={ownerView}
         />
 
         <PostMedia post={post} />
@@ -50,7 +54,7 @@ export default function PostCard({ post }: PostCardProps) {
             likes={actions.likes}
             saved={actions.saved}
             reserved={reservation.isReserved}
-            commentsOpen={comments.isOpen}
+            commentsOpen={compact ? false : comments.isOpen}
             commentsTotal={comments.total}
             commentsPanelId={commentsPanelId}
             shareOpen={share.isOpen}
@@ -60,6 +64,7 @@ export default function PostCard({ post }: PostCardProps) {
             onToggleShare={share.toggle}
             onToggleSave={actions.toggleSave}
             onReserve={reservation.open}
+            showReserve={!ownerView}
           />
 
           {share.isOpen && (
@@ -90,7 +95,7 @@ export default function PostCard({ post }: PostCardProps) {
             </button>
           )}
 
-          {comments.isOpen && (
+          {!compact && comments.isOpen && (
             <CommentsPanel
               id={commentsPanelId}
               initialCount={post.commentsCount}
@@ -105,6 +110,56 @@ export default function PostCard({ post }: PostCardProps) {
           <span className={styles.time}>{post.createdAt}</span>
         </div>
       </article>
+
+      {compact && comments.isOpen && (
+        <div
+          className={styles.commentsSheetBackdrop}
+          role="presentation"
+          onMouseDown={comments.toggle}
+        >
+          <section
+            id={commentsPanelId}
+            className={styles.commentsSheet}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Comentarios de la publicación"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <div className={styles.commentsSheetHandle} aria-hidden="true" />
+            <div className={styles.commentsSheetHeader}>
+              <div>
+                <strong>Comentarios</strong>
+                <span>{comments.total} comentarios</span>
+              </div>
+              <button
+                type="button"
+                className={styles.commentsSheetClose}
+                onClick={comments.toggle}
+                aria-label="Cerrar comentarios"
+              >
+                ×
+              </button>
+            </div>
+            <div className={styles.commentsSheetPost}>
+              <PostMedia post={post} />
+              <div className={styles.commentsSheetCaption}>
+                <strong>{post.user.username}</strong> {post.caption}
+              </div>
+            </div>
+            <div className={styles.commentsSheetList}>
+              <CommentsPanel
+                id={`${commentsPanelId}-content`}
+                initialCount={post.commentsCount}
+                initialComments={post.comments}
+                comments={comments.comments}
+                draft={comments.draft}
+                onDraftChange={comments.setDraft}
+                onSubmit={comments.submit}
+              />
+            </div>
+          </section>
+        </div>
+      )}
 
       {reservation.isOpen && (
         <ReservationModal

@@ -8,9 +8,10 @@ import styles from "../PostCard.module.css";
 interface PostMenuProps {
   postId: string;
   username: string;
+  ownerView?: boolean;
 }
 
-export function PostMenu({ postId, username }: PostMenuProps) {
+export function PostMenu({ postId, username, ownerView = false }: PostMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [feedback, setFeedback] = useState("");
   const menuRef = useRef<HTMLDivElement>(null);
@@ -80,15 +81,19 @@ export function PostMenu({ postId, username }: PostMenuProps) {
             </p>
           ) : (
             <>
-              <button type="button" role="menuitem" className={styles.dangerOption} onClick={() => showFeedback("Publicación reportada") }>
-                <AlertTriangle size={17} /> Reportar publicación
-              </button>
-              <button type="button" role="menuitem" onClick={() => showFeedback("Verás menos publicaciones como esta") }>
-                <EyeOff size={17} /> No me interesa
-              </button>
-              <button type="button" role="menuitem" onClick={() => showFeedback(`${username} fue silenciado`) }>
-                <BellOff size={17} /> Silenciar cuenta
-              </button>
+              {!ownerView && (
+                <>
+                  <button type="button" role="menuitem" className={styles.dangerOption} onClick={() => showFeedback("Publicación reportada")}>
+                    <AlertTriangle size={17} /> Reportar publicación
+                  </button>
+                  <button type="button" role="menuitem" onClick={() => showFeedback("Verás menos publicaciones como esta")}>
+                    <EyeOff size={17} /> No me interesa
+                  </button>
+                  <button type="button" role="menuitem" onClick={() => showFeedback(`${username} fue silenciado`)}>
+                    <BellOff size={17} /> Silenciar cuenta
+                  </button>
+                </>
+              )}
               <button type="button" role="menuitem" onClick={copyPostLink}>
                 <Link2 size={17} /> Copiar enlace
               </button>

@@ -1,23 +1,36 @@
-.container {
+.container,
+.containerWithoutRight {
   display: grid;
-
-  grid-template-columns:
-    220px
-    minmax(0, 1fr)
-    320px;
 
   grid-template-rows:
     72px
     minmax(0, 1fr);
 
-  grid-template-areas:
-    "sidebar navbar navbar"
-    "sidebar content right";
-
   width: 100%;
   min-height: 100vh;
 
   background: #f5f5f5;
+}
+
+.container {
+  grid-template-columns:
+    220px
+    minmax(0, 1fr)
+    320px;
+
+  grid-template-areas:
+    "sidebar navbar navbar"
+    "sidebar content right";
+}
+
+.containerWithoutRight {
+  grid-template-columns:
+    220px
+    minmax(0, 1fr);
+
+  grid-template-areas:
+    "sidebar navbar"
+    "sidebar content";
 }
 
 
@@ -114,7 +127,8 @@
 ───────────────────────────── */
 
 @media (max-width: 1100px) {
-  .container {
+  .container,
+  .containerWithoutRight {
     grid-template-columns:
       72px
       minmax(0, 1fr);
@@ -139,7 +153,8 @@
 ───────────────────────────── */
 
 @media (max-width: 600px) {
-  .container {
+  .container,
+  .containerWithoutRight {
     display: block;
 
     width: 100%;

@@ -54,10 +54,19 @@
   font-family: Arial, Helvetica, sans-serif;
 
   font-size: 14px;
+
+  color: #334155;
+  caret-color: #176b73;
 }
 
 .search input::placeholder {
-  color: #9a9a9a;
+  color: #8290a3;
+}
+
+.search input:-webkit-autofill,
+.search input:-webkit-autofill:hover,
+.search input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #334155;
 }
 
 
@@ -124,4 +133,78 @@
   overflow: hidden;
 
   border-radius: 50%;
+}
+
+
+/* MENÚ DE PERFIL */
+
+.profileWrapper {
+  position: relative;
+}
+
+.profileMenu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+
+  min-width: 190px;
+
+  padding: 8px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+
+  z-index: 100;
+}
+
+.profileMenuItem {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #374151;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+
+  text-decoration: none;
+  text-align: left;
+
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.profileMenuItem:hover {
+  background: #f5f6f7;
+}
+
+.profileMenuItem svg {
+  color: #6b7280;
+}
+
+.profileMenuItemLogout {
+  color: #dc2626;
+}
+
+.profileMenuItemLogout svg {
+  color: #dc2626;
+}
+
+.profileMenuItemLogout:hover {
+  background: #fef2f2;
 }
