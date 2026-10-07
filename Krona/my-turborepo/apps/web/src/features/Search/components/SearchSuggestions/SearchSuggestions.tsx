@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { CheckCircle2, Section } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import styles from "./SearchSuggestions.module.css";
 import type { SearchUser } from "../../types/search.types";
 

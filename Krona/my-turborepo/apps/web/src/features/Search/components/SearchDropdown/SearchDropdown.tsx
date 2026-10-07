@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { BadgeCheck, Search, Store, } from "lucide-react";
 import styles from "./SearchDropdown.module.css";
-import { SearchResult } from "../../types/search.types";
-import { spawn } from "child_process";
+import type { SearchResult } from "../../types/search.types";
 
 interface SearchDropdownProps {
     query: string;

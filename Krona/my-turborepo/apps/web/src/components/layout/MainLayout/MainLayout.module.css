@@ -21,6 +21,15 @@
 }
 
 
+/* Las pantallas sin panel derecho aprovechan todo el ancho disponible. */
+.withoutRightPanel {
+  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-areas:
+    "sidebar navbar"
+    "sidebar content";
+}
+
+
 /* ─────────────────────────────
    SIDEBAR FIJO
 ───────────────────────────── */
@@ -122,6 +131,10 @@
     grid-template-areas:
       "sidebar navbar"
       "sidebar content";
+  }
+
+  .withoutRightPanel {
+    grid-template-columns: 72px minmax(0, 1fr);
   }
 
   .sidebar {

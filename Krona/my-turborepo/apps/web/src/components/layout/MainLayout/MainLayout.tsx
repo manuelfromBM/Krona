@@ -1,7 +1,7 @@
 import styles from "./MainLayout.module.css";
 
 import Sidebar from "../Sidebar/Sidebar";
-import Navbar  from "../Navbar/Navbar";
+import Navbar from "../Navbar/Navbar";
 
 interface MainLayoutProps {
   center: React.ReactNode;
@@ -11,7 +11,7 @@ interface MainLayoutProps {
 
 export default function MainLayout({ center, right, showNavbar = true, }: MainLayoutProps) {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${right == null ? styles.withoutRightPanel : ""}`}>
       <aside className={styles.sidebar}>
         <Sidebar />
       </aside>
@@ -26,9 +26,7 @@ export default function MainLayout({ center, right, showNavbar = true, }: MainLa
         {center}
       </main>
 
-      <aside className={styles.right}>
-        {right}
-      </aside>
+      {right != null && <aside className={styles.right}>{right}</aside>}
     </div>
   );
 }

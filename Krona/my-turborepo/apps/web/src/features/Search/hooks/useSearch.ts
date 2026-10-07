@@ -4,10 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { mockBusinesses, mockExploreVideos, mockSuggestedUsers } from "../mocks/mockSearch";
 import type { SearchResult } from "../types/search.types";
 
-export const useSearch = () => {
-    // TEXTO QUE ESCRIBE EL USUARIO
-    const [query, setQuery] = useState("");
-
+export const useSearch = (query: string) => {
     //ACA NOS DICE SI ESTAMOS SIMULANDO UNA BUSQUEDA
     const [isLoading, setIsLoading] = useState(false);
 
@@ -35,7 +32,8 @@ export const useSearch = () => {
             //-MOSTRAMOS LAS SUGERENCIAS Y EXPLORAR
             if (!hasQuery) {
                 setIsLoading(false);
-                setResults([]);
+                // En la pantalla inicial mostramos todo agrupado, como un marketplace.
+                setResults(searchableItems);
                 return;
             }
 
@@ -114,20 +112,10 @@ export const useSearch = () => {
         searchableItems,
     ] );
 
-    //LIMPIAR TODO EL BUSCADOR
-    const clearSearch = () => {
-        setQuery("");
-        setResults([]);
-        setIsLoading(false);
-    };
-
     return {
-        query,
-        setQuery,
         isLoading,
         results,
         hasQuery,
-        clearSearch,
 
         //LOS DEJAMOS DISPONIBLE PARA LA PANTALLA INICIAL
         suggestedUsers: mockSuggestedUsers,

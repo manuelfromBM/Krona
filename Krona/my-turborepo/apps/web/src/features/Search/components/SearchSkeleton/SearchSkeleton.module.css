@@ -1,0 +1,73 @@
+.skeleton {
+  display: grid;
+  gap: 18px;
+}
+.section {
+  padding: 18px;
+  border: 1px solid #e8eaf0;
+  border-radius: 16px;
+  background: #fff;
+}
+.title,
+.image,
+.line,
+.shortLine {
+  background: linear-gradient(90deg, #eef1f4 25%, #f8f9fa 50%, #eef1f4 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.25s infinite;
+}
+.title {
+  width: 145px;
+  height: 19px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.card {
+  padding: 9px;
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+}
+.image {
+  height: 95px;
+  border-radius: 9px;
+}
+.line,
+.shortLine {
+  height: 9px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+.shortLine {
+  width: 62%;
+  margin-top: 7px;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .card:nth-child(n + 3) {
+    display: none;
+  }
+}

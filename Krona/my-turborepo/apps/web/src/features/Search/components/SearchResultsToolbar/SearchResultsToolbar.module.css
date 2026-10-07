@@ -1,0 +1,117 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 2px;
+}
+.summary {
+  min-width: 0;
+}
+.summary strong {
+  display: block;
+  overflow: hidden;
+  color: #16181d;
+  font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.summary span {
+  display: block;
+  margin-top: 4px;
+  color: #7a808c;
+  font-size: 11px;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.filterButton,
+.shareButton,
+.clearButton,
+.viewToggle button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 35px;
+  border: 1px solid #dde2e8;
+  background: #fff;
+  color: #475467;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.filterButton,
+.shareButton {
+  padding: 0 11px;
+  border-radius: 9px;
+}
+.clearButton {
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  color: #d04450;
+}
+.filterButton.active {
+  border-color: #20b486;
+  background: #eaf8f4;
+  color: #0c8d70;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: #20b486;
+  color: #fff;
+  font-size: 9px;
+}
+.viewToggle {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid #dde2e8;
+  border-radius: 9px;
+  background: #fff;
+}
+.viewToggle button {
+  width: 35px;
+  border: 0;
+  border-radius: 0;
+}
+.viewToggle button + button {
+  border-left: 1px solid #e5e8ec;
+}
+.viewToggle button.selected {
+  background: #0d1117;
+  color: #fff;
+}
+.shareButton:hover,
+.filterButton:hover {
+  border-color: #20b486;
+  color: #0c8d70;
+}
+.clearButton:hover {
+  text-decoration: underline;
+}
+@media (max-width: 650px) {
+  .toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .actions {
+    width: 100%;
+  }
+  .filterButton {
+    flex: 1;
+  }
+  .shareButton span {
+    display: none;
+  }
+}

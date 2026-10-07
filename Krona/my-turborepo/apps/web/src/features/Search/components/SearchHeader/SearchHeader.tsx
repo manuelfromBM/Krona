@@ -34,10 +34,10 @@ export const SearchHeader = ({
             </button>
 
             {/* BUSCADOR */}
-            <div className={styles.SearchBox}>
+            <div className={styles.searchBox}>
                 <Search
                     size={18}
-                    className={styles.SearchIcon}
+                    className={styles.searchIcon}
                 ></Search>
 
                 <input 

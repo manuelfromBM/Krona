@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Play } from "lucide-react";
 import styles from "./ExploreGrid.module.css";
-import { SearchVideo } from "../../types/search.types";
+import type { SearchVideo } from "../../types/search.types";
 
 interface ExploreGridProps {
     videos: SearchVideo[];

@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams, } from "next/navigation";
-import { Search, MapPin, ChevronDown, X, } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Search, MapPin, ChevronDown, X } from "lucide-react";
 import styles from "./Nabvar.module.css";
 import { NotificationBell } from "./Notifications/NotificationBell";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SearchDropdown } from "../../../features/Search/components/SearchDropdown/SearchDropdown";
-import { mockBusinesses, mockSuggestedUsers, } from "../../../features/Search/mocks/mockSearch";
+import { mockBusinesses, mockSuggestedUsers } from "../../../features/Search/mocks/mockSearch";
 import type { SearchResult } from "../../../features/Search/types/search.types";
 
 export const Navbar = () => {
@@ -50,7 +50,7 @@ export const Navbar = () => {
         if (item.type === "user") {
           return (
             item.username
-              .toUpperCase()
+              .toLowerCase()
               .includes(value) || item.fullName
                 .toLowerCase()
                 .includes(value)
@@ -82,10 +82,6 @@ export const Navbar = () => {
       });
   }, [searchValue]);
 
-  const handleClearSearch = () =>{
-    router.replace("/search");
-  };
-
   const router = useRouter();
 
   // Nos permite saber en qué ruta estamos.
@@ -101,12 +97,26 @@ export const Navbar = () => {
   // Obtenemos lo que está escrito en ?q=
   const query = searchParams.get("q") ?? "";
 
-  // Cuando estamos en el Feed y pulsamos el buscador,
-  // entramos a la pantalla de búsqueda.
-  const handleOpenSearch = () => {
-    if (!isSearchPage) {
-      router.push("/search");
-    }
+  // En /search el input siempre refleja lo que existe en la URL.
+  useEffect(() => {
+    if (isSearchPage) setSearchValue(query);
+  }, [isSearchPage, query]);
+
+  // Evita actualizar la URL en cada pulsación: espera 300 ms.
+  useEffect(() => {
+    if (!isSearchPage || searchValue === query) return;
+    const timer = window.setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (searchValue.trim()) params.set("q", searchValue.trim());
+      else params.delete("q");
+      router.replace(`/search${params.size ? `?${params.toString()}` : ""}`);
+    }, 300);
+    return () => window.clearTimeout(timer);
+  }, [isSearchPage, query, router, searchParams, searchValue]);
+
+  const handleClearSearch = () => {
+    setSearchValue("");
+    if (isSearchPage) router.replace("/search");
   };
 
   // Cuando escribimos dentro de /search,
@@ -115,18 +125,9 @@ export const Navbar = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = event.target.value;
+    setSearchValue(value);
 
-    // Si queda vacío, dejamos simplemente /search.
-    if (!value.trim()) {
-      router.replace("/search");
-      return;
-    }
-
-    // encodeURIComponent evita problemas con espacios
-    // o caracteres especiales.
-    router.replace(
-      `/search?q=${encodeURIComponent(value)}`
-    );
+    // En /search la URL se actualiza mediante el debounce superior.
   };
 
   return (
@@ -145,15 +146,18 @@ export const Navbar = () => {
             type="text"
             placeholder="Buscar servicios o negocios"
             value={searchValue}
-            onChange={(event) =>
-              setSearchValue(event.target.value)
-            }
+            onChange={handleSearchChange}
             onKeyDown={handleSearchKeyDown}
           />
+          {searchValue && (
+            <button type="button" className={styles.clearSearch} onClick={handleClearSearch} aria-label="Limpiar búsqueda">
+              <X size={16} />
+            </button>
+          )}
         </div>
           
           
-        <SearchDropdown
+        {!isSearchPage && <SearchDropdown
           query={searchValue}
           results={quickResults}
           onViewMore={() => {
@@ -190,7 +194,7 @@ export const Navbar = () => {
               );
             }
           }}
-        />
+        />}
 
       </div>
 
