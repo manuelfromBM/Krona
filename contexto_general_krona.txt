@@ -1,0 +1,195 @@
+BM Code Lab 
+Team Dev Krona: Manuel Diaz | Bastian Madrid | Matias Palma | Cristian San Martin
+📱 Krona – Resumen General del Sistema
+1. Descripción general
+Krona es una plataforma SaaS multi-tenant orientada a la conexión entre usuarios finales y prestadores de servicios locales, permitiendo descubrir, agendar, pagar y gestionar servicios profesionales de forma centralizada.
+El sistema combina:
+Marketplace de servicios
+Sistema de agenda inteligente
+Feed promocional
+Gestión empresarial
+Con presencia en web y móvil, está enfocado en:
+Profesionales independientes
+Emprendedores
+Pymes
+Pequeñas empresas
+
+2. Problema que resuelve
+Actualmente, muchos prestadores de servicios:
+No cuentan con un sistema profesional de agenda
+Gestionan reservas vía WhatsApp, Instagram o llamadas
+No tienen métricas, control de pagos ni visibilidad organizada
+No gestionan stock de servicios, personal, ni disponibilidad
+Krona centraliza en una sola plataforma:
+Descubrimiento de servicios
+Reservas en tiempo real
+Pagos integrados
+Gestión de agenda y disponibilidad
+Promoción mediante publicaciones
+Visualización por ubicación
+Métricas y control operativo
+
+3. Tipos de usuarios
+3.1 Usuario final (Cliente)
+Funciones:
+Buscar servicios cercanos o recomendados
+Visualizar perfiles de prestadores
+Ver publicaciones en un feed
+Agendar citas en horarios disponibles
+Ver prestadores en un mapa
+Gestionar sus reservas
+Pagar servicios directamente desde la app
+👉 No paga suscripción
+
+3.2 Prestador de servicios (Suscriptor)
+Incluye:
+Profesionales independientes
+Emprendedores
+Pymes
+Pequeñas empresas
+👉 Usa Krona bajo un modelo SaaS por suscripción
+
+4. Modelos de prestadores
+4.1 Profesional independiente
+Se gestiona a sí mismo
+Administra:
+Su perfil
+Sus servicios
+Su agenda
+Sus reservas
+Sus pagos
+Sus métricas
+No tiene gestión de empleados.
+
+4.2 Empresa / Pyme
+Incluye una estructura jerárquica interna.
+Roles principales:
+Dueño / Gerente / Administrador
+Empleados / Prestadores internos
+Funciones del Dueño / Gerente:
+Gestionar el perfil general de la empresa
+Crear y administrar empleados
+Asignar servicios a empleados
+Definir horarios por empleado
+Visualizar métricas individuales y globales
+Gestionar ingresos, pagos y rendimiento
+Administrar stock de servicios y recursos
+Funciones del Empleado:
+Gestionar su propia agenda
+Recibir reservas asignadas
+Ver métricas personales
+Ejecutar servicios
+
+5. Funcionalidades principales
+🔍 Búsqueda y descubrimiento
+Búsqueda por tipo de servicio
+Ordenamiento por:
+Cercanía
+Recomendación
+Popularidad
+Basado en ubicación del usuario
+
+📅 Sistema de agenda y reservas
+Cada prestador tiene una agenda propia
+Cada usuario final tiene una agenda para sus reservas
+Reservas por:
+Fecha
+Hora
+Servicio
+Prestador o empleado asignado
+Control de:
+Disponibilidad en tiempo real
+Conflictos de horario
+Cancelaciones y reprogramaciones
+👉 Diseñado para eventos en tiempo real / WebSockets
+
+💳 Sistema de pagos
+Pagos integrados dentro de la app
+Soporte para:
+Tarjeta de crédito/débito
+Transferencias
+Pasarelas de pago (ej: Stripe, Mercado Pago, Flow, etc.)
+Pagos por:
+Reserva
+Servicio
+Historial de pagos para:
+Usuarios
+Prestadores
+Liquidaciones y reportes financieros para empresas
+
+📰 Feed de publicaciones
+Feed central visible para usuarios
+Publicaciones creadas por prestadores
+Uso promocional e informativo
+Enfoque en servicios (no red social genérica)
+
+🗺️ Mapa de servicios
+Visualización geográfica de prestadores
+Filtros por tipo de servicio
+Integración con servicios de mapas
+Basado en geolocalización del usuario
+
+📦 Gestión de stock y recursos
+Administración de stock asociado a servicios
+Control de:
+Empleados
+Disponibilidad
+Recursos limitados
+Descuento automático de stock al confirmar una reserva
+Alertas de stock bajo
+Pensado especialmente para:
+Empresas
+Servicios con recursos físicos o limitados
+
+📊 Dashboard de métricas
+Para prestadores:
+Número de reservas
+Ingresos
+Visitas al perfil
+Interacciones
+Rendimiento general
+Para empresas:
+Métricas globales
+Rendimiento por empleado
+Servicios más vendidos
+Uso de agenda y recursos
+Para administradores del sistema:
+Métricas globales
+Actividad de usuarios
+Actividad de prestadores
+Uso de la plataforma
+
+⚙️ Personalización de perfil
+Imágenes y videos
+Descripción
+Servicios ofrecidos
+Horarios
+Ubicación
+Branding básico según plan:
+Colores
+Tipografías
+Botones
+
+6. Modelo de negocio
+Usuarios finales: Gratis
+Prestadores: Suscripción SaaS
+Posibles planes:
+Profesional independiente
+Empresa pequeña
+Empresa avanzada
+Ingresos adicionales por:
+Comisiones por pago
+Funcionalidades premium
+Mayor visibilidad
+
+7. Enfoque técnico (resumen)
+Arquitectura multi-tenant
+Backend orientado a eventos
+Uso de WebSockets para agenda y notificaciones
+APIs REST + tiempo real
+Escalable y modular
+
+Krona se posiciona como una plataforma integral de gestión y descubrimiento de servicios, combinando agenda, pagos, promoción y administración empresarial en una sola solución.
+
+
+

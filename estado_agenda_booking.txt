@@ -1,0 +1,126 @@
+KRONA — ESTADO DEL MÓDULO AGENDA / BOOKING
+Fecha: 2026-10-07
+Rama: backend/feed-connection
+
+────────────────────────────────────────
+1. CONTEXTO
+────────────────────────────────────────
+Se revisó el reglamento IA (docs/REGLAMENTO-KRONA-IA/) y el contexto general
+(contexto_general_krona.txt) antes de trabajar. Se construyó la "agenda" de
+Krona en dos partes: backend (módulo Booking) y frontend (feature Agenda),
+siguiendo la arquitectura Clean/Hexagonal documentada y el estilo visual ya
+existente en apps/web.
+
+No se tocó prisma/schema.prisma (ya tenía los modelos Service y Appointment),
+ni .env, ni se hizo commit/push (prohibido para la IA según el reglamento).
+
+────────────────────────────────────────
+2. BACKEND — apps/backend/src/modules/booking/
+────────────────────────────────────────
+Módulo nuevo, registrado en app.module.ts, con arquitectura:
+
+  domain/entities/        service.entity.ts, appointment.entity.ts
+  domain/repositories/    service.repository.ts, appointment.repository.ts (interfaces + tokens)
+  infrastructure/         service.repository.impl.ts, appointment.repository.impl.ts (Prisma)
+  application/usecases/
+    - create-service.usecase.ts
+    - list-services.usecase.ts
+    - create-appointment.usecase.ts   (valida colisión de horario exacto del prestador)
+    - list-my-appointments.usecase.ts (por clientId)
+    - list-provider-appointments.usecase.ts (por providerId)
+    - cancel-appointment.usecase.ts   (valida participante + estado cancelable)
+    + un .spec.ts por cada usecase (19 tests, todos pasando)
+  dto/                    create-service.dto.ts, create-appointment.dto.ts, *-response.dto.ts
+  presentation/booking.controller.ts
+  booking.module.ts
+
+Endpoints expuestos (sin guard JWT todavía — el proyecto no tiene guards/strategies
+implementados aún, solo el flujo de registro):
+  POST /booking/services
+  GET  /booking/services/provider/:providerId
+  POST /booking/appointments
+  GET  /booking/appointments/client/:clientId
+  GET  /booking/appointments/provider/:providerId
+  POST /booking/appointments/:id/cancel   (body: { requesterId })
+
+Verificado: `pnpm jest --testPathPatterns=booking` (19/19 OK) y `pnpm run build`
+(nest build) sin errores.
+
+────────────────────────────────────────
+3. FRONTEND — apps/web/src/features/Agenda/
+────────────────────────────────────────
+Se mejoró el feature Agenda (antes: solo un widget MyAgenda con mock y dos
+páginas vacías). Ahora incluye dos vistas completas con datos mock (NO
+conectadas aún al backend real):
+
+  components/AgendaClientPage/      -> página completa vista CLIENTE
+  components/AgendaBusinessPage/    -> página completa vista NEGOCIO/PYME
+                                        (incluye selector de día, next 7 días)
+  components/AppointmentCard/       -> tarjeta de cita (avatar, servicio,
+                                        estado, precio, acciones)
+  components/StatusBadge/           -> badge de estado (confirmada/pendiente/
+                                        cancelada/completada)
+  components/AgendaFilters/         -> tabs Próximas/Pendientes/Pasadas/Canceladas
+  components/AgendaStatsBar/        -> fila de métricas (hoy, pendientes,
+                                        confirmadas, ingresos/gasto del período)
+  components/EmptyAgendaState/      -> estado vacío por pestaña
+  components/AgendaPromoCard/       -> widget panel derecho
+  components/MyAgenda/              -> widget compacto original (sin tocar,
+                                        se usa en app/page.tsx)
+  hooks/useAgenda.ts                -> filtrado por tab + cálculo de stats
+                                        (antes vacío)
+  mock/mockAppointments.ts          -> mockClientAppointments y
+                                        mockBusinessAppointments (fechas
+                                        relativas a "hoy")
+  types/agenda.types.ts             -> se agregó Appointment, AppointmentStatus,
+                                        AgendaTabKey, AgendaStats (sin romper
+                                        AgendaItem existente)
+  utils/formatAgendaDate.ts         -> formateo de fecha relativa y precio CLP
+
+Rutas conectadas con MainLayout + RightPanel:
+  app/(cliente)/agenda_cliente/page.tsx  -> <AgendaClientPage/>
+  app/(pyme)/agenda/page.tsx             -> <AgendaBusinessPage/>
+
+Verificado: `pnpm exec tsc --noEmit` limpio y `pnpm run build` (next build)
+genera /agenda y /agenda_cliente sin errores.
+
+────────────────────────────────────────
+4. PENDIENTE / PRÓXIMOS PASOS SUGERIDOS
+────────────────────────────────────────
+- Conectar useAgenda / AgendaClientPage / AgendaBusinessPage a los endpoints
+  reales de /booking (actualmente usan mock). Se necesitaría un cliente API
+  (lib/) y reemplazar mockClientAppointments / mockBusinessAppointments por
+  fetch real, pasando clientId/providerId reales (aún no hay guards JWT ni
+  AuthContext con esos ids expuestos — revisar features/Auth/context).
+- Implementar AuthGuard/JwtStrategy en backend si se quiere proteger
+  /booking/* y extraer clientId/providerId del token en vez de recibirlos
+  en el body/params.
+- Decidir si se necesita un UseCase adicional para "completar" una cita
+  (marcar COMPLETED) desde la vista de negocio — hoy solo existen
+  confirmar/cancelar.
+- Revisar con el equipo si CreateAppointmentUseCase debe validar
+  solapamiento por duración del servicio (hoy solo valida horario exacto
+  idéntico, ver comentario en create-appointment.usecase.ts).
+- Tests E2E del BookingController (solo hay unit tests de usecases por ahora).
+- La carpeta modules/feed y modules/profile siguen como ESQUELETO (archivos
+  vacíos), no se tocaron en esta sesión.
+
+────────────────────────────────────────
+5. ARCHIVOS CLAVE PARA RETOMAR
+────────────────────────────────────────
+Backend:
+  apps/backend/src/modules/booking/booking.module.ts
+  apps/backend/src/modules/booking/presentation/booking.controller.ts
+  apps/backend/src/app.module.ts
+
+Frontend:
+  apps/web/src/features/Agenda/hooks/useAgenda.ts
+  apps/web/src/features/Agenda/components/AgendaClientPage/AgendaClientPage.tsx
+  apps/web/src/features/Agenda/components/AgendaBusinessPage/AgendaBusinessPage.tsx
+  apps/web/src/app/(cliente)/agenda_cliente/page.tsx
+  apps/web/src/app/(pyme)/agenda/page.tsx
+
+Reglamento / contexto:
+  docs/REGLAMENTO-KRONA-IA/
+  contexto_general_krona.txt
+  contexto_tecnologico.txt
