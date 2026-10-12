@@ -1,0 +1,123 @@
+RESUMEN DE CONVERSACIÓN - DESCONEXIÓN DE MOCKS DEL FEED (web)
+Fecha: 2026-10-10
+Branch en ese momento: backend/feed
+
+----------------------------------------
+1. CONTEXTO INICIAL (no relacionado al feed, pero ocurrió en la misma sesión)
+----------------------------------------
+- Hubo un error EADDRINUSE en el backend (puerto 3001) porque quedó un proceso node viejo (PID 6776) escuchando. Se mató el proceso y se liberó el puerto. Ya resuelto, no requiere seguimiento.
+
+- Comandos para levantar las apps del monorepo (turborepo, pnpm):
+  - Todo junto desde la raíz: `pnpm dev` (turbo corre backend + web en paralelo)
+  - Por separado:
+    - Backend: `cd apps/backend && pnpm dev` -> `nest start --watch`, puerto 3001
+    - Web:     `cd apps/web && pnpm dev` -> `next dev --turbopack --port 3000`
+    - Mobile:  `cd apps/mobile && pnpm dev` -> `expo start`
+
+----------------------------------------
+2. TEMA PRINCIPAL: DESCONECTAR MOCKS DEL FEED EN EL FRONTEND
+----------------------------------------
+
+DÓNDE ESTÁ EL MOCK USADO ACTUALMENTE:
+- apps/web/src/features/Feed/FeedPage.tsx (línea ~7 y ~18): importa `mockPosts` de
+  apps/web/src/features/Feed/mocks/mockPosts.ts y lo mapea directo a <PostCard>.
+- apps/web/src/features/Feed/components/FreeList/FreeList.tsx: mismo patrón, importa
+  mockPosts directamente.
+- Otros mocks relacionados a paneles del feed (no al feed en sí):
+  - apps/web/src/features/Feed/mocks/mockStatistics.ts
+  - apps/web/src/features/Feed/mocks/mockRightPanel.ts
+  - apps/web/src/features/Feed/mocks/mockCenterPanel.ts (consumido por CenterPanel.tsx)
+
+CLIENTE HTTP YA EXISTENTE (listo para usar):
+- apps/web/src/lib/api-client.ts
+  - Expone `apiClient.get<T>(path)` y `apiClient.post<T>(path, data)`.
+  - Usa como base `process.env.NEXT_PUBLIC_API_URL` (hay que verificar que
+    apps/web/.env.local tenga `NEXT_PUBLIC_API_URL=http://localhost:3001`).
+  - Lanza `ApiError` si la respuesta no es ok.
+
+ENDPOINT REAL EN EL BACKEND:
+- GET /feed -> apps/backend/src/modules/feed/presentation/feed.controller.ts (líneas ~60-64)
+  Devuelve: { posts: [...], nextCursor }
+  Cada post (función toFeedResponse) tiene esta forma:
+    {
+      id,
+      user: { id, username, initials },
+      media: { type, urls, duration },
+      likes,
+      likedByMe,
+      caption,
+      commentsCount,
+      createdAt
+    }
+- Otros endpoints relevantes del mismo controller:
+  - POST   /feed/posts                  -> crear post
+  - POST   /feed/posts/:id/like         -> like
+  - DELETE /feed/posts/:id/like         -> unlike
+  - GET    /feed/posts/:id/comments     -> listar comentarios (NO vienen embebidos en el feed)
+  - POST   /feed/posts/:id/comments     -> crear comentario
+
+DESAJUSTE DE TIPOS IMPORTANTE (pendiente de resolver cuando se conecte):
+El tipo `Post` del frontend (usado en mockPosts.ts) tiene campos que el backend
+NO devuelve en toFeedResponse:
+  - user.verified
+  - user.isFollowing
+  - user.avatar
+  - likedBy
+  - comments (array embebido)
+  - isSuggestion
+Habrá que decidir entre:
+  (a) crear un adapter/mapper que traduzca la respuesta del backend al tipo Post
+      del frontend, rellenando con defaults lo que falte, o
+  (b) ajustar el tipo Post y los componentes para tolerar esos campos como
+      opcionales / cargarlos por separado (ej. comments vía lazy-load al abrir
+      el post con GET /feed/posts/:id/comments en vez de venir precargados).
+
+CAMBIOS QUE HABRÍA QUE HACER (cuando el usuario decida avanzar):
+1. En FeedPage.tsx y FreeList.tsx: quitar `import { mockPosts }` y reemplazar por
+   una llamada a `apiClient.get("/feed")`, probablemente con useState + useEffect
+   o un hook propio `useFeed()` (no se detectó React Query/SWR en el proyecto).
+2. Mapear la respuesta del backend al tipo Post esperado por PostCard/Stories, etc.
+3. Resolver la carga de comentarios por separado (lazy-load).
+
+CÓMO VER QUÉ ESTÁ MANDANDO EL BACKEND (para debug):
+- curl http://localhost:3001/feed | jq   (o json_pp si no hay jq)
+- Entrar directo a http://localhost:3001/feed en el navegador (GET se ve bien ahí)
+- Postman / Insomnia / Thunder Client
+- Una vez conectado el frontend: DevTools -> Network -> filtrar "feed" -> Response/Preview
+- Para query params, revisar apps/backend/src/modules/feed/dto/list-feed.dto.ts
+  (no se llegó a revisar en detalle este DTO todavía -> PENDIENTE si se necesita)
+
+----------------------------------------
+3. HALLAZGO ADICIONAL: RUTAS DEL FEED EN EL FRONTEND
+----------------------------------------
+Se investigó dónde apuntan los datos en las dos "entradas" al feed:
+
+- Ruta "/" (home) -> apps/web/src/app/page.tsx
+  Esta es la página que REALMENTE se ve al levantar la app.
+  Renderiza <FeedPage /> (el componente real) dentro de un <MainLayout>,
+  junto con <MyAgenda> y <Statistics> que también usan mocks
+  (mockAgenda, mockStatistics de otras features).
+  CONCLUSIÓN: usa mockPosts hardcodeado, NO llama a la API.
+
+- Ruta "/feed" -> apps/web/src/app/(cliente)/feed/page.tsx
+  Está COMPLETAMENTE VACÍA / sin implementar. Solo tiene:
+    export default function feed() {
+      return <div><h1>feed</h1></div>;
+    }
+  No reutiliza FeedPage, no usa mocks, no llama a la API. Es un placeholder
+  que nadie conectó aún.
+
+CONCLUSIÓN GENERAL: ninguna de las dos rutas consume datos reales de la API
+todavía. La home (/) usa el mock; la ruta /feed dedicada ni siquiera está
+implementada.
+
+----------------------------------------
+4. ESTADO / PRÓXIMOS PASOS SUGERIDOS (no decididos aún por el usuario)
+----------------------------------------
+- Usuario indicó explícitamente que quiere hacer los cambios él mismo
+  ("no quiero que hagas nada, quiero ir haciendo yo las cosas") - en esta
+  sesión solo se dieron explicaciones, NO se modificó código del feed.
+- Pendiente decidir: adapter de tipos (Post front vs respuesta backend),
+  estrategia de fetching (useEffect simple vs librería), y qué hacer con
+  la ruta /feed vacía (¿eliminarla, redirigir a "/", o implementarla como
+  la página real del feed y mover la lógica de page.tsx ahí?).

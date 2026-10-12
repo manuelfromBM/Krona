@@ -159,6 +159,32 @@ exports.Prisma.AppointmentScalarFieldEnum = {
   serviceId: 'serviceId'
 };
 
+exports.Prisma.PostScalarFieldEnum = {
+  id: 'id',
+  caption: 'caption',
+  mediaType: 'mediaType',
+  mediaUrls: 'mediaUrls',
+  duration: 'duration',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  authorId: 'authorId'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  createdAt: 'createdAt',
+  postId: 'postId',
+  authorId: 'authorId'
+};
+
+exports.Prisma.LikeScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  postId: 'postId',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -185,11 +211,20 @@ exports.AppointmentStatus = exports.$Enums.AppointmentStatus = {
   COMPLETED: 'COMPLETED'
 };
 
+exports.MediaType = exports.$Enums.MediaType = {
+  image: 'image',
+  video: 'video',
+  carrusel: 'carrusel'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ProviderProfile: 'ProviderProfile',
   Service: 'Service',
-  Appointment: 'Appointment'
+  Appointment: 'Appointment',
+  Post: 'Post',
+  Comment: 'Comment',
+  Like: 'Like'
 };
 
 /**
