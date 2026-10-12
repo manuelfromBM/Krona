@@ -20,6 +20,39 @@
 
 /* BUSCADOR */
 
+.clearSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  flex-shrink: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #777777;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+.clearSearch:hover {
+  background: #e7e7e7;
+}
+
+.searchWrapper {
+  position: relative;
+
+  width: 100%;
+  max-width: 520px;
+}
+
 .search {
   width: 100%;
   max-width: 520px;
@@ -45,7 +78,8 @@
 
 .search input {
   width: 100%;
-
+  color: #111111;
+  caret-color: #111111;
   border: none;
   outline: none;
 
@@ -57,7 +91,7 @@
 }
 
 .search input::placeholder {
-  color: #9a9a9a;
+  color: #888888;
 }
 
 

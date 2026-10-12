@@ -1,0 +1,202 @@
+.dropdown {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  left: 0;
+
+  width: 100%;
+  min-width: 360px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.12);
+
+  z-index: 1000;
+}
+
+
+/* RESULTADOS */
+
+.results {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.result {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 10px 12px;
+
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+
+  background: #ffffff;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+.result:hover {
+  background: #f7f8f9;
+}
+
+
+/* AVATAR */
+
+.avatar {
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  background: #eeeeee;
+
+  color: #555555;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+.image {
+  object-fit: cover;
+}
+
+
+/* INFORMACIÓN */
+
+.info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+
+.name {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+}
+
+
+.name strong {
+  overflow: hidden;
+
+  color: #171717;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+.info span {
+  color: #777777;
+
+  font-size: 11px;
+}
+
+
+.verified {
+  flex-shrink: 0;
+
+  color: #1b73e8;
+}
+
+
+/* SIN RESULTADOS */
+
+.empty {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 18px;
+
+  color: #777777;
+}
+
+
+.empty p {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+
+/* VER MÁS */
+
+.viewMore {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 13px 14px;
+
+  border: none;
+
+  background: #ffffff;
+
+  color: #10a37f;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+
+.viewMore span {
+  flex: 1;
+
+  text-align: left;
+}
+
+
+.viewMore:hover {
+  background: #f4faf8;
+}
+
+
+@media (max-width: 600px) {
+  .dropdown {
+    min-width: 280px;
+  }
+}
