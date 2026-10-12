@@ -1,27 +1,32 @@
-import  styles  from "./MainLayout.module.css";
+import styles from "./MainLayout.module.css";
 
+import Sidebar from "../Sidebar/Sidebar";
+import Navbar from "../Navbar/Navbar";
 
 interface MainLayoutProps {
-    left: React.ReactNode;
-    center: React.ReactNode;
-    right: React.ReactNode;
+  center: React.ReactNode;
+  right: React.ReactNode;
+  showNavbar?: boolean;
 }
 
-export default function MainLayout({ left, center, right, }: MainLayoutProps) {
-    return (
-        <div className={styles.container}>
-            <aside className={styles.left}>
-                {left}
-            </aside>
+export default function MainLayout({ center, right, showNavbar = true, }: MainLayoutProps) {
+  return (
+    <div className={`${styles.container} ${right == null ? styles.withoutRightPanel : ""}`}>
+      <aside className={styles.sidebar}>
+        <Sidebar />
+      </aside>
+      
+      {showNavbar && (
+        <header className={styles.navbar}>
+          <Navbar></Navbar>
+        </header>
+      )}
 
-            <main className={styles.center}>
-                {center}
-            </main>
+      <main className={styles.content}>
+        {center}
+      </main>
 
-            <aside className={styles.right}>
-                {right}
-            </aside>
-
-        </div>
-    );
+      {right != null && <aside className={styles.right}>{right}</aside>}
+    </div>
+  );
 }

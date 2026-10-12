@@ -1,31 +1,31 @@
-//import { Navbar }   from "./components/Navbar/Navbar";
-//import { Stories }  from "./components/Stories/Stories";
-import { FreeList } from "./components/FreeList/FreeList";
-//import { Footer }   from "./components/Footer/Footer";
 import styles from "./FeedPage.module.css";
+import { Stories } from "./components/Stories/Stories";
+import PostCard from "./components/PostCard/PostCard";
+import { CenterPanel } from "./components/CenterPanel/CenterPanel";
 
-export const FeedPage = () => {
-    return (
-        <>
-            
+import { mockPosts } from "./mocks/mockPosts";
 
-            <div className={styles.layout}>
+export default function FeedPage() {
+  return (
+    <div className={styles.feed}>
+      <section className={styles.stories}>
+        <Stories />
+      </section>
 
-              {/* Centro — feed principal */}
-              <main className={styles.center}>
-                
-                <FreeList />
-                
-              </main>
+      <div className={styles.content}>
+        <section className={styles.posts}>
+          {mockPosts.map((post) => (
+            <PostCard
+              key={post.id}
+              post={post}
+            />
+          ))}
+        </section>
 
-              {/* Derecha — sugerencias/publicidad (puedes llenarlo después) */}
-              <aside className={styles.right}>
-                    {/* <RightPanel /> */}
-              </aside>
-
-            </div>
-        </>
-    );
-};
-
-export default FeedPage;
+        <aside className={styles.centerPanel}>
+          <CenterPanel />
+        </aside>
+      </div>
+    </div>
+  );
+}

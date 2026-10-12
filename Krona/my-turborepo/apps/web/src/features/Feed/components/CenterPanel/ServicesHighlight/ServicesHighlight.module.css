@@ -1,0 +1,14 @@
+.card { background: #fff; border-radius: 16px; border: 1px solid #ebebeb; padding: 16px; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.title { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+.link  { font-size: 12px; font-weight: 600; color: #20b282; background: none; border: none; cursor: pointer; }
+.list  { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.item  { display: flex; align-items: center; gap: 10px; }
+.img   { width: 52px; height: 52px; border-radius: 10px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; position: relative; overflow: hidden; }
+.info  { flex: 1; min-width: 0; }
+.name  { font-size: 13px; font-weight: 600; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.desc  { font-size: 11px; color: #aaa; margin: 1px 0 3px; }
+.bottom { display: flex; align-items: center; gap: 8px; }
+.price  { font-size: 12px; font-weight: 700; color: #1B3A6B; }
+.rating { font-size: 11px; color: #aaa; display: flex; align-items: center; gap: 2px; }
+.star   { color: #f4b942; }

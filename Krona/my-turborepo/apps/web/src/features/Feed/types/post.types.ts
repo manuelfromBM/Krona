@@ -1,24 +1,23 @@
-export type MediaType = "Image" | "video" | "tiktok" | "carousel";
+import { User } from "./user.types";
+import { Media }from "./media.types";
 
+export interface PostComment {
+    id: string;
+    username: string;
+    avatar: string;
+    text: string;
+    createdAt: string;
+}
 
 export interface Post {
     id: string;
-    user: {
-        username: string;
-        avatar?: string;
-        initials: string;
-        verified?: boolean;
-        isFollowing?: boolean;
-    };
-    media: {
-        type: MediaType;
-        urls:string[];                  //ESTO ERA PARA IMAGENES Y VIDEOS PARA EL CARRUSEL//
-        duration?: string;              // SOLO VIDEOS EJEMPLO 1M//
-    };
+    user: User;
+    media: Media;
     likes: number;
     likedBy?: string;
     caption: string;
     commentsCount: number;
+    comments?: PostComment[];
     createdAt: string;
     isSuggestion?: boolean;
 }

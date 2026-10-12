@@ -1,6 +1,6 @@
 import styles from "./FreeList.module.css";
 import PostCard from "../PostCard/PostCard";
-import { mockPosts } from "../../service/mockPosts";
+import { mockPosts } from "../../mocks/mockPosts";
 
 export const FreeList = () => {
 
