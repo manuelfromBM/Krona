@@ -1,9 +1,15 @@
-import Main_card from "../features/Auth/components/card/card";
+import Sidebar from "../components/layout/Sidebar/Sidebar";
+import FeedPage from "../features/Feed/FeedPage";
 
 export default function pagePrincipal() {
     return (
-        <>
-            <Main_card />
-        </>
+        <main style={{display: "flex"}}>
+            <Sidebar></Sidebar>
+
+            <section style={{flex: 1, padding: "2rem"}}>
+                
+                <FeedPage></FeedPage>
+            </section>
+        </main>
     );
 }
