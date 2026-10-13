@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import styles from "./SearchPage.module.css";
@@ -35,7 +35,7 @@ const VALID_QUICK_FILTERS: QuickFilter[] = [
   "favorites",
 ];
 
-export default function SearchPage() {
+function SearchPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get("q") ?? "";
@@ -347,5 +347,13 @@ export default function SearchPage() {
         onToggleFavorite={toggleFavorite}
       />
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div>Cargando búsqueda...</div>}>
+      <SearchPageContent />
+    </Suspense>
   );
 }

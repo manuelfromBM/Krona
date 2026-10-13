@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import styles from "./MainLayout.module.css";
 
 import Sidebar from "../Sidebar/Sidebar";
@@ -18,7 +19,9 @@ export default function MainLayout({ center, right, showNavbar = true, }: MainLa
       
       {showNavbar && (
         <header className={styles.navbar}>
-          <Navbar></Navbar>
+          <Suspense fallback={null}>
+            <Navbar></Navbar>
+          </Suspense>
         </header>
       )}
 
