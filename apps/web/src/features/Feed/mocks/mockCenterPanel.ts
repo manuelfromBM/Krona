@@ -1,4 +1,4 @@
-import type { ServiceItem, Opportunity } from "../types/centerPanel.types";
+import type { ServiceItem, Opportunity } from "@packages/types/feed";
 
 export const mockServices: ServiceItem[] = [
     { id:"1", name:"Barbería El Corte",  description:"Corte + Barba Premium",    price:"$12.000", rating:4.9, reviews:128, emoji:"✂️" },

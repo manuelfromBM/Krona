@@ -22,8 +22,23 @@ interface PostActionsProps {
 export function PostActions(props: PostActionsProps) {
   return (
     <div className={styles.reactions}>
-      <button type="button" className={`${styles.reactBtn} ${props.liked ? styles.liked : ""}`} onClick={props.onToggleLike} aria-label="Me gusta">
-        <Heart size={22} fill={props.liked ? "#e05252" : "none"} /><span>{props.likes}</span>
+      <button 
+        type="button" 
+        className={`
+          ${styles.reactBtn} 
+          ${
+            props.liked ? 
+            styles.liked : ""
+          }
+        `} 
+        onClick={props.onToggleLike} 
+        aria-label="Me gusta">
+        <Heart 
+          size={22} 
+          fill={props.liked ? "#e05252" : "none"} 
+        ></Heart>
+          <span>{props.likes}</span>
+      
       </button>
       <button type="button" className={styles.reactBtn} onClick={props.onToggleComments} aria-label={props.commentsOpen ? "Cerrar comentarios" : "Abrir comentarios"} aria-expanded={props.commentsOpen} aria-controls={props.commentsPanelId}>
         <MessageCircle size={22} /><span>{props.commentsTotal}</span>

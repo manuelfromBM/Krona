@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./ServicesHighlight.module.css";
-import type { ServiceItem } from "../../../types/centerPanel.types";
+import type { ServiceItem } from "@packages/types/feed";
 
 interface Props { services: ServiceItem[]; }
 

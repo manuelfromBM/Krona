@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import { styles } from "./ForgotPassword.styles";
 import { useNavigation } from "@react-navigation/native";
-import type { StackNavigationProp } from "@react-navigation/stack";
 import { useForgotPassword } from "@packages/hooks";
 
 export const ForgotPassword: React.FC = () => {

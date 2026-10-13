@@ -1,4 +1,4 @@
-import type { Suggestion, AdBanner } from "../types/suggestion.types";
+import type { Suggestion, AdBanner } from "@packages/types/feed";
 
 export const mockSuggestions: Suggestion[] = [
 

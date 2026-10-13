@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./AdBanner.module.css";
-import type { AdBanner as AdBannerType } from "../../../features/Feed/types/suggestion.types";
+import type { AdBanner as AdBannerType } from "@packages/types/feed";
 
 export const AdBanner = ({ ad }: { ad: AdBannerType}) => {
     return (

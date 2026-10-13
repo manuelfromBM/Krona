@@ -1,5 +1,5 @@
 import styles from "./NearOpportunities.module.css";
-import type { Opportunity } from "../../../types/centerPanel.types";
+import type { Opportunity } from "@packages/types/feed";
 
 interface Props { opportunities: Opportunity[]; }
 

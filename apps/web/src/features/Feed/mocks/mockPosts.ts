@@ -1,4 +1,4 @@
-import type { Post } from "../types/post.types";
+import type { Post } from "@packages/types/feed";
 
 export const mockPosts: Post[] = [
 

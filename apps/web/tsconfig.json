@@ -7,9 +7,23 @@
       }
     ],
     "paths": {
-      "@packages/services": ["../../packages/services/src"],
-      "@packages/services/*": ["../../packages/services/src/*"]
-    }
+      "@packages/services": [
+        "../../packages/services/src"
+      ],
+      "@packages/services/*": [
+        "../../packages/services/src/*"
+      ],
+      "@packages/types": [
+        "../../packages/types/src"
+      ],
+      "@packages/types/*": [
+        "../../packages/types/src/*"
+      ],
+      "@packages/hooks/*": [
+        "../../packages/hooks/src/*"
+      ]
+    },
+    "rootDir": "../.."
   },
   "include": [
     "**/*.ts",

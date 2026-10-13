@@ -1,13 +1,21 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "Node16",
     "target": "ES2022",
     "outDir": "./dist",
-    "rootDir": "./src",
-    "types": ["node", "jest"],
+    "rootDir": ".",
+    "types": [
+      "node",
+      "jest"
+    ],
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "moduleResolution": "Node16"
   },
-  "include": ["src/**/*","prisma.config.ts","prisma/**/*.ts"]
+  "include": [
+    "src/**/*",
+    "prisma.config.ts",
+    "prisma/**/*.ts"
+  ]
 }

@@ -1,4 +1,4 @@
-import type { Story } from "../types/story.types";
+import type { Story } from "@packages/types/feed";
 
 export const mockStories: Story [] = [
     { 

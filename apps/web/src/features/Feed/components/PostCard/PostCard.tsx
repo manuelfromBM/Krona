@@ -1,8 +1,8 @@
 "use client";
 
 import styles from "./PostCard.module.css";
-import { UsePostActions } from "../../hooks/usePostActions";
-import type { Post } from "../../types/post.types";
+import { UsePostActions } from "@packages/hooks/feed/useFeedWeb";
+import type { Post } from "@packages/types/feed";
 import { PostHeader } from "./Header/PostHeader";
 import { PostMedia } from "./Media/PostMedia";
 import { PostActions } from "./Actions/PostActions";
@@ -10,9 +10,9 @@ import { CommentsPanel } from "./Comments/CommentsPanel";
 import { SharePanel } from "./Share/SharePanel";
 import ReservationModal from "./Reservation/ReservationModal";
 import { ReservationToast } from "./Reservation/ReservationToast";
-import { useComments } from "./hooks/useComments";
-import { useReservation } from "./hooks/useReservation";
-import { useShare } from "./hooks/useShare";
+import { useComments } from "@packages/hooks/feed/useComments";
+import { useReservation } from "@packages/hooks/feed/useReservation";
+import { useShare } from "@packages/hooks/feed/useShare";
 
 interface PostCardProps {
   post: Post;

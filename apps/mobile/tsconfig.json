@@ -3,10 +3,29 @@
   "compilerOptions": {
     "jsx": "react",
     "strict": true,
-    "baseUrl": ".",
+    "target": "ES2019",
+    "lib": [
+      "ES2019",
+      "DOM"
+    ],
+    "noEmit": true,
     "paths": {
-      "@packages/hooks": ["../../packages/hooks/src"]
-    }
+      "@packages/*": [
+        "../../packages/*/src"
+      ],
+      "src/*": [
+        "./src/*"
+      ],
+      "@packages/types/*": [
+        "../../packages/types/src/*"
+      ]
+    },
+    "rootDir": "../.."
   },
-  "include": ["src/**/*","src","App.tsx","index.ts"]
+  "include": [
+    "src/**/*",
+    "src",
+    "App.tsx",
+    "index.ts"
+  ]
 }

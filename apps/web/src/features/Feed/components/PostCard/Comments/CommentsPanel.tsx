@@ -2,7 +2,7 @@ import type { FormEvent } from "react";
 import Image from "next/image";
 
 import styles from "../PostCard.module.css";
-import type { PostComment } from "../../../types/post.types";
+import type { PostComment } from "@packages/types/feed";
 
 interface CommentsPanelProps {
   id: string;

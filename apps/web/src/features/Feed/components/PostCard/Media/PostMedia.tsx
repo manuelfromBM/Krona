@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, LayoutGrid, Play } from "lucide-react";
 
 import styles from "../PostCard.module.css";
-import type { Post } from "../../../types/post.types";
+import type { Post } from "@packages/types/feed";
 
 export function PostMedia({ post }: { post: Post }) {
   const [slide, setSlide] = useState(0);

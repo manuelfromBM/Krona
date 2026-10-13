@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, Heart, MessageCircle, X } from "lucide-react";
 
 import styles from "./StoryModal.module.css";
-import type { Story } from "../../../types/story.types";
+import type { Story } from "@packages/types/feed";
 
 interface StoryModalProps {
   stories: Story[];

@@ -4,16 +4,27 @@
     "jsx": "react-jsx",
     "noEmit": true,
     "target": "ES2017",
-    "lib": ["DOM", "ES2017"],
-    "module": "commonjs",
+    "lib": [
+      "DOM",
+      "ES2017"
+    ],
+    "module": "Node16",
     "esModuleInterop": true,
     "strict": true,
-    "types": ["node", "jest"],
-    "baseUrl": "./src",
+    "types": [
+      "node",
+      "jest"
+    ],
     "paths": {
-      "@/*": ["*"]
-    }
-
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "moduleResolution": "Node16",
+    "rootDir": "./src",
+    "isolatedModules": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

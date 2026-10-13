@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Plus } from "lucide-react";
 import StoryModal from "./StoryModal/StoryModal";
 import { mockStories } from "../../mocks/mockStories";
-import type { Story, StoryBadge } from "../../types/story.types";
+import type { Story, StoryBadge } from "@packages/types/feed";
 
 const BADGE_CONFIG: Record<StoryBadge, { label: string; cls: string | undefined }> = {
   disponible: { label: "● Disponible", cls: styles.badgeGreen  },

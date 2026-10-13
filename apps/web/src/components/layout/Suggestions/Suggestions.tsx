@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./Suggestions.module.css";
-import type { Suggestion} from "../../../features/Feed/types/suggestion.types";
+import type { Suggestion} from "@packages/types/feed";
 
 interface SuggestionsProps {
     suggestions: Suggestion[];

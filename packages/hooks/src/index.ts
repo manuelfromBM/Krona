@@ -13,3 +13,12 @@ export * from "./agendar/UseAgendar";
 export { useDashboardPremiumData } from "./dashboard/useDashboardPremiumData";
 export { useDashboardPremiumCalendarioData } from "./dashboard/useDashboardPremiumCalendarioData";
 export * from './context/AuthContext'
+
+//===================================================================================================
+//==============================================HOOKS_WEB============================================
+//===================================================================================================
+
+export { UsePostActions } from "./feed/useFeedWeb";
+export { useComments } from "./feed/useComments";
+export { useReservation } from "./feed/useReservation";
+export { useShare } from "./feed/useShare";

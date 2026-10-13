@@ -3,7 +3,8 @@ export default function useLogin(): {
     setEmail: import("react").Dispatch<import("react").SetStateAction<string>>;
     password: string;
     setPassword: import("react").Dispatch<import("react").SetStateAction<string>>;
-    handleLogin: () => void;
-    navigation: any;
+    loading: boolean;
+    error: string | null;
+    handleLogin: () => Promise<void>;
 };
 //# sourceMappingURL=UseLogin.d.ts.map

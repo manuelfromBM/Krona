@@ -1,8 +1,4 @@
 import { Platform } from "react-native";
-/**
- * Hook personalizado para gestionar la lógica de agendamiento de servicios
- * @returns Objeto con estados y funciones para el agendamiento
- */
 export declare const useAgendar: () => {
     navigation: Omit<import("@react-navigation/native").NavigationProp<ReactNavigation.RootParamList>, "getState"> & {
         getState(): import("@react-navigation/native").NavigationState | undefined;

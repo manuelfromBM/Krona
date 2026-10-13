@@ -7,13 +7,14 @@
     "skipLibCheck": true,
 
     /* Módulos */
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "esModuleInterop": true,
 
     /* Aliases compartidos */
-    "baseUrl": ".",
     "paths": {
-      "@packages/*": ["packages/*/src"]
+      "@packages/*": ["./packages/*/src"],
+      "@packages/types/*": ["./packages/types/src/*"]
     }
   }
 }

@@ -1,8 +1,4 @@
-import type {
-  SearchBusiness,
-  SearchUser,
-  SearchVideo,
-} from "../types/search.types";
+import type { SearchBusiness, SearchUser, SearchVideo } from "../types/search.types";
 
 
 // ======================================================

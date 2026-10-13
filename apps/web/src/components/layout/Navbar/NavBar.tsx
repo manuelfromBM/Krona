@@ -26,7 +26,7 @@ export const Navbar = () => {
     }
 
     router.push(
-       `/search?q=${encodeURIComponent(value)}`
+      `/search?q=${encodeURIComponent(value)}`
     );
   };
 

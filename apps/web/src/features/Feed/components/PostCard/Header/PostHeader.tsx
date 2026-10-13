@@ -2,7 +2,7 @@ import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 
 import styles from "../PostCard.module.css";
-import type { Post } from "../../../types/post.types";
+import type { Post } from "@packages/types/feed";
 import { PostMenu } from "./PostMenu";
 
 interface PostHeaderProps {
