@@ -48,5 +48,17 @@ export const apiClient = {
       method: "POST",
       body: data !== undefined ? JSON.stringify(data) : undefined,
     }),
+  delete: async <T>(path: string): Promise<T> => {
+    const response = await fetch(`${API_URL}${path}`,{
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+    return response.json() as Promise<T>
+  },
 };
 //listo para produccion

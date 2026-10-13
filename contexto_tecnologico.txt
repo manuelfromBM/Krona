@@ -1,0 +1,179 @@
+CONTEXTO TECNOLOGICO - PROYECTO KRONA
+Generado: 2026-10-04
+Rama actual: backend/feed-connection
+
+====================================================================
+1. ARQUITECTURA GENERAL
+====================================================================
+Monorepo gestionado con Turborepo + pnpm workspaces (pnpm@9, Node >=22).
+Estructura:
+  apps/
+    backend/   -> API REST con NestJS
+    web/       -> Aplicacion web con Next.js
+    mobile/    -> App movil con Expo / React Native
+  packages/
+    eslint-config/       -> Configuraciones de ESLint compartidas
+    hooks/                -> Hooks de React compartidos (para mobile)
+    services/             -> Servicios/clientes compartidos (ej. llamadas API)
+    types/                -> Tipos TypeScript compartidos
+    typescript-config/    -> tsconfig base compartido
+    ui/                   -> Libreria de componentes React compartida
+    utils/                -> Utilidades compartidas
+
+Build/orquestacion: turbo.json define pipelines (build, dev, lint, check-types).
+Gestor de paquetes: pnpm con overrides (react 19.1.0, react-native 0.81.5).
+Todo el codigo esta en TypeScript.
+
+====================================================================
+2. BACKEND (apps/backend) - @krona/backend
+====================================================================
+Framework: NestJS 11 (@nestjs/common, core, platform-express, config, jwt)
+Lenguaje: TypeScript 5.7
+Base de datos: PostgreSQL, accedida via Prisma ORM (prisma / @prisma/client v7.6)
+  - Adaptador: @prisma/adapter-neon (Neon serverless Postgres)
+  - Variables de entorno: DATABASE_URL, DIRECT_URL, JWT_SECRET (.env)
+  - Schema actual (apps/backend/prisma/schema.prisma) define SOLO:
+      User (CLIENT/PROVIDER), ProviderProfile, Service, Appointment
+    No existen modelos para Post/Comment/Like/SavedPost (feed) ni nada de
+    "profile" mas alla de ProviderProfile -> el modulo feed y el modulo
+    profile no tienen respaldo de base de datos todavia.
+Autenticacion: JWT (@nestjs/jwt) + bcryptjs para hashing de contraseñas.
+Validacion: class-validator + class-transformer (DTOs).
+Arquitectura interna: estilo Clean/Hexagonal por modulo, con carpetas:
+  application/ (usecases), domain/ (entities, repositories),
+  infrastructure/ (implementaciones de repos con Prisma),
+  presentation/ (controllers), dto/
+
+Estado real de cada modulo (src/modules):
+  - auth: UNICO modulo con logica funcional.
+      * auth.module.ts registra JwtModule + RegisterUseCase + USER_REPOSITORY
+        (PrismaUserRepository). Solo expone POST /auth/registro.
+      * application/register.usecase.ts (60 lineas) tiene la implementacion
+        real de registro (hash bcrypt, chequeo de email duplicado, firma JWT).
+      * Existe un ARCHIVO DUPLICADO vacio en
+        application/usecases/register.usecase.ts (0 lineas) -> probable
+        resto de una migracion de carpeta "application/" a "application/usecases/"
+        sin terminar; limpiar o migrar la logica.
+      * Los demas usecases nuevos en application/usecases/ (login, logout,
+        refresh-token, get-profile) y los DTOs nuevos (auth-response.dto.ts,
+        login.dto.ts, refresh-token.dto.ts) estan creados pero VACIOS
+        (0 lineas) -> son solo scaffolding, sin implementar ni cablear
+        en auth.module.ts / auth.controller.ts todavia.
+      * auth.controller.ts conserva console.log de depuracion (no logger)
+        en el endpoint de registro -> pendiente de limpiar.
+  - feed (src/modules/feed): modulo COMPLETO EN ESQUELETO. Las ~40 rutas
+    (entities: post/comment/like/saved-post; repositories; usecases como
+    create-post, like-post, list-feed, list-suggestions, etc.; dtos;
+    infrastructure/*.repository.impl.ts; feed.module.ts; feed.controller.ts)
+    existen como archivos pero TODOS tienen 0 lineas (vacios). No esta
+    importado en app.module.ts. Es la rama de trabajo activa
+    ("backend/feed-connection") pero el desarrollo del modulo aun no ha
+    empezado a escribirse.
+  - profile (src/modules/profile): mismo caso que feed -> profile.module.ts,
+    profile.controller.ts, get-profile.usecase.ts, profile.entity.ts,
+    profile.repository.impl.ts, profile-response.dto.ts, todos vacios (0
+    lineas). No esta importado en app.module.ts.
+  - booking (src/modules/booking): solo existe booking.module.ts y esta
+    vacio (0 lineas). No hay controller/usecases/entities todavia. No esta
+    importado en app.module.ts.
+
+app.module.ts SOLO importa: ConfigModule, PrismaModule, AuthModule.
+  -> feed, profile y booking no estan conectados a la aplicacion NestJS
+     en este momento, aunque sus archivos ya existen en el arbol.
+
+Testing: Jest + ts-jest (unit), supertest para e2e (test:e2e) -- infra de
+  testing configurada pero sin tests nuevos para los modulos en esqueleto.
+Lint/format: ESLint 9 + typescript-eslint + Prettier.
+Contenedor: Dockerfile multi-stage (pruning con turbo prune, build con
+  pnpm, imagen final node:22-alpine ejecutando dist/main.js).
+  docker-compose.yml orquesta backend (puerto 3001->3000) y web (3000).
+
+====================================================================
+3. WEB (apps/web) - Next.js
+====================================================================
+Framework: Next.js 15 (App Router), React 19.1, modo Turbopack en dev.
+Estructura de rutas con route groups: (auth), (bussines), (cliente),
+  (public), (pyme) -> indica multiples roles/perfiles de usuario
+  (negocio/pyme, cliente, publico).
+Tambien existe src/features (Agenda, Auth, Feed, Statistics) ademas de
+  src/app por route group -> separacion por feature ademas de por rutas.
+Paginas detectadas: login, registro, recuperar password, dashboard
+  (negocio y pyme), staff, agenda (cliente y pyme), feed, usuarios.
+Estilos: CSS Modules (*.module.css) + globals.css.
+Componentes propios en src/components/layout (Navbar, Sidebar, Footer,
+  MessagesDock, RightPanel, Suggestions, AdBanner, Notifications, etc.)
+  y src/components/ui.
+Iconos: lucide-react.
+Dependencias internas: @repo/ui (componentes compartidos), @packages/services.
+Lint: eslint-config-next vía @repo/eslint-config, check-types con tsc.
+No hay cambios pendientes (git) en esta app respecto al ultimo estado.
+
+====================================================================
+4. MOBILE (apps/mobile) - Expo / React Native
+====================================================================
+Expo SDK ~54, React Native 0.81.5, React 19.1.
+Navegacion: @react-navigation (native, native-stack, bottom-tabs, drawer).
+Mapas: expo-maps, react-native-maps.
+UI/gráficos: react-native-chart-kit, react-native-svg, react-native-reanimated,
+  react-native-gesture-handler, expo-linear-gradient, lucide-react-native.
+Almacenamiento local: @react-native-async-storage/async-storage.
+HTTP client: axios.
+Calendario: react-native-calendars, @react-native-community/datetimepicker.
+Dependencias internas: @packages/hooks, @packages/types.
+Estructura: src/screens (una carpeta por pantalla, con .tsx + .styles.ts),
+  src/navigation (stack/tab navigators), src/context (AuthContext),
+  src/components/Feed.
+Pantallas principales: login/register/forgotPassword, feed (publicaciones),
+  agenda/agendar/agendaCalendario, dashboard (free/premium con graficos),
+  profile/editProfile/gallery, administrador/Crud, busqueda, map, notificaciones,
+  metodoPago/agregarTarjeta.
+No hay cambios pendientes (git) en esta app respecto al ultimo estado.
+
+====================================================================
+5. DOMINIO DE NEGOCIO (inferido del codigo)
+====================================================================
+Krona parece ser una plataforma que conecta:
+  - Clientes (CLIENT) que agendan citas/servicios y ven un feed social.
+  - Proveedores/negocios (PROVIDER / "pyme") que gestionan su perfil,
+    servicios, agenda, dashboard con estadisticas (free/premium) y staff.
+Funcionalidades clave (segun frontend ya construido en web/mobile, por
+  delante del backend): autenticacion con roles, reserva de citas
+  (appointments/services/booking), feed social (posts, comentarios, likes,
+  guardados, sugerencias), perfiles, metodos de pago, mapa de ubicacion,
+  notificaciones.
+El backend hoy solo soporta: registro de usuario (CLIENT) con JWT. Todo
+  lo demas (booking, feed, profile, login/logout/refresh) esta modelado
+  en el frontend pero sin API funcional detras todavia.
+
+====================================================================
+6. HERRAMIENTAS COMUNES / DEVOPS
+====================================================================
+- Turborepo (turbo.json) para build/dev/lint/check-types en todo el monorepo.
+- Prettier para formateo global.
+- Docker + docker-compose para despliegue (menciones en commits recientes de
+  redeploy en Render: "cambios en docker file para redeploy en render",
+  "Hoist paquetes @prisma/* para que el cliente generado los resuelva en runtime").
+- .npmrc y pnpm-workspace.yaml configuran el monorepo pnpm.
+
+====================================================================
+7. ESTADO ACTUAL DE LA RAMA (backend/feed-connection)
+====================================================================
+Cambios sin commitear (untracked), todos en apps/backend/src/modules/auth
+y apps/backend/src/modules/feed:
+  - auth/application/usecases/ (get-profile, login, logout, refresh-token,
+    register) -> ARCHIVOS VACIOS, sin implementar.
+  - auth/dto/ (auth-response.dto.ts, login.dto.ts, refresh-token.dto.ts)
+    -> ARCHIVOS VACIOS, sin implementar.
+  - modules/feed/ completo (entities, repositories, usecases, dtos,
+    infrastructure, module, controller) -> TODO VACIO, sin implementar y
+    sin modelos en Prisma todavia.
+Commits recientes (90c415f, 9e2fd1c, 9ee84be, 1caa545, 6b8e7dd) se centran
+  en logging de depuracion y ajustes de Docker/env para despliegue en
+  Render (plataforma de hosting usada para el backend), no en el feed.
+
+RESUMEN: a pesar del nombre de la rama ("feed-connection"), el trabajo de
+  implementacion del feed (y de login/logout/refresh/get-profile de auth)
+  todavia NO ha comenzado a nivel de codigo -> solo existe el scaffolding
+  de archivos vacios siguiendo la convencion arquitectonica del modulo
+  auth existente. El unico flujo backend funcional end-to-end es el
+  registro de usuarios.

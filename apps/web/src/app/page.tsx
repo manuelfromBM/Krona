@@ -1,8 +1,8 @@
 import MainLayout from "../components/layout/MainLayout/MainLayout";
 import { RightPanel } from "../components/layout/RightPanel/RightPanel";
 
-import FeedPage from "../features/Feed/FeedPage";
-
+//import FeedPage from "../features/Feed/FeedPage";
+import FeedPage from "../features/Feed/FeedPage"
 import { MyAgenda } from "../features/Agenda/components/MyAgenda/MyAgenda";
 import { Statistics } from "../features/Statistics/components/Statistics/Statistics";
 

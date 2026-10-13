@@ -1,0 +1,51 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 4px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.confirmada {
+  background: rgba(13, 183, 159, 0.12);
+  color: #078b7c;
+}
+.confirmada .dot {
+  background: #0db79f;
+}
+
+.pendiente {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+}
+.pendiente .dot {
+  background: #f59e0b;
+}
+
+.cancelada {
+  background: rgba(239, 68, 68, 0.1);
+  color: #b42318;
+}
+.cancelada .dot {
+  background: #ef4444;
+}
+
+.completada {
+  background: rgba(100, 116, 139, 0.12);
+  color: #475467;
+}
+.completada .dot {
+  background: #64748b;
+}
